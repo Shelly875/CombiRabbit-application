@@ -1,0 +1,5 @@
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/combi_animation" android:oneshot="false">
+    <item android:drawable="@drawable/combi_logo" android:duration="500" />
+    <item android:drawable="@drawable/combi_mouth_closed" android:duration="500" />
+</animation-list>

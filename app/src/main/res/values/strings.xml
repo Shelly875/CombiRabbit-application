@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">CombiRabbit</string>
+    <string name="user_name_instruction">מה שמך?</string>
+    <string name="user_age_instruction">מה הגיל שלך?</string>
+    <string name="user_phone_instruction">אנא הזן מספר טלפון של הורה:</string>
+    <string name="user_code_instruction">אנא הזן קוד:</string>
+    <string name="code_hint_text">XXXXXX</string>
+
+    <string-array name="ages">
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12+</item>
+    </string-array>
+</resources>

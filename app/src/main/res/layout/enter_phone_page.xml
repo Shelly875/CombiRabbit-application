@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/app_background">
+
+    <ImageView
+        android:id="@+id/combi_icon"
+        android:layout_width="@dimen/new_game_combi_icon_width"
+        android:layout_height="@dimen/new_game_combi_icon_height"
+        android:layout_marginTop="@dimen/new_game_combi_icon_margin_top"
+        android:onClick="clicking"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/user_instruction"
+        android:layout_width="@dimen/new_game_instruction_width"
+        android:layout_height="@dimen/new_game_instruction_height"
+        android:layout_marginTop="@dimen/new_game_instruction_margin_top"
+        android:text="אנא הזן מספר טלפון:"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/new_game_instruction_text_size"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.488"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/combi_icon" />
+
+    <EditText
+        android:id="@+id/user_input"
+        android:layout_width="@dimen/new_game_user_input_width"
+        android:layout_height="@dimen/new_game_user_input_height"
+        android:hint="05XXXXXXXX"
+        android:maxLength="10"
+        android:textSize="@dimen/new_game_user_input_text_size"
+        android:digits="0123456789"
+        android:textColorHint="@color/grey"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/btn_phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_instruction"
+        app:layout_constraintVertical_bias="0.34" />
+
+    <ImageButton
+        android:id="@+id/btn_phone"
+        android:layout_width="@dimen/new_game_button_width"
+        android:layout_height="@dimen/new_game_button_height"
+        android:layout_marginBottom="@dimen/new_game_button_margin_bottom"
+        android:background="@drawable/btn_selector_continue"
+        android:onClick="CodePage"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

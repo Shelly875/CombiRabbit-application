@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+    // ************ New game registration ************ //
+
+    // combi icon new setup (game) positions
+    <dimen name="new_game_combi_icon_height">259dp</dimen>
+    <dimen name="new_game_combi_icon_width">288dp</dimen>
+    <dimen name="new_game_combi_icon_margin_top">32dp</dimen>
+
+    // user_input new setup (game) positions
+    <dimen name="new_game_user_input_height">70dp</dimen>
+    <dimen name="new_game_user_input_width">327dp</dimen>
+    <dimen name="new_game_user_input_text_size">30sp</dimen>
+
+    // button for continue with registration to the new game positions
+    <dimen name="new_game_button_height">62dp</dimen>
+    <dimen name="new_game_button_width">217dp</dimen>
+    <dimen name="new_game_button_margin_top">259dp</dimen>
+    <dimen name="new_game_button_margin_bottom">72dp</dimen>
+
+    // user instruction text new setup (game) positions
+    <dimen name="new_game_instruction_height">50dp</dimen>
+    <dimen name="new_game_instruction_width">242dp</dimen>
+    <dimen name="new_game_instruction_margin_top">36dp</dimen>
+    <dimen name="new_game_instruction_text_size">25sp</dimen>
+
+    // ************ Saved game ************ //
+
+</resources>

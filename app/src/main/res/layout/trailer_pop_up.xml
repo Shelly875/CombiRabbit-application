@@ -1,0 +1,69 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:gravity="center">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="30dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:padding="10dp"
+            android:background="@drawable/popup_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/popup_question"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:padding="10dp"
+                android:text="לאיזה מסך תרצה להגיע?"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/btn_guide_button"
+                android:layout_width="95dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="64dp"
+                android:background="@drawable/btn_go_to_trailer"
+                app:layout_constraintEnd_toStartOf="@+id/btn_start_game_button"
+                app:layout_constraintTop_toBottomOf="@+id/popup_question" />
+
+            <ImageButton
+                android:id="@+id/btn_start_game_button"
+                android:layout_width="95dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="48dp"
+                android:background="@drawable/btn_go_to_game"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/popup_question" />
+
+            <ImageButton
+                android:id="@+id/close_pop_up"
+                android:layout_width="39dp"
+                android:layout_height="29dp"
+                android:background="@drawable/btn_close_popup"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</LinearLayout>

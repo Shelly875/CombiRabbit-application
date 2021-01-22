@@ -21,6 +21,7 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 public class CodeVerificationPage extends ActivityMethods {

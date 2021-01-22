@@ -146,7 +146,7 @@ public class GameBoard extends ActivityMethods {
                             objChosenGame = new BullsAndCows();
 
                             // input for function: game number 1
-                            ShowPopUp(objChosenGame);
+                            ShowPopUp(objChosenGame, maxAge);
                         }
                     });
 
@@ -161,7 +161,7 @@ public class GameBoard extends ActivityMethods {
                                 objChosenGame = new MatchAndComplete();
                             }
                             // input for function: game number 2
-                            ShowPopUp(objChosenGame);
+                            ShowPopUp(objChosenGame, maxAge);
                         }
                     });
 
@@ -194,7 +194,8 @@ public class GameBoard extends ActivityMethods {
         this.stopAnimation(rabbitAnimation, animationDuration);
     }
 
-    protected void ShowPopUp(Object objChosenGame){
+    // popup that will redirect to the wanted game
+    protected void ShowPopUp(Object objChosenGame, String maxAge){
 
         // Show the pop up for - instructions/start game
         trailerPopUp.setContentView(R.layout.trailer_pop_up);
@@ -210,8 +211,10 @@ public class GameBoard extends ActivityMethods {
             @Override
             public void onClick(View v) {
 
-                startActivity(new Intent(GameBoard.this, objChosenGame.getClass()));
-
+                // we sending the max age to see which intent of bulls and cows
+                // we will operate
+                startActivity(new Intent(GameBoard.this,
+                        objChosenGame.getClass()).putExtra("maxAge", maxAge));
             }
         });
 
@@ -224,7 +227,5 @@ public class GameBoard extends ActivityMethods {
 
             }
         });
-
-
     }
 }

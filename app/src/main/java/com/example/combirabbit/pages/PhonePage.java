@@ -9,7 +9,6 @@ import android.widget.EditText;
 
 import com.example.combirabbit.R;
 import com.example.combirabbit.activity.ActivityMethods;
-import com.example.combirabbit.activity.GameBoard;
 import com.example.combirabbit.models.GameOperations;
 import com.example.combirabbit.models.User;
 import com.google.firebase.firestore.DocumentReference;
@@ -28,6 +27,7 @@ public class PhonePage extends ActivityMethods {
     private int animationDuration = 11;
     private User newUser;
     private FirebaseFirestore mDatabase;
+    private GameOperations tempGameInstance;
     private GameOperations gameInstance;
 
     @Override
@@ -85,12 +85,13 @@ public class PhonePage extends ActivityMethods {
             // Add the phone number to the new user's parameters
             this.newUser.setPhone(phonePrefix + strPhoneNumber);
             // Add new user to the game
+            this.tempGameInstance = new GameOperations(this.newUser);
             this.gameInstance = new GameOperations(this.newUser);
 
             this.mDatabase = FirebaseFirestore.getInstance();
             DocumentReference docRef = this.mDatabase
                     .collection("SavedGames")
-                    .document(this.gameInstance.getUserInstance().getPhone());
+                    .document(this.tempGameInstance.getUserInstance().getPhone());
 
             // check if the user already has a game saved in db
             docRef.get().addOnCompleteListener(task -> {
@@ -102,11 +103,12 @@ public class PhonePage extends ActivityMethods {
                         phoneNumberField.requestFocus();
                         Log.d("INFO: ", "No such document");
                     } else {
-                        if (!document.exists() && isNewGame) {
-                            this.gameInstance.saveGame();
+                        if ((!document.exists() && isNewGame) ||
+                                (document.exists() && isNewGame)) {
+                            this.tempGameInstance.saveGame();
                         }
-                        startActivity(new Intent(this, GameBoard.class)
-                                .putExtra("gameInstance", gameInstance));
+                        startActivity(new Intent(this, CodeVerificationPage.class)
+                                .putExtra("gameInstance", this.gameInstance));
                     }
                 } else {
                     phoneNumberField.setError("קיימת בעיה במערכת. אנא נסה שנית מאוחר יותר.");

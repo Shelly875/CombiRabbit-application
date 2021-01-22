@@ -1,15 +1,10 @@
 package com.example.combirabbit.models;
 
-import android.util.Log;
-
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameOperations implements Serializable {
 
@@ -24,7 +19,7 @@ public class GameOperations implements Serializable {
 
     // Start connection to the database server
     public void setFireBaseInstance() {
-        this.mDatabase = FirebaseFirestore.getInstance();
+         this.mDatabase = FirebaseFirestore.getInstance();
     }
 
     // Get firebase instance
@@ -37,7 +32,7 @@ public class GameOperations implements Serializable {
     // Save the user details and the game itself
     // in cloud store db
     public void saveGame() {
-        this.setFireBaseInstance();
+
         Map<String, Object> user = new HashMap<>();
         user.put("name", this.getUserInstance().getName());
         user.put("age", this.getUserInstance().getAge());
@@ -48,7 +43,7 @@ public class GameOperations implements Serializable {
         // if so - save the data instead of the current row
         // and not in addition to it
         // Add a new document with a generated ID
-        this.mDatabase.collection("SavedGames")
+        this.getFireBaseInstance().collection("SavedGames")
                 .document(this.getUserInstance().getPhone())
                 .set(user);
     }

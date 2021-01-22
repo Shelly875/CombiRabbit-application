@@ -10,7 +10,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -19,7 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.combirabbit.R;
 import com.example.combirabbit.fragments.BullAndCowsColorFragment;
 import com.example.combirabbit.fragments.BullAndCowsNumFragment;
-import com.example.combirabbit.fragments.MatchAndComplete;
+import com.example.combirabbit.fragments.MatchAndCompleteFragment;
 import com.example.combirabbit.fragments.WhoSitNextToMeFragment;
 import com.example.combirabbit.models.GameOperations;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,6 +41,10 @@ public class GameBoard extends ActivityMethods {
     private Dialog trailerPopUp;
     private TextView scoreTwo;
     private AnimationDrawable rabbitAnimation;
+    private String maxAge = "";
+    private Object objChosenGame;
+    private ImageButton btnStartTrailer;
+    private ImageButton btnStartGame;
     TextView playerName;
     private int animationDuration = 17;
 
@@ -102,6 +105,9 @@ public class GameBoard extends ActivityMethods {
 
                         Log.d("INFO:", "age 6 to 7");
 
+                        // will be used to direct the user to the game
+                        maxAge = "7";
+
                         // Game one
                         ft.replace(R.id.game_one, new BullAndCowsColorFragment());
 
@@ -113,11 +119,14 @@ public class GameBoard extends ActivityMethods {
 
                         Log.d("INFO:", "age 8 and above");
 
+                        // will be used to direct the user to the game
+                        maxAge = "12+";
+
                         // Game one
                         ft.replace(R.id.game_one, new BullAndCowsNumFragment());
 
                         // Game two
-                        ft.replace(R.id.game_two, new MatchAndComplete());
+                        ft.replace(R.id.game_two, new MatchAndCompleteFragment());
                     }
 
                     // operate fragments
@@ -132,8 +141,12 @@ public class GameBoard extends ActivityMethods {
                     btnPlayGameOne.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+
+                            // Bulls and cows - colors or numbers
+                            objChosenGame = new BullsAndCows();
+
                             // input for function: game number 1
-                            ShowPopUp();
+                            ShowPopUp(objChosenGame);
                         }
                     });
 
@@ -141,10 +154,17 @@ public class GameBoard extends ActivityMethods {
                     btnPlayGameTwo.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            // give the popup the chosen game class
+                            if (maxAge.equals("7")) {
+                                objChosenGame = new WhoSitNextToMe();
+                            } else {
+                                objChosenGame = new MatchAndComplete();
+                            }
                             // input for function: game number 2
-                            ShowPopUp();
+                            ShowPopUp(objChosenGame);
                         }
                     });
+
 
 
                     // load from db all the relevant fields
@@ -174,9 +194,37 @@ public class GameBoard extends ActivityMethods {
         this.stopAnimation(rabbitAnimation, animationDuration);
     }
 
-    protected void ShowPopUp(){
+    protected void ShowPopUp(Object objChosenGame){
+
+        // Show the pop up for - instructions/start game
         trailerPopUp.setContentView(R.layout.trailer_pop_up);
         trailerPopUp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         trailerPopUp.show();
+
+        // Take the buttons and direct the intents
+        btnStartTrailer = trailerPopUp.findViewById(R.id.btn_guide_button);
+        btnStartGame = trailerPopUp.findViewById(R.id.btn_start_game_button);
+
+        // Each press will lead to other intent - start game
+        btnStartGame.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(GameBoard.this, objChosenGame.getClass()));
+
+            }
+        });
+
+        // Each press will lead to other intent - start trailer
+        btnStartTrailer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(new Intent(GameBoard.this, objChosenGame.getClass()));
+
+            }
+        });
+
+
     }
 }

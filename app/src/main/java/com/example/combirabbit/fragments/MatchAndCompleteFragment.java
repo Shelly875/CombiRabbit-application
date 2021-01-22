@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.combirabbit.R;
 
-public class MatchAndComplete extends Fragment {
+public class MatchAndCompleteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup parent,
                              Bundle savedInstanceState) {

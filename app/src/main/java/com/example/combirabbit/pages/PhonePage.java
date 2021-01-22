@@ -11,13 +11,10 @@ import com.example.combirabbit.R;
 import com.example.combirabbit.activity.ActivityMethods;
 import com.example.combirabbit.activity.GameBoard;
 import com.example.combirabbit.models.GameOperations;
-import com.example.combirabbit.models.MyCallback;
 import com.example.combirabbit.models.User;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PhonePage extends ActivityMethods {
 

@@ -9,6 +9,7 @@ import android.widget.EditText;
 
 import com.example.combirabbit.R;
 import com.example.combirabbit.activity.ActivityMethods;
+import com.example.combirabbit.activity.GameBoard;
 import com.example.combirabbit.models.GameOperations;
 import com.example.combirabbit.models.User;
 import com.google.firebase.firestore.DocumentReference;
@@ -107,7 +108,7 @@ public class PhonePage extends ActivityMethods {
                                 (document.exists() && isNewGame)) {
                             this.tempGameInstance.saveGame();
                         }
-                        startActivity(new Intent(this, CodeVerificationPage.class)
+                        startActivity(new Intent(this, GameBoard.class)
                                 .putExtra("gameInstance", this.gameInstance));
                     }
                 } else {

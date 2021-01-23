@@ -22,11 +22,16 @@ public class BullsAndCows extends ActivityMethods{
         Log.d("max age is: ", maxAge);
 
         // Layout will be declared by the user age
+        // bulls and cows with colors
         if(maxAge.equals("7")) {
             Log.d("INFO : ", "here");
             // Main view - bulls and cows in colors
             setContentView(R.layout.bulls_cows_color_game);
+
+
+
         }
+        // bulls and cows with numbers
         else{
             Log.d("INFO : ", "second here");
             // Main view - bulls and cows with numbers

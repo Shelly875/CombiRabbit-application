@@ -2,19 +2,164 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/game_board_background">
+    android:background="@drawable/game_background">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/bulls_cows_color_title"
+        android:layout_width="306dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="100dp"
         android:text="בול פגיעה בצבעים"
-        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="30sp"
-        android:textAlignment="center"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/timer"
+        android:layout_width="203dp"
+        android:layout_height="70dp"
+        android:background="@drawable/game_timer"
+        app:layout_constraintEnd_toStartOf="@+id/bulls_cows_color_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/colors_to_guess"
+        android:layout_width="302dp"
+        android:layout_height="84dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="104dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bulls_cows_color_title">
+
+        <ImageView
+            android:id="@+id/color_one"
+            android:layout_width="84dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bulls_cows_guess_block" />
+
+        <ImageView
+            android:id="@+id/color_two"
+            android:layout_width="84dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/bulls_cows_guess_block" />
+
+        <ImageView
+            android:id="@+id/guess_three"
+            android:layout_width="84dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/bulls_cows_guess_block" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="304dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/colors_to_guess">
+
+        <ImageView
+            android:layout_width="85dp"
+            android:layout_height="90dp"
+            android:background="@drawable/image_placeholder" />
+
+        <ImageView
+            android:layout_width="85dp"
+            android:layout_height="90dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/image_placeholder" />
+
+        <ImageView
+            android:layout_width="85dp"
+            android:layout_height="90dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/image_placeholder" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/colors_registry"
+        android:layout_width="84dp"
+        android:layout_height="22dp"
+        android:layout_marginEnd="124dp"
+        android:layout_marginBottom="4dp"
+        android:text="מחסן צבעים:"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="321dp"
+        android:layout_height="76dp"
+        android:layout_marginEnd="84dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/colors_num_registry"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
 
+        <ImageButton
+            android:id="@+id/black_color"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/black_stain_color" />
+
+        <ImageButton
+            android:id="@+id/yellow_color"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/yellow_stain_color" />
+
+        <ImageButton
+            android:id="@+id/red_color"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/red_stain_color" />
+
+        <ImageButton
+            android:id="@+id/blue_color"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/blue_stain_color" />
+
+        <ImageButton
+            android:id="@+id/pink_color"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/pink_stain_color" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btn_start_guess"
+        android:layout_width="133dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/btn_start_guess"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timer" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,17 +2,114 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/game_board_background">
+    android:background="@drawable/game_background">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/bulls_cows_num_title"
+        android:layout_width="306dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="100dp"
         android:text="בול פגיעה במספרים"
-        android:textSize="30sp"
         android:textAlignment="center"
-        android:textColor="@color/white"/>
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/timer"
+        android:layout_width="203dp"
+        android:layout_height="70dp"
+        android:background="@drawable/game_timer"
+        app:layout_constraintEnd_toStartOf="@+id/bulls_cows_num_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/numbers_to_guess"
+        android:layout_width="302dp"
+        android:layout_height="84dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="104dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bulls_cows_num_title">
+
+        <ImageView
+            android:id="@+id/num_one"
+            android:layout_width="54dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/bulls_cows_guess_block" />
+
+        <ImageView
+            android:id="@+id/num_two"
+            android:layout_width="54dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"
+            android:background="@drawable/bulls_cows_guess_block" />
+
+        <ImageView
+            android:id="@+id/num_three"
+            android:layout_width="54dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"
+            android:background="@drawable/bulls_cows_guess_block" />
+
+        <ImageView
+            android:id="@+id/num_four"
+            android:layout_width="54dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"
+            android:background="@drawable/bulls_cows_guess_block" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="304dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginEnd="104dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numbers_to_guess">
+
+        <EditText
+            android:id="@+id/guess_one"
+            android:layout_width="54dp"
+            android:layout_height="match_parent" />
+
+        <EditText
+            android:id="@+id/guess_two"
+            android:layout_width="54dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"/>
+
+        <EditText
+            android:id="@+id/guess_three"
+            android:layout_width="54dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="25dp"/>
+
+        <EditText
+            android:id="@+id/guess_four"
+            android:layout_width="54dp"
+            android:layout_marginLeft="25dp"
+            android:layout_height="match_parent" />
+
+
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btn_start_guess"
+        android:layout_width="133dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/btn_start_guess"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timer" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,6 +17,7 @@ import com.example.combirabbit.adapters.GuessColorAdapter;
 import com.example.combirabbit.models.ColorGuessItem;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 public class BullsAndCows extends ActivityMethods{
@@ -24,8 +25,12 @@ public class BullsAndCows extends ActivityMethods{
     private static final int MAX_GUESS_PLACE = 3;
     private int nGuessPlace = 0;
     private int nGuessNumber = 0;
-    private final String [] strColors = {"black", "blue", "pink", "red", "yellow"};
-    private String [] strRandomColorsToGuess;
+    private final int [] strColors = {R.drawable.black_stain_color,
+                                         R.drawable.pink_stain_color,
+                                         R.drawable.blue_stain_color,
+                                         R.drawable.yellow_stain_color,
+                                         R.drawable.red_stain_color};
+    private int [] strRandomColorsToGuess;
     private ColorGuessItem nUserGuess;
     private ArrayList<ColorGuessItem> strUserColorsGuess;
     private RecyclerView mColorsGuessTable;
@@ -52,9 +57,10 @@ public class BullsAndCows extends ActivityMethods{
 
             // the colors the game generate to guess randomly
             Random r = new Random();
-            strRandomColorsToGuess = new String[]{strColors[r.nextInt(strColors.length)],
+            strRandomColorsToGuess = new int[]{strColors[r.nextInt(strColors.length)],
                     strColors[r.nextInt(strColors.length)], strColors[r.nextInt(strColors.length)]};
 
+            Log.d("Log: ", ""+ Arrays.toString(strRandomColorsToGuess));
         }
         // bulls and cows with numbers
         else{

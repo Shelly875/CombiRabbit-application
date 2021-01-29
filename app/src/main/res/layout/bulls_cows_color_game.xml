@@ -88,14 +88,24 @@
         app:layout_constraintBottom_toTopOf="@+id/colors_registry"
         app:layout_constraintEnd_toEndOf="parent" />
 
+    <ImageButton
+        android:id="@+id/btn_clear_guess"
+        android:layout_width="133dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="188dp"
+        android:layout_marginBottom="4dp"
+        android:onClick="clearGuess"
+        android:background="@drawable/btn_clear_guess"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <LinearLayout
         android:id="@+id/colors_registry"
         android:layout_width="321dp"
         android:layout_height="76dp"
         android:layout_marginEnd="100dp"
-        android:layout_marginBottom="72dp"
         android:background="@drawable/colors_num_registry"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_clear_guess"
         app:layout_constraintEnd_toEndOf="parent">
 
 
@@ -157,26 +167,27 @@
         android:layout_height="55dp"
         android:layout_marginStart="44dp"
         android:layout_marginTop="16dp"
-        android:onClick="startPlay"
         android:visibility="invisible"
+        android:onClick="sendGuess"
         android:background="@drawable/btn_send_guess"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/timer_img" />
 
 
-    <view
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/guess_list"
         class="androidx.appcompat.app.AlertController$RecycleListView"
-        android:layout_width="190dp"
-        android:layout_height="192dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="160dp"
+        android:layout_height="125dp"
+        android:layout_marginStart="36dp"
         android:layout_marginTop="11dp"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_start_guess"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="0.012">
 
-    </view>
+    </androidx.recyclerview.widget.RecyclerView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

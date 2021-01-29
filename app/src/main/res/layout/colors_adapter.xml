@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="28dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imgGuessOne"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            tools:layout_editor_absoluteX="152dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <ImageView
+            android:id="@+id/imgGuessTwo"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <ImageView
+            android:id="@+id/imgGuessThree"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            tools:layout_editor_absoluteX="84dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <TextView
+            android:id="@+id/txtGuessResult"
+            android:layout_width="40dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="3dp"
+            android:text="ב פ ב"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            tools:layout_editor_absoluteX="257dp"
+            tools:layout_editor_absoluteY="13dp" />
+
+    </LinearLayout>
+</LinearLayout>

@@ -10,14 +10,14 @@ public class User implements Serializable {
 
     public User() {}
 
-    public User(String newName, String newAge, String newEmail) {
+    public User(String newName, String newAge, String newPhone) {
         this.sName  = newName;
-        this.sPhone = newEmail;
         this.sAge   = newAge;
+        this.sPhone = newPhone;
     }
 
     public String getName() {
-        return sName;
+        return this.sName;
     }
 
     public void setName(String newName) {
@@ -25,7 +25,7 @@ public class User implements Serializable {
     }
 
     public String getAge() {
-        return sAge;
+        return this.sAge;
     }
 
     public void setAge(String newAge) {
@@ -33,10 +33,10 @@ public class User implements Serializable {
     }
 
     public String getPhone() {
-        return sPhone;
+        return this.sPhone;
     }
 
-    public void setPhone(String newEmail) {
-        this.sPhone  = newEmail;
+    public void setPhone(String newPhone) {
+        this.sPhone  = newPhone;
     }
 }

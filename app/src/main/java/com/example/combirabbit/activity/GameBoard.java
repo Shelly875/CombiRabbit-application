@@ -8,6 +8,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -21,10 +22,12 @@ import com.example.combirabbit.fragments.BullAndCowsNumFragment;
 import com.example.combirabbit.fragments.MatchAndCompleteFragment;
 import com.example.combirabbit.fragments.WhoSitNextToMeFragment;
 import com.example.combirabbit.models.GameOperations;
+import com.example.combirabbit.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Objects;
 
@@ -32,21 +35,15 @@ public class GameBoard extends ActivityMethods {
 
     // Class variables
 
-    private FirebaseAuth mAuth;
     private GameOperations gameInstance;
-    private FirebaseUser currentUser;
     private TextView scoreOne;
     private ImageButton btnPlayGameOne;
     private ImageButton btnPlayGameTwo;
     private Dialog trailerPopUp;
     private TextView scoreTwo;
-    private AnimationDrawable rabbitAnimation;
     private String maxAge = "";
     private Object objChosenGame;
-    private ImageButton btnStartTrailer;
-    private ImageButton btnStartGame;
     TextView playerName;
-    private int animationDuration = 17;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,8 +61,8 @@ public class GameBoard extends ActivityMethods {
         // Get previous intent parameters sent - from loading a game,
         // or starting a new game
         Intent prevIntent = getIntent();
-        this.gameInstance = (GameOperations) prevIntent
-                .getSerializableExtra("gameInstance");
+        this.gameInstance = (GameOperations) prevIntent.getSerializableExtra("gameInstance");
+        GameOperations tempGameInstance = new GameOperations(this.gameInstance.getUserInstance());
 
         // Start playing recording - enter your name
         // Config recording - welcome
@@ -74,16 +71,25 @@ public class GameBoard extends ActivityMethods {
         // Load game or start a new game (that was already saved)
         // when loading a game - take name, high score 1, high score 2 for view only
         // take age - for loading a specific game fragment
-
-        DocumentReference docRef = this.gameInstance.getFireBaseInstance()
+        FirebaseFirestore mDatabase = FirebaseFirestore.getInstance();
+        DocumentReference docRef = mDatabase
                 .collection("SavedGames")
-                .document(this.gameInstance.getUserInstance().getPhone());
+                .document(tempGameInstance.getUserInstance().getPhone());
 
         // check if the user already has a game saved in db
         docRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
+                assert document != null;
                 if (document.exists()) {
+
+                    // If the current game is a saved one and not a new one
+                    // upload to the gameInstance the data
+                    this.gameInstance = new GameOperations(new User(document.getString("name"),
+                                                 document.getString("age"),
+                                                 this.gameInstance.getUserInstance().getPhone()),
+                                                 document.getString("highestScoreOne"),
+                                                 document.getString("highestScoreTwo") );
 
                     // Set game score from db
                     scoreOne = (TextView)findViewById(R.id.score_game_one);
@@ -138,31 +144,25 @@ public class GameBoard extends ActivityMethods {
                     btnPlayGameTwo = findViewById(R.id.btn_play_game_two);
 
                     // For game one - show popup window and navigate to trailer or game
-                    btnPlayGameOne.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
+                    btnPlayGameOne.setOnClickListener(v -> {
 
-                            // Bulls and cows - colors or numbers
-                            objChosenGame = new BullsAndCows();
+                        // Bulls and cows - colors or numbers
+                        objChosenGame = new BullsAndCows();
 
-                            // input for function: game number 1
-                            ShowPopUp(objChosenGame, maxAge);
-                        }
+                        // input for function: game number 1
+                        ShowPopUp(objChosenGame, maxAge);
                     });
 
                     // For game two - show popup window and navigate to trailer or game
-                    btnPlayGameTwo.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // give the popup the chosen game class
-                            if (maxAge.equals("7")) {
-                                objChosenGame = new WhoSitNextToMe();
-                            } else {
-                                objChosenGame = new MatchAndComplete();
-                            }
-                            // input for function: game number 2
-                            ShowPopUp(objChosenGame, maxAge);
+                    btnPlayGameTwo.setOnClickListener(v -> {
+                        // give the popup the chosen game class
+                        if (maxAge.equals("7")) {
+                            objChosenGame = new WhoSitNextToMe();
+                        } else {
+                            objChosenGame = new MatchAndComplete();
                         }
+                        // input for function: game number 2
+                        ShowPopUp(objChosenGame, maxAge);
                     });
 
 
@@ -187,7 +187,8 @@ public class GameBoard extends ActivityMethods {
         super.onStart();
 
         // Start playing animation & record when pressing the rabbit icon
-        rabbitAnimation = (AnimationDrawable) this.configAnimation
+        int animationDuration = 17;
+        AnimationDrawable rabbitAnimation = (AnimationDrawable) this.configAnimation
                 (R.id.combi_icon, animationDuration);
 
         // Stop animation after first time
@@ -203,29 +204,22 @@ public class GameBoard extends ActivityMethods {
         trailerPopUp.show();
 
         // Take the buttons and direct the intents
-        btnStartTrailer = trailerPopUp.findViewById(R.id.btn_guide_button);
-        btnStartGame = trailerPopUp.findViewById(R.id.btn_start_game_button);
+        ImageButton btnStartTrailer = trailerPopUp.findViewById(R.id.btn_guide_button);
+        ImageButton btnStartGame = trailerPopUp.findViewById(R.id.btn_start_game_button);
 
         // Each press will lead to other intent - start game
-        btnStartGame.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnStartGame.setOnClickListener(v -> {
 
-                // we sending the max age to see which intent of bulls and cows
-                // we will operate
-                startActivity(new Intent(GameBoard.this,
-                        objChosenGame.getClass()).putExtra("maxAge", maxAge));
-            }
+            // we sending the max age to see which intent of bulls and cows
+            // we will operate
+            startActivity(new Intent(GameBoard.this,
+                    objChosenGame.getClass()).putExtra("maxAge", maxAge)
+                                             .putExtra("gameInstance", this.gameInstance));
         });
 
         // Each press will lead to other intent - start trailer
-        btnStartTrailer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startActivity(new Intent(GameBoard.this, objChosenGame.getClass()));
-
-            }
-        });
+        btnStartTrailer.setOnClickListener(v ->
+                startActivity(new Intent(GameBoard.this, objChosenGame.getClass())
+                .putExtra("gameInstance", this.gameInstance)));
     }
 }

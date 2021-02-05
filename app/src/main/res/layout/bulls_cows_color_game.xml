@@ -92,10 +92,10 @@
         android:id="@+id/btn_clear_guess"
         android:layout_width="133dp"
         android:layout_height="55dp"
-        android:layout_marginEnd="188dp"
+        android:layout_marginEnd="112dp"
         android:layout_marginBottom="4dp"
-        android:onClick="clearGuess"
         android:background="@drawable/btn_clear_guess"
+        android:onClick="clearGuess"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -154,38 +154,90 @@
         android:id="@+id/btn_start_guess"
         android:layout_width="133dp"
         android:layout_height="55dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="16dp"
-        android:onClick="startPlay"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/btn_start_guess"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timer_img" />
+        android:onClick="startPlay"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_clear_guess" />
 
     <ImageButton
         android:id="@+id/btn_send_guess"
         android:layout_width="133dp"
         android:layout_height="55dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/btn_send_guess"
         android:visibility="invisible"
         android:onClick="sendGuess"
-        android:background="@drawable/btn_send_guess"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_clear_guess" />
+
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bull_sign"
+        app:layout_constraintStart_toEndOf="@+id/txtBull"
         app:layout_constraintTop_toBottomOf="@+id/timer_img" />
 
+    <TextView
+        android:id="@+id/txtBull"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:text="בול"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        app:layout_constraintStart_toEndOf="@+id/imgCow"
+        app:layout_constraintTop_toBottomOf="@+id/timer_img" />
+
+    <ImageView
+        android:id="@+id/imgCow"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/cow_sign"
+        app:layout_constraintStart_toEndOf="@+id/txtCow"
+        app:layout_constraintTop_toBottomOf="@+id/timer_img" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtCow" />
+
+    <TextView
+        android:id="@+id/txtCow"
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        android:text="פגיעה"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timer_img" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/guess_list"
         class="androidx.appcompat.app.AlertController$RecycleListView"
-        android:layout_width="160dp"
-        android:layout_height="125dp"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="11dp"
+        android:layout_width="185dp"
+        android:layout_height="150dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="84dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_start_guess"
-        app:layout_constraintVertical_bias="0.012">
+        app:layout_constraintEnd_toStartOf="@+id/colors_to_guess"
+        app:layout_constraintHorizontal_bias="0.941"
+        app:layout_constraintStart_toStartOf="parent">
 
     </androidx.recyclerview.widget.RecyclerView>
 

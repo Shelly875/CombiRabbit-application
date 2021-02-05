@@ -92,4 +92,7 @@ public class ActivityMethods extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
+
+
 }

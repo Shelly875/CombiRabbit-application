@@ -1,5 +1,7 @@
 package com.example.combirabbit.models;
 
+import android.util.Log;
+
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
@@ -17,9 +19,15 @@ public class GameOperations implements Serializable {
         this.userInstance = newUser;
     }
 
+    public GameOperations(User newUser, String highestScoreOne, String highestScoreTwo) {
+        this.userInstance = newUser;
+        this.highestScoreGameOne = highestScoreOne;
+        this.highestScoreGameTwo = highestScoreTwo;
+    }
+
     // Start connection to the database server
     public void setFireBaseInstance() {
-         this.mDatabase = FirebaseFirestore.getInstance();
+        this.mDatabase = FirebaseFirestore.getInstance();
     }
 
     // Get firebase instance
@@ -57,7 +65,7 @@ public class GameOperations implements Serializable {
     }
 
     public User getUserInstance() {
-        return userInstance;
+        return this.userInstance;
     }
 
     public void setNewUser(User newUser) {
@@ -65,7 +73,7 @@ public class GameOperations implements Serializable {
     }
 
     public String getHighestScoreGameOne() {
-        return highestScoreGameOne;
+        return this.highestScoreGameOne;
     }
 
     public void setHighestScoreGameOne(String highestScoreGameOne) {
@@ -73,10 +81,44 @@ public class GameOperations implements Serializable {
     }
 
     public String getHighestScoreGameTwo() {
-        return highestScoreGameTwo;
+        return this.highestScoreGameTwo;
     }
 
     public void setHighestScoreGameTwo(String highestScoreGameTwo) {
         this.highestScoreGameTwo = highestScoreGameTwo;
     }
+
+    public boolean isBetterScoreOne(String newRecord)
+    {
+
+        // In case this is the first game
+        if(this.getHighestScoreGameOne().equals(""))
+        {
+            Log.d("Log: ", "score: " + this.getHighestScoreGameOne());
+            return true;
+        }
+
+        // Make string to int in order to compare between them
+        int newRecordTemp = Integer.parseInt(newRecord.replace(":",""));
+        int oldRecordTemp = Integer.parseInt(this.getHighestScoreGameOne()
+                .replace(":", ""));
+
+        // Check which score is better, if the current one it better return false,
+        // else return true
+        Log.d("LOG: ", "new record: "+ newRecordTemp + " old record: " + oldRecordTemp);
+        return newRecordTemp < oldRecordTemp;
+    }
+
+    public boolean isBetterScoreTwo(String newRecord)
+    {
+        // Make string to int in order to compare between them
+        int newRecordTemp = Integer.parseInt(newRecord.replace(":",""));
+        int oldRecordTemp = Integer.parseInt(this.highestScoreGameTwo
+                .replace(":", ""));
+
+        // Check which score is better, if the current one it better return false,
+        // else return true
+        return newRecordTemp < oldRecordTemp;
+    }
 }
+

@@ -1,22 +1,20 @@
 package com.example.combirabbit.adapters;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.combirabbit.R;
 import com.example.combirabbit.models.ColorGuessItem;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class GuessColorAdapter extends RecyclerView.Adapter<GuessColorAdapter.ExampleViewHolder> {
-    private ArrayList<ColorGuessItem> nColorsGuessList;
+    private final ArrayList<ColorGuessItem> nColorsGuessList;
     private final int COW = 1;
     private final int BULL = 0;
 
@@ -40,6 +38,7 @@ public class GuessColorAdapter extends RecyclerView.Adapter<GuessColorAdapter.Ex
         this.nColorsGuessList = nColorsGuessList;
     }
 
+    @NonNull
     @Override
     public ExampleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())

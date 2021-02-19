@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/game_background">
@@ -55,7 +54,7 @@
             android:id="@+id/guess_one"
             android:layout_width="84dp"
             android:layout_height="match_parent"
-            android:background="@drawable/bulls_cows_guess_block"
+            android:background="@drawable/game_guess_block"
             android:orientation="horizontal" />
 
         <LinearLayout
@@ -63,7 +62,7 @@
             android:layout_width="84dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
-            android:background="@drawable/bulls_cows_guess_block"
+            android:background="@drawable/game_guess_block"
             android:orientation="horizontal" />
 
         <LinearLayout
@@ -71,7 +70,7 @@
             android:layout_width="84dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
-            android:background="@drawable/bulls_cows_guess_block"
+            android:background="@drawable/game_guess_block"
             android:orientation="horizontal" />
 
     </LinearLayout>
@@ -95,7 +94,7 @@
         android:layout_marginEnd="112dp"
         android:layout_marginBottom="4dp"
         android:background="@drawable/btn_clear_guess"
-        android:onClick="clearGuess"
+        android:onClick="clearColorGuess"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -157,7 +156,7 @@
         android:layout_marginEnd="40dp"
         android:layout_marginBottom="4dp"
         android:background="@drawable/btn_start_guess"
-        android:onClick="startPlay"
+        android:onClick="startColorsGame"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_clear_guess" />
 
@@ -169,7 +168,7 @@
         android:layout_marginBottom="4dp"
         android:background="@drawable/btn_send_guess"
         android:visibility="invisible"
-        android:onClick="sendGuess"
+        android:onClick="sendColorGuess"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_clear_guess" />
 

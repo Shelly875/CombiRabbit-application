@@ -10,22 +10,22 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.combirabbit.R;
 import com.example.combirabbit.adapters.GuessColorAdapter;
+import com.example.combirabbit.adapters.GuessNumAdapter;
 import com.example.combirabbit.models.ColorGuessItem;
 import com.example.combirabbit.models.GameOperations;
+import com.example.combirabbit.models.NumberGuessItem;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
@@ -33,6 +33,7 @@ import java.util.Random;
 public class BullsAndCows extends ActivityMethods{
     private LinearLayout layerGuessedColors;
     private static final int MAX_GUESS_PLACE = 3;
+    private static final int MAX_GUESS_NUM_LENGTH = 4;
     private int nGuessPlace = 0;
     private int nGuessNumber = 0;
     private final int [] nGameColors = {R.drawable.black_stain_color,
@@ -41,15 +42,20 @@ public class BullsAndCows extends ActivityMethods{
                                          R.drawable.yellow_stain_color,
                                          R.drawable.red_stain_color};
     private int [] nRandomColorsToGuess;
+    private int [] nRandomNumbersToGuess;
+    private ArrayList<NumberGuessItem> arrUserNumbersGuess;
+    private NumberGuessItem nUserGuessNum;
     private ColorGuessItem nUserGuess;
-    private ArrayList<ColorGuessItem> strUserColorsGuess;
+    private ArrayList<ColorGuessItem> arrUserColorsGuess;
     private RecyclerView.Adapter mAdapter;
-//    private static final String SUCCESS_RESULT = "בבב";
-    private final int SUCCESS_RESULT = 3;
+    private final int COLORS_SUCCESS_RESULT = 3;
+    private final int NUMBERS_SUCCESS_RESULT = 4;
     private GameOperations gameInstance;
     private Chronometer timerView;
     private final int BULL = 0;
     private boolean isButtonPressedClear = true;
+    private EditText txtUserGuess;
+    int[] nResultNum = {0,0};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +67,10 @@ public class BullsAndCows extends ActivityMethods{
         this.gameInstance = (GameOperations) prevIntent
                 .getSerializableExtra("gameInstance");
         String maxAge = prevIntent.getStringExtra("maxAge");
-
         // Set the activity to use full screen
         this.fullScreen();
+
+        Random r = new Random();
 
         // Layout will be declared by the user age
         // bulls and cows with colors
@@ -72,23 +79,31 @@ public class BullsAndCows extends ActivityMethods{
             setContentView(R.layout.bulls_cows_color_game);
 
             // the colors the game generate to guess randomly
-            Random r = new Random();
             nRandomColorsToGuess = new int[]{nGameColors[r.nextInt(nGameColors.length)],
                     nGameColors[r.nextInt(nGameColors.length)], nGameColors[r.nextInt(nGameColors.length)]};
-            Log.d("Log: ", ""+ Arrays.toString(nRandomColorsToGuess));
+            Log.d("Log: ", "The random colors are: "
+                    + Arrays.toString(nRandomColorsToGuess));
         }
         // bulls and cows with numbers
         else{
             // Main view - bulls and cows with numbers
             setContentView(R.layout.bulls_cows_num_game);
+
+            // the numbers the game generate to guess randomly
+            nRandomNumbersToGuess = new int[]{r.nextInt(9),
+                    r.nextInt(9), r.nextInt(9), r.nextInt(9)};
+
+            Log.d("Log: ", "The random numbers are: "
+                    + Arrays.toString(nRandomNumbersToGuess));
         }
     }
 
     // Class functions
     // Function that will manage the game and it's components
-    public void startPlay(View view) {
-        strUserColorsGuess = new ArrayList<>();
+    public void startColorsGame(View view) {
+        arrUserColorsGuess = new ArrayList<>();
         nUserGuess = new ColorGuessItem();
+
         // Find elements of the buttons of the game
         ImageButton btnStartGuessing = findViewById(R.id.btn_start_guess);
         ImageButton btnSendGuess = findViewById(R.id.btn_send_guess);
@@ -108,9 +123,8 @@ public class BullsAndCows extends ActivityMethods{
         ImageButton imgYellowColor = findViewById(R.id.yellow_color);
         ImageButton imgPinkColor = findViewById(R.id.pink_color);
 
-
-        // Init colors guessing
-        buildRecyclerView();
+        // Init numbers guessing recycle view
+        buildColorRecyclerView();
 
         // Init all the colors buttons on the screen
         // so when clicked, will appear on the guess list
@@ -187,7 +201,7 @@ public class BullsAndCows extends ActivityMethods{
     }
 
     // Clear the guess blocks
-    public void clearGuess(View view) {
+    public void clearColorGuess(View view) {
         // return numbers of guesses to zero
         nGuessPlace = 0;
         LinearLayout l1;
@@ -207,7 +221,7 @@ public class BullsAndCows extends ActivityMethods{
 
     // Send the guess of the user and write it down
     // in the guessing table
-    public void sendGuess(View view) {
+    public void sendColorGuess(View view) {
 
         if(nGuessPlace < MAX_GUESS_PLACE)
         {
@@ -220,22 +234,20 @@ public class BullsAndCows extends ActivityMethods{
             this.isButtonPressedClear = false;
 
             // Clear the guess
-            clearGuess(view);
+            clearColorGuess(view);
 
             // Add new guess to table
-            strUserColorsGuess.add(nGuessNumber, nUserGuess);
+            arrUserColorsGuess.add(nGuessNumber, nUserGuess);
             nUserGuess = new ColorGuessItem();
 
             // Get the result of the guess
-//            String nResult = strUserColorsGuess.get(nGuessNumber).checkGuess(strRandomColorsToGuess);
-
             int[] nResult = {0,0};
-            nResult = this.strUserColorsGuess.get(nGuessNumber).checkGuess(nRandomColorsToGuess);
+            nResult = this.arrUserColorsGuess.get(nGuessNumber).checkGuess(nRandomColorsToGuess);
 
             if(nResult !=null) {
 
                 // If the user guessed correctly, popup will appear
-                if (nResult[this.BULL] == this.SUCCESS_RESULT) {
+                if (nResult[this.BULL] == this.COLORS_SUCCESS_RESULT) {
                     // stop the clock
                     timerView.stop();
 
@@ -255,15 +267,26 @@ public class BullsAndCows extends ActivityMethods{
         }
     }
 
-    // Build the guessing table
-    public void buildRecyclerView()
+    // Build the colors guessing table
+    public void buildColorRecyclerView()
     {
         RecyclerView mColorsGuessTable = findViewById(R.id.guess_list);
         mColorsGuessTable.setHasFixedSize(true);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
-        mAdapter = new GuessColorAdapter(strUserColorsGuess);
+        mAdapter = new GuessColorAdapter(arrUserColorsGuess);
         mColorsGuessTable.setLayoutManager(mLayoutManager);
         mColorsGuessTable.setAdapter(mAdapter);
+    }
+
+    // Build the numbers guessing table
+    public void buildNumRecyclerView()
+    {
+        RecyclerView mNumbersGuessTable = findViewById(R.id.guess_list);
+        //mNumbersGuessTable.setHasFixedSize(true);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this);
+        mAdapter = new GuessNumAdapter(arrUserNumbersGuess);
+        mNumbersGuessTable.setLayoutManager(mLayoutManager);
+        mNumbersGuessTable.setAdapter(mAdapter);
     }
 
     protected void ShowPopUp(String newRecord)
@@ -344,5 +367,89 @@ public class BullsAndCows extends ActivityMethods{
                 Log.d("INFO: ", "get failed with ", task.getException());
             }
         });
+    }
+
+    public void startNumGame(View view) {
+
+        // Make user number's input guess enabled
+        // and find it in the xml elements
+        this.txtUserGuess = findViewById(R.id.user_number);
+        this.txtUserGuess.setEnabled(true);
+
+        // Init the user and the game numbers guess
+        this.arrUserNumbersGuess = new ArrayList<>();
+        this.nUserGuessNum = new NumberGuessItem(this.txtUserGuess.getText());
+        Log.d("Log", "Starting result: " +
+                Arrays.toString(this.nUserGuessNum.getGuessResult()));
+
+        // Find elements of the buttons of the game
+        ImageButton btnStartGuessing = findViewById(R.id.btn_start_guess);
+        ImageButton btnSendGuess = findViewById(R.id.btn_send_guess);
+
+        // Replace buttons - start/send
+        btnStartGuessing.setVisibility(View.INVISIBLE);
+        btnSendGuess.setVisibility(View.VISIBLE);
+
+        // Start timer
+        startTimer();
+
+        // Init numbers guessing recycle view
+        buildNumRecyclerView();
+
+    }
+
+    public void sendNumGuess(View view) {
+
+        // Check that the guess entered is in the proper length
+        if(this.txtUserGuess.length() < MAX_GUESS_NUM_LENGTH)
+        {
+            Log.d("Log: ", "You can't sent guess that is partly filled.");
+        }
+        else
+        {
+            // Find the user guess element
+            this.txtUserGuess = findViewById(R.id.user_number);
+
+            // Insert the user's guess to the items array
+            this.nUserGuessNum.setUserNumbersGuess(this.txtUserGuess.getText());
+
+            // Add new guess to table
+            this.arrUserNumbersGuess.add(this.nGuessNumber, this.nUserGuessNum);
+
+            // Get the result of the guess
+
+            this.nResultNum = this.arrUserNumbersGuess.get(this.nGuessNumber)
+                    .checkGuess(this.nRandomNumbersToGuess);
+
+            Log.d("Log", "the text that sent " + this.nUserGuessNum.getUserNumbersGuess());
+            Log.d("Log", "the current result " +
+                    Arrays.toString(this.nUserGuessNum.getGuessResult()));
+
+            if(this.nResultNum !=null) {
+
+                // If the user guessed correctly, popup will appear
+                if (this.nResultNum[this.BULL] == this.NUMBERS_SUCCESS_RESULT) {
+                    // stop the clock
+                    timerView.stop();
+
+                    // if there is a new record, show on the screen and save
+                    // currentRecord > previousRecord, open firebase to check
+                    ShowPopUp((String) timerView.getText());
+                }
+            }
+            // Write the guess into the table of guessing
+            mAdapter.notifyItemInserted(nGuessNumber);
+
+            // increase number of guessing
+            nGuessNumber++;
+
+            // Clear the guess text
+            clearNumGuess(view);
+        }
+    }
+
+    public void clearNumGuess(View view) {
+
+        this.txtUserGuess.getText().clear();
     }
 }

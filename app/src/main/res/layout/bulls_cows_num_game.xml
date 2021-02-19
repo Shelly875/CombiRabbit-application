@@ -20,8 +20,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="132dp"
+        android:text="נחש את 4 הספרות של המשחק: XXXX"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bulls_cows_num_title" />
+
     <ImageView
-        android:id="@+id/timer"
+        android:id="@+id/timer_img"
         android:layout_width="203dp"
         android:layout_height="70dp"
         android:background="@drawable/game_timer"
@@ -29,74 +40,42 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Chronometer
+        android:id="@+id/timer"
+        android:layout_width="67dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="28dp"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="@+id/timer_img"
+        app:layout_constraintHorizontal_bias="0.691"
+        app:layout_constraintStart_toStartOf="@+id/timer_img"
+        app:layout_constraintTop_toTopOf="@+id/timer_img" />
+
     <LinearLayout
         android:id="@+id/numbers_to_guess"
         android:layout_width="302dp"
         android:layout_height="84dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="104dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="100dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bulls_cows_num_title">
-
-        <ImageView
-            android:id="@+id/num_one"
-            android:layout_width="54dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/bulls_cows_guess_block" />
-
-        <ImageView
-            android:id="@+id/num_two"
-            android:layout_width="54dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="25dp"
-            android:background="@drawable/bulls_cows_guess_block" />
-
-        <ImageView
-            android:id="@+id/num_three"
-            android:layout_width="54dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="25dp"
-            android:background="@drawable/bulls_cows_guess_block" />
-
-        <ImageView
-            android:id="@+id/num_four"
-            android:layout_width="54dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="25dp"
-            android:background="@drawable/bulls_cows_guess_block" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="304dp"
-        android:layout_height="59dp"
-        android:layout_marginTop="84dp"
-        android:layout_marginEnd="104dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/numbers_to_guess">
+        app:layout_constraintTop_toBottomOf="@+id/bulls_cows_num_title"
+        android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/guess_one"
-            android:layout_width="54dp"
-            android:layout_height="match_parent" />
-
-        <EditText
-            android:id="@+id/guess_two"
-            android:layout_width="54dp"
+            android:id="@+id/user_number"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="25dp"/>
-
-        <EditText
-            android:id="@+id/guess_three"
-            android:layout_width="54dp"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="25dp"/>
-
-        <EditText
-            android:id="@+id/guess_four"
-            android:layout_width="54dp"
-            android:layout_marginLeft="25dp"
-            android:layout_height="match_parent" />
+            android:hint="X X X X"
+            android:text=""
+            android:inputType="number"
+            android:enabled="false"
+            android:maxLength="4"
+            android:textColor="@color/black"
+            android:textAlignment="center"
+            android:textColorHint="@color/grey"
+            android:textSize="50sp"/>
 
 
     </LinearLayout>
@@ -105,11 +84,104 @@
         android:id="@+id/btn_start_guess"
         android:layout_width="133dp"
         android:layout_height="55dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="252dp"
+        android:layout_marginBottom="28dp"
         android:background="@drawable/btn_start_guess"
+        android:onClick="startNumGame"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btn_send_guess"
+        android:layout_width="133dp"
+        android:layout_height="55dp"
+        android:layout_marginStart="252dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/btn_send_guess"
+        android:visibility="invisible"
+        android:onClick="sendNumGuess"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <ImageButton
+        android:id="@+id/btn_clear_guess"
+        android:layout_width="133dp"
+        android:layout_height="55dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/btn_clear_guess"
+        android:onClick="clearNumGuess"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/btn_start_guess" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/bull_sign"
+        app:layout_constraintStart_toEndOf="@+id/txtBull"
+        app:layout_constraintTop_toBottomOf="@+id/timer_img" />
+
+    <TextView
+        android:id="@+id/txtBull"
+        android:layout_width="30dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:text="בול"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        app:layout_constraintStart_toEndOf="@+id/imgCow"
+        app:layout_constraintTop_toBottomOf="@+id/timer_img" />
+
+    <ImageView
+        android:id="@+id/imgCow"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/cow_sign"
+        app:layout_constraintStart_toEndOf="@+id/txtCow"
+        app:layout_constraintTop_toBottomOf="@+id/timer_img" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:background="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timer" />
+        app:layout_constraintTop_toBottomOf="@+id/txtCow" />
+
+    <TextView
+        android:id="@+id/txtCow"
+        android:layout_width="40dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="8dp"
+        android:text="פגיעה"
+        android:textColor="@color/black"
+        android:textSize="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timer_img" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/guess_list"
+        class="androidx.appcompat.app.AlertController$RecycleListView"
+        android:layout_width="185dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="84dp"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+    </androidx.recyclerview.widget.RecyclerView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

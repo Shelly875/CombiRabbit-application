@@ -70,6 +70,25 @@ public class ActivityMethods extends AppCompatActivity {
         return rabbitAnimation;
     }
 
+    protected Object configAnimationHoldSign(int combiIcon, int duration) {
+
+        AnimationDrawable rabbitAnimation;
+        rabbitIcon = findViewById(combiIcon);
+        rabbitIcon.setBackgroundResource(R.drawable.combi_with_sign_animation);
+        rabbitAnimation = (AnimationDrawable) rabbitIcon.getBackground();
+        rabbitAnimation.start();
+
+        // When pressing the rabbit, we can hear the record again
+        rabbitIcon.setOnClickListener(v -> {
+            mediaPlayer.start();
+            rabbitAnimation.start();
+            stopAnimation(rabbitAnimation, duration);
+        });
+
+        return rabbitAnimation;
+    }
+
+
     protected void stopAnimation(AnimationDrawable rabbitAnimation, int duration) {
         new Handler().postDelayed(new Runnable() {
             @Override

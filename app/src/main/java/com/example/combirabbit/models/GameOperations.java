@@ -109,15 +109,24 @@ public class GameOperations implements Serializable {
         return newRecordTemp < oldRecordTemp;
     }
 
+
     public boolean isBetterScoreTwo(String newRecord)
     {
+        // In case this is the second game
+        if(this.getHighestScoreGameTwo().equals(""))
+        {
+            Log.d("Log: ", "score: " + this.getHighestScoreGameTwo());
+            return true;
+        }
+
         // Make string to int in order to compare between them
         int newRecordTemp = Integer.parseInt(newRecord.replace(":",""));
-        int oldRecordTemp = Integer.parseInt(this.highestScoreGameTwo
+        int oldRecordTemp = Integer.parseInt(this.getHighestScoreGameTwo()
                 .replace(":", ""));
 
         // Check which score is better, if the current one it better return false,
         // else return true
+        Log.d("LOG: ", "new record: "+ newRecordTemp + " old record: " + oldRecordTemp);
         return newRecordTemp < oldRecordTemp;
     }
 }

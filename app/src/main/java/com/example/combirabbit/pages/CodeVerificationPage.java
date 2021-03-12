@@ -20,8 +20,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
-
-import java.io.Serializable;
 import java.util.concurrent.TimeUnit;
 
 public class CodeVerificationPage extends ActivityMethods {
@@ -37,6 +35,7 @@ public class CodeVerificationPage extends ActivityMethods {
     private GameOperations gameInstance;
     private FirebaseUser currentUser;
     private int animationDuration = 4;
+    private static final String KEY_VERIFICATION_ID = "key_verification_id";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class CodeVerificationPage extends ActivityMethods {
         setContentView(R.layout.enter_code_page);
 
         //initializing objects
-        mAuth = FirebaseAuth.getInstance();
+        this.mAuth = FirebaseAuth.getInstance();
         editTextCode = findViewById(R.id.user_input);
 
         // Get previous intent parameters sent
@@ -59,6 +58,12 @@ public class CodeVerificationPage extends ActivityMethods {
 
         // Send verification code
         sendVerificationCode(strPhoneNumber);
+
+        // Restore instance state
+        // put this code after starting phone number verification
+        if (mVerificationId == null && savedInstanceState != null) {
+            onRestoreInstanceState(savedInstanceState);
+        }
 
         // Start playing recording - enter your name
         this.configRecord(R.raw.enter_code_record);
@@ -73,6 +78,107 @@ public class CodeVerificationPage extends ActivityMethods {
 
         // Stop animation after first time
         this.stopAnimation(rabbitAnimation, animationDuration);
+    }
+
+    //the callback to detect the verification status
+    private final PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks =
+            new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                @Override
+                public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
+
+                    //Getting the code sent by SMS
+                    String code = phoneAuthCredential.getSmsCode();
+                    Log.d("Log: ", "Im in verification complete!");
+                    //sometime the code is not detected automatically
+                    //in this case the code will be null
+                    //so user has to manually enter the code
+                    verifyVerificationCode(code);
+//                    if (code != null) {
+//                        editTextCode.setText(code);
+//                        //verifying the code
+//                        verifyVerificationCode(code);
+//                    }
+                }
+
+                @Override
+                public void onVerificationFailed(FirebaseException e) {
+                    Log.d("Log: ", "Im in verification Failed!");
+                    Toast.makeText(CodeVerificationPage.this, e.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                    Log.e("TAG", e.getMessage());
+                }
+
+                //when the code is generated then this method will receive the code.
+                @Override
+                public void onCodeSent(@NonNull String s,
+                                       @NonNull PhoneAuthProvider.ForceResendingToken
+                                               forceResendingToken) {
+                    Log.d("Log: ", "Im in onCodeSent!");
+//                    super.onCodeSent(s, forceResendingToken);
+
+                    //storing the verification id that is sent to the user
+                    mVerificationId = s;
+                    Log.d("Log: ", "Verification id is: " + mVerificationId);
+                }
+            };
+
+    private void sendVerificationCode(String mobile) {
+        PhoneAuthOptions options =
+                PhoneAuthOptions.newBuilder(mAuth)
+                        .setPhoneNumber(mobile)       // Phone number to verify
+                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
+                        .setActivity(this)                 // Activity (for callback binding)
+                        .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
+                        .build();
+        PhoneAuthProvider.verifyPhoneNumber(options);
+    }
+
+    private void verifyVerificationCode(String code) {
+        //creating the credential
+        try {
+            if(mVerificationId == null)
+            {
+                Log.d("Log: ", "this is null for sure!");
+            }
+
+            if(this.mVerificationId == null)
+            {
+                Log.d("Log: ", "this is null for sure!");
+            }
+
+            Log.d("Log: ", "code: " +  code);
+            PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
+            signInWithPhoneAuthCredential(credential);
+        } catch (Exception e){
+            Log.d("Error:", String.valueOf(e));
+        }
+    }
+
+    //used for signing the user
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        this.mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(CodeVerificationPage.this,
+                        task -> {
+                            if (task.isSuccessful() && !(task.getException()
+                                    instanceof FirebaseAuthInvalidCredentialsException)) {
+
+                                // Check that the current user is logged in
+                                this.currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                                if (this.currentUser != null) {
+
+                                    // Verification succeeded and moving to game board
+                                    startActivity(new Intent(this,
+                                            GameBoard.class).putExtra("gameInstance",
+                                            this.gameInstance));
+                                }
+                            }
+                            else {
+
+                                //verification unsuccessful.. display an error message
+                                editTextCode.setError("הקוד שגוי");
+                                editTextCode.requestFocus();
+                            }
+                        });
     }
 
     public void GameBoard(View view) {
@@ -95,86 +201,16 @@ public class CodeVerificationPage extends ActivityMethods {
         verifyVerificationCode(strCode);
     }
 
-    private void sendVerificationCode(String mobile) {
-        PhoneAuthOptions options =
-                PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber(mobile)       // Phone number to verify
-                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-                        .setActivity(this)                 // Activity (for callback binding)
-                        .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
-                        .build();
-        PhoneAuthProvider.verifyPhoneNumber(options);
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mVerificationId = savedInstanceState.getString(KEY_VERIFICATION_ID);
     }
 
-
-    //the callback to detect the verification status
-    private final PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks =
-            new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-                @Override
-                public void onVerificationCompleted(PhoneAuthCredential phoneAuthCredential) {
-
-                    //Getting the code sent by SMS
-                    String code = phoneAuthCredential.getSmsCode();
-
-                    //sometime the code is not detected automatically
-                    //in this case the code will be null
-                    //so user has to manually enter the code
-                    if (code != null) {
-                        editTextCode.setText(code);
-                        //verifying the code
-                        verifyVerificationCode(code);
-                    }
-                }
-
-                @Override
-                public void onVerificationFailed(FirebaseException e) {
-                    Toast.makeText(CodeVerificationPage.this, e.getMessage(),
-                            Toast.LENGTH_LONG).show();
-                    Log.e("TAG", e.getMessage());
-                }
-
-                //when the code is generated then this method will receive the code.
-                @Override
-                public void onCodeSent(String s, @NonNull PhoneAuthProvider.ForceResendingToken
-                        forceResendingToken) {
-//                super.onCodeSent(s, forceResendingToken);
-
-                    //storing the verification id that is sent to the user
-                    mVerificationId = s;
-                }
-            };
-
-    private void verifyVerificationCode(String code) {
-        //creating the credential
-        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
-        signInWithPhoneAuthCredential(credential);
-    }
-
-    //used for signing the user
-    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
-        this.mAuth.signInWithCredential(credential)
-                .addOnCompleteListener(CodeVerificationPage.this,
-                        task -> {
-                            if (task.isSuccessful() && !(task.getException()
-                                    instanceof FirebaseAuthInvalidCredentialsException)) {
-
-                                // Check that the current user is logged in
-                                this.currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                                if (this.currentUser != null) {
-
-                                   // Verification succeeded and moving to game board
-                                   startActivity(new Intent(this,
-                                        GameBoard.class).putExtra("gameInstance",
-                                        this.gameInstance));
-                                }
-                            }
-                            else {
-
-                                //verification unsuccessful.. display an error message
-                                editTextCode.setError("הקוד שגוי");
-                                editTextCode.requestFocus();
-                            }
-                        });
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(KEY_VERIFICATION_ID, mVerificationId);
     }
 
 }

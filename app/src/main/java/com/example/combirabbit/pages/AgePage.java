@@ -41,7 +41,7 @@ public class AgePage extends ActivityMethods {
 
         // choose age from the list
         ageSpinner = findViewById(R.id.spinner_choose_age);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getBaseContext(),
                 R.array.ages, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(R.layout.spinner_age_config);
         ageSpinner.setAdapter(adapter);

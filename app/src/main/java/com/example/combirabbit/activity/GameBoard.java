@@ -165,8 +165,6 @@ public class GameBoard extends ActivityMethods {
                         ShowPopUp(objChosenGame, maxAge);
                     });
 
-
-
                     // load from db all the relevant fields
                     // fragments game images from relevant age
                     // show name of the user

@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/game_board_background">
@@ -25,10 +26,10 @@
         android:background="@drawable/game_board_wood_log"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.176"
         app:layout_constraintStart_toEndOf="@+id/tree_game_one"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.668" />
+        app:layout_constraintVertical_bias="0.672" />
 
     <ImageButton
         android:id="@+id/btn_play_game"
@@ -49,7 +50,7 @@
         android:background="@drawable/btn_play_game"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.814"
         app:layout_constraintStart_toEndOf="@+id/btn_play_game"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.8" />
@@ -58,48 +59,48 @@
         android:id="@+id/wooden_sign_score"
         android:layout_width="131dp"
         android:layout_height="108dp"
-        android:layout_marginBottom="260dp"
+        android:layout_marginBottom="284dp"
         android:background="@drawable/game_board_wooden_sign"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.208"
+        app:layout_constraintHorizontal_bias="0.181"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/wooden_sign_score_two"
         android:layout_width="131dp"
         android:layout_height="108dp"
-        android:layout_marginBottom="260dp"
+        android:layout_marginBottom="284dp"
         android:background="@drawable/game_board_wooden_sign"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.724"
+        app:layout_constraintHorizontal_bias="0.69"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/combi_icon"
-        android:layout_width="74dp"
-        android:layout_height="68dp"
+        android:layout_width="86dp"
+        android:layout_height="79dp"
         android:onClick="clicking"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.029"
+        app:layout_constraintHorizontal_bias="0.024"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.949" />
+        app:layout_constraintVertical_bias="0.951" />
 
     <TextView
         android:id="@+id/score_game_one"
         android:layout_width="104dp"
         android:layout_height="46dp"
-        android:layout_marginStart="116dp"
+        android:layout_marginStart="120dp"
         android:text=""
         android:textColor="@color/black"
-        android:textSize="40sp"
+        android:textSize="35sp"
         app:layout_constraintBottom_toTopOf="@+id/tree_game_one"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/wooden_sign_score"
-        app:layout_constraintVertical_bias="0.643" />
+        app:layout_constraintVertical_bias="0.590" />
 
     <FrameLayout
         android:id="@+id/game_one"
@@ -107,10 +108,10 @@
         android:layout_height="66dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/game_two"
-        app:layout_constraintHorizontal_bias="0.395"
+        app:layout_constraintHorizontal_bias="0.364"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wooden_sign_score"
-        app:layout_constraintVertical_bias="0.324" />
+        app:layout_constraintVertical_bias="0.325" />
 
     <FrameLayout
         android:id="@+id/game_two"
@@ -119,21 +120,22 @@
         android:layout_marginEnd="164dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.723"
         app:layout_constraintStart_toEndOf="@+id/tree_game_one"
         app:layout_constraintTop_toBottomOf="@+id/wooden_sign_score_two"
-        app:layout_constraintVertical_bias="0.324" />
+        app:layout_constraintVertical_bias="0.325" />
 
     <TextView
         android:id="@+id/score_game_two"
         android:layout_width="104dp"
         android:layout_height="46dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="55dp"
         android:text=""
-        android:textDirection="anyRtl"
         android:textColor="@color/black"
-        android:textSize="40sp"
+        android:textDirection="anyRtl"
+        android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toEndOf="@+id/score_game_one"
         app:layout_constraintTop_toTopOf="@+id/wooden_sign_score_two" />
 

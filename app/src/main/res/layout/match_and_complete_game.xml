@@ -4,15 +4,307 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/game_board_background">
+    android:background="@drawable/game_background">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:id="@+id/textView"
+        android:layout_width="190dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="56dp"
         android:text="התאם והשלם"
-        android:textSize="30sp"
         android:textAlignment="center"
-        android:textColor="@color/white"/>
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/game_title_level"
+        android:layout_width="45dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="136dp"
+        android:text="משחק"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/current_game_level"
+        android:layout_width="10dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
+        android:text="1"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toStartOf="@+id/game_title_level"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/max_game_level"
+        android:layout_width="60dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
+        android:text="מתוך    5"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintStart_toEndOf="@+id/timer_img"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/timer_img"
+        android:layout_width="203dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/game_timer"
+        app:layout_constraintEnd_toStartOf="@+id/game_title"
+        app:layout_constraintHorizontal_bias="0.136"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Chronometer
+        android:id="@+id/timer"
+        android:layout_width="67dp"
+        android:layout_height="19dp"
+        android:layout_marginTop="28dp"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="@+id/timer_img"
+        app:layout_constraintHorizontal_bias="0.698"
+        app:layout_constraintStart_toStartOf="@+id/timer_img"
+        app:layout_constraintTop_toTopOf="@+id/timer_img" />
+
+    <FrameLayout
+        android:id="@+id/shapes_board"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/match_block"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timer_img" />
+
+
+    <ImageButton
+        android:id="@+id/random_guess_img"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/img_comb_one"
+        app:layout_constraintStart_toEndOf="@+id/shapes_board"
+        app:layout_constraintTop_toBottomOf="@+id/current_game_level" />
+
+    <ImageButton
+        android:id="@+id/btn_rotate_shape"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="40dp"
+        android:clickable="false"
+        android:onClick="rotateShape"
+        android:background="@drawable/rotate_img"
+        app:layout_constraintStart_toEndOf="@+id/shapes_board"
+        app:layout_constraintTop_toBottomOf="@+id/random_guess_img" />
+
+    <ImageButton
+        android:id="@+id/btn_clear_arrange"
+        android:layout_width="151dp"
+        android:layout_height="63dp"
+        android:layout_marginStart="56dp"
+        android:clickable="false"
+        android:background="@drawable/btn_clear_guess"
+        android:onClick="clearArrangement"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/title_registry"
+        android:layout_width="61dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="40dp"
+        android:text="מחסן:"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <LinearLayout
+        android:id="@+id/images_registry"
+        android:layout_width="320dp"
+        android:layout_height="239dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="4dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title_registry">
+
+        <ImageButton
+            android:id="@+id/btn_block_triangle"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/match_block_triangular_img" />
+
+        <ImageButton
+            android:id="@+id/btn_half_circle"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/match_blue_half_circle_img" />
+
+        <ImageButton
+            android:id="@+id/btn_green_rectangle"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/match_green_rectangle_img" />
+
+        <ImageButton
+            android:id="@+id/btn_blue_half_star"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/match_half_star_img" />
+
+        <ImageButton
+            android:id="@+id/btn_purple_in_circle_rec"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/match_purple_half_circle_rec_img" />
+
+        <ImageButton
+            android:id="@+id/btn_parallelogram_blue"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="-290dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/match_blue_trapeze_img" />
+
+        <ImageButton
+            android:id="@+id/btn_rhombus_red"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/match_red_rhombus_img" />
+
+        <ImageButton
+            android:id="@+id/btn_q_circle_red"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/match_red_quarter_circle_img" />
+
+        <ImageButton
+            android:id="@+id/btn_yellow_square"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/match_yellow_square_img" />
+
+        <ImageButton
+            android:id="@+id/btn_block_circle"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/match_circle_in_circle_block" />
+
+        <ImageButton
+            android:id="@+id/btn_lines_yellow"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="-290dp"
+            android:layout_marginTop="120dp"
+            android:background="@drawable/match_yellow_lines_img" />
+
+        <ImageButton
+            android:id="@+id/btn_blue_star_empty"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="120dp"
+            android:background="@drawable/match_star_backgroud_colored" />
+
+        <ImageButton
+            android:id="@+id/btn_orange_square"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="120dp"
+            android:background="@drawable/match_orange_square_img" />
+
+        <ImageButton
+            android:id="@+id/btn_parallelogram_green"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="9dp"
+            android:layout_marginTop="120dp"
+            android:background="@drawable/match_green_parallelogram_img" />
+
+        <ImageButton
+            android:id="@+id/btn_orange_triangle"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="120dp"
+            android:background="@drawable/match_orange_triangle_img" />
+
+        <ImageButton
+            android:id="@+id/btn_green_shape"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="-230dp"
+            android:layout_marginTop="180dp"
+            android:background="@drawable/match_light_green_rec_squre_img" />
+
+        <ImageButton
+            android:id="@+id/btn_purple_out_circle_rec"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="180dp"
+            android:background="@drawable/match_purple_rec_circle_out_img" />
+
+        <ImageButton
+            android:id="@+id/btn_green_triangle"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="180dp"
+            android:background="@drawable/match_light_green_triangle_img" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/btn_start_game"
+        android:layout_width="130dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/btn_start_guess"
+        android:onClick="startGame"
+        app:layout_constraintBottom_toTopOf="@+id/images_registry"
+        app:layout_constraintEnd_toStartOf="@+id/title_registry" />
+
+    <ImageView
+        android:id="@+id/combi_icon"
+        android:layout_width="57dp"
+        android:layout_height="57dp"
+        android:layout_marginEnd="16dp"
+        android:onClick="clicking"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 

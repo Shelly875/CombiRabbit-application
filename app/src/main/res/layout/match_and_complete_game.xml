@@ -92,13 +92,12 @@
         app:layout_constraintTop_toBottomOf="@+id/timer_img" />
 
 
-    <ImageButton
+    <ImageView
         android:id="@+id/random_guess_img"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="12dp"
         android:layout_marginTop="80dp"
-        android:background="@drawable/img_comb_one"
         app:layout_constraintStart_toEndOf="@+id/shapes_board"
         app:layout_constraintTop_toBottomOf="@+id/current_game_level" />
 

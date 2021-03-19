@@ -23,8 +23,10 @@
         android:id="@+id/timer_img"
         android:layout_width="203dp"
         android:layout_height="70dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/game_timer"
         app:layout_constraintEnd_toStartOf="@+id/bulls_cows_color_title"
+        app:layout_constraintHorizontal_bias="0.049"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -228,17 +230,27 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/guess_list"
         class="androidx.appcompat.app.AlertController$RecycleListView"
-        android:layout_width="185dp"
-        android:layout_height="150dp"
+        android:layout_width="254dp"
+        android:layout_height="253dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="84dp"
+        android:layout_marginBottom="40dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/colors_to_guess"
-        app:layout_constraintHorizontal_bias="0.941"
+        app:layout_constraintHorizontal_bias="0.153"
         app:layout_constraintStart_toStartOf="parent">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <ImageButton
+        android:id="@+id/btn_bull_color_instructions"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="332dp"
+        android:background="@drawable/btn_instructions"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,8 +24,8 @@
         android:layout_width="250dp"
         android:layout_height="27dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="132dp"
-        android:text="נחש את 4 הספרות של המשחק: XXXX"
+        android:layout_marginEnd="172dp"
+        android:text="נחש את 4 ספרות המשחק:"
         android:textColor="@color/black"
         android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,6 +37,7 @@
         android:layout_height="70dp"
         android:background="@drawable/game_timer"
         app:layout_constraintEnd_toStartOf="@+id/bulls_cows_num_title"
+        app:layout_constraintHorizontal_bias="0.155"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -84,7 +85,7 @@
         android:id="@+id/btn_start_guess"
         android:layout_width="133dp"
         android:layout_height="55dp"
-        android:layout_marginStart="252dp"
+        android:layout_marginStart="300dp"
         android:layout_marginBottom="28dp"
         android:background="@drawable/btn_start_guess"
         android:onClick="startNumGame"
@@ -95,7 +96,7 @@
         android:id="@+id/btn_send_guess"
         android:layout_width="133dp"
         android:layout_height="55dp"
-        android:layout_marginStart="252dp"
+        android:layout_marginStart="300dp"
         android:layout_marginBottom="28dp"
         android:background="@drawable/btn_send_guess"
         android:visibility="invisible"
@@ -173,15 +174,25 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/guess_list"
         class="androidx.appcompat.app.AlertController$RecycleListView"
-        android:layout_width="185dp"
-        android:layout_height="150dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginBottom="84dp"
+        android:layout_width="261dp"
+        android:layout_height="244dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="32dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
     </androidx.recyclerview.widget.RecyclerView>
+
+    <ImageButton
+        android:id="@+id/btn_bull_num_instructions"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/btn_instructions"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

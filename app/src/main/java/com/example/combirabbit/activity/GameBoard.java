@@ -8,9 +8,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -23,8 +21,6 @@ import com.example.combirabbit.fragments.MatchAndCompleteFragment;
 import com.example.combirabbit.fragments.WhoSitNextToMeFragment;
 import com.example.combirabbit.models.GameOperations;
 import com.example.combirabbit.models.User;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -197,7 +193,7 @@ public class GameBoard extends ActivityMethods {
     protected void ShowPopUp(Object objChosenGame, String maxAge){
 
         // Show the pop up for - instructions/start game
-        trailerPopUp.setContentView(R.layout.trailer_pop_up);
+        trailerPopUp.setContentView(R.layout.trailer_popup);
         trailerPopUp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         trailerPopUp.show();
 

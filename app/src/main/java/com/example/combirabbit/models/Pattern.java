@@ -158,7 +158,7 @@ public class Pattern {
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_green_rectangle_img,
                     90));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_block_triangular_img,
-                    180));
+                    270));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_green_parallelogram_img,
                     270));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_circle_in_circle_block,

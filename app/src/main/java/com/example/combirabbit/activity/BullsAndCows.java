@@ -317,6 +317,7 @@ public class BullsAndCows extends ActivityMethods{
         // Stop animation after first time
         this.stopAnimation(rabbitAnimation, animationDuration);
 
+        successPopUp.setCancelable(false);
         successPopUp.show();
 
         // Return to the game board

@@ -10,7 +10,6 @@ import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
@@ -18,19 +17,17 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.example.combirabbit.R;
 import com.example.combirabbit.models.GameOperations;
 import com.example.combirabbit.models.ImagePlace;
 import com.example.combirabbit.models.MatchPattern;
-import com.example.combirabbit.models.Pattern;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class MatchAndComplete extends ActivityMethods{
+public class MatchAndComplete extends ActivityMethods {
 
     private GameOperations gameInstance;
     private Chronometer timerView;
@@ -53,11 +50,8 @@ public class MatchAndComplete extends ActivityMethods{
         // Make screen landscape
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-       // Intent prevIntent = getIntent();
-        //this.gameInstance = (GameOperations) prevIntent.getSerializableExtra("gameInstance");
-        //GameOperations tempGameInstance = new GameOperations(this.gameInstance.getUserInstance());
-
-
+        Intent prevIntent = getIntent();
+        this.gameInstance = (GameOperations) prevIntent.getSerializableExtra("gameInstance");
     }
 
     protected void onStart() {
@@ -96,7 +90,7 @@ public class MatchAndComplete extends ActivityMethods{
         ImageButton btnGreenShape = findViewById(R.id.btn_green_shape);
         ImageButton btnPurpleCircleRecOut = findViewById(R.id.btn_purple_out_circle_rec);
         ImageButton btnGreenTriangle = findViewById(R.id.btn_green_triangle);
-
+        ImageView speechBubble = findViewById(R.id.speech_bubble);
 
         // enable buttons - clear board and rotate
         // make start game button disappear
@@ -134,9 +128,10 @@ public class MatchAndComplete extends ActivityMethods{
         this.userPlacement = new ArrayList<>();
 
         // Timer start the game
-        // Start timer
-        startTimer();
-
+        // Start timer for the first time
+        if(this.nLevel == 1) {
+            startTimer();
+        }
         // All the checking stuff
         MatchPattern randMatchPattern = new MatchPattern(this.nLevel);
         // set the rand image by level
@@ -145,17 +140,34 @@ public class MatchAndComplete extends ActivityMethods{
 
         // Init
         Handler handler = new Handler();
-        Runnable runnable = new Runnable() {
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                boolean isFinished;
                 // Play the game
-                playGame(randMatchPattern, view);
-                handler.postDelayed(this, 500);
-            }
-        };
+                isFinished = playGame(randMatchPattern, view);
 
-        //Start
-        handler.postDelayed(runnable, 500);
+                // check if the game finished in level MAX_LEVEL
+                if(isFinished){
+
+                    // stop the runnable
+                    handler.removeCallbacks(this);
+                    // finished and pop up with harry!!
+                    Log.d("INFO: ", "game finished and you succeeded all!");
+
+                    // stop the timer
+                    timerView.stop();
+                    // if there is a new record, show on the screen and save
+                    // currentRecord > previousRecord, open firebase to check
+                    ShowPopUp((String) timerView.getText());
+                }
+
+                // continue to play
+                else {
+                    handler.postDelayed(this, 1000);
+                }
+            }
+        }, 2000);
 
     }
 
@@ -391,11 +403,40 @@ public class MatchAndComplete extends ActivityMethods{
                 .setDegree((int) imgCurrentShapeOnBoard.getRotation());
     }
 
+    public boolean playGame(MatchPattern randMatchPattern, View view){
+
+        TextView txtCurrentLevel = findViewById(R.id.current_game_level);
+        ImageView speechBubble = findViewById(R.id.speech_bubble);
+
+        // Check if user pattern is like the image given to him
+        if(randMatchPattern.isMatch(this.userPlacement))
+        {
+            Log.d("msg: ", "the result is true we are in");
+            speechBubble.setVisibility(View.VISIBLE);
+            Handler handler = new Handler();
+            handler.postDelayed(() -> speechBubble.setVisibility(View.INVISIBLE), 2000);
+
+            // if we finished all the levels
+            if(this.nLevel == this.MAX_LEVEL) {
+                    return true;
+            }
+            else {
+                this.nLevel++;
+                // increase the level in the screen
+                txtCurrentLevel.setText(String.valueOf(this.nLevel));
+                // clear board
+                clearArrangement(view);
+                // return to the main
+                startGame(view);
+            }
+        }
+        return false;
+    }
+
     protected void ShowPopUp(String newRecord)
     {
         int animationDuration = 8;
         ImageButton btnReturnToBoardGame;
-
 
         // Show the pop up for - instructions/start game
         // Start playing recording - enter your name
@@ -419,14 +460,19 @@ public class MatchAndComplete extends ActivityMethods{
         // Stop animation after first time
         this.stopAnimation(rabbitAnimation, animationDuration);
 
-        successPopUp.show();
-
-        // Return to the game board
-        GameOperations tempGameInstance = new GameOperations(this.gameInstance.getUserInstance());
-        btnReturnToBoardGame = successPopUp.findViewById(R.id.btn_return);
-        btnReturnToBoardGame.setOnClickListener(v ->
-                startActivity(new Intent(successPopUp.getContext(), GameBoard.class)
-                        .putExtra("gameInstance", tempGameInstance)));
+        try {
+            successPopUp.setCancelable(false);
+            // Return to the game board
+            GameOperations tempGameInstance = new GameOperations(this.gameInstance.getUserInstance());
+            btnReturnToBoardGame = successPopUp.findViewById(R.id.btn_return);
+            btnReturnToBoardGame.setOnClickListener(v ->
+                    startActivity(new Intent(successPopUp.getContext(), GameBoard.class)
+                            .putExtra("gameInstance", tempGameInstance)));
+            successPopUp.show();
+        }
+        catch (Exception e){
+            Log.d("LOG: ","THE ERROR: " + e);
+        }
 
     }
 
@@ -448,6 +494,7 @@ public class MatchAndComplete extends ActivityMethods{
                     TextView newRecordView;
                     TextView msgNewRecord;
 
+                    // Check which score is better and save it in DB
                     if(this.gameInstance.isBetterScoreTwo(newRecord))
                     {
                         msgNewRecord = successPopUp.findViewById(R.id.msg_new_record);
@@ -455,7 +502,7 @@ public class MatchAndComplete extends ActivityMethods{
                         newRecordView = successPopUp.findViewById(R.id.new_record);
                         newRecordView.setVisibility(View.VISIBLE);
                         newRecordView.setText(newRecord);
-                        this.gameInstance.setHighestScoreGameOne(newRecord);
+                        this.gameInstance.setHighestScoreGameTwo(newRecord);
                         this.gameInstance.saveGame();
                     }
                 }
@@ -469,40 +516,6 @@ public class MatchAndComplete extends ActivityMethods{
                 Log.d("INFO: ", "get failed with ", task.getException());
             }
         });
-    }
-
-    public void playGame(MatchPattern randMatchPattern, View view){
-
-        TextView txtCurrentLevel = findViewById(R.id.current_game_level);
-
-        // Check if user pattern is like the image given to him
-
-        // TODO: we will need to do some sort of listener
-        //  so this function will always check
-
-        if(randMatchPattern.isMatch(this.userPlacement))
-        {
-            Log.d("msg: ", "the result is true we are in");
-            // if we finished all the levels
-            if(this.nLevel == MAX_LEVEL) {
-                // finished and pop up with harry!!
-                Log.d("INFO: ", "game finished and you succeeded all!");
-
-                timerView.stop();
-
-                // if there is a new record, show on the screen and save
-                // currentRecord > previousRecord, open firebase to check
-                // TODO
-                //ShowPopUp((String) timerView.getText());
-            }
-            this.nLevel ++;
-            // increase the level in the screen
-            txtCurrentLevel.setText(String.valueOf(this.nLevel));
-            // clear board
-            clearArrangement(view);
-            // return to the main
-            startGame(view);
-        }
     }
 }
 

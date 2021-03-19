@@ -64,7 +64,6 @@ public class WhoSitNextToMe extends ActivityMethods{
         this.txtGameLevel = findViewById(R.id.current_game_level);
         this.txtGameLevel.setText(String.valueOf(this.nGameLevel));
 
-
 //        this.configRecord(R.raw.enter_phone_record);
     }
 
@@ -376,6 +375,7 @@ public class WhoSitNextToMe extends ActivityMethods{
         // Stop animation after first time
         this.stopAnimation(rabbitAnimation, animationDuration);
 
+        successPopUp.setCancelable(false);
         successPopUp.show();
 
         // Return to the game board
@@ -412,7 +412,7 @@ public class WhoSitNextToMe extends ActivityMethods{
                         newRecordView = successPopUp.findViewById(R.id.new_record);
                         newRecordView.setVisibility(View.VISIBLE);
                         newRecordView.setText(newRecord);
-                        this.gameInstance.setHighestScoreGameOne(newRecord);
+                        this.gameInstance.setHighestScoreGameTwo(newRecord);
                         this.gameInstance.saveGame();
                     }
                 }

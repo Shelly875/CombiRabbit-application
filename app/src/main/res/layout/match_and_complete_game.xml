@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/game_background">
@@ -106,10 +107,10 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="36dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rotate_img"
         android:clickable="false"
         android:onClick="rotateShape"
-        android:background="@drawable/rotate_img"
         app:layout_constraintStart_toEndOf="@+id/shapes_board"
         app:layout_constraintTop_toBottomOf="@+id/random_guess_img" />
 
@@ -117,9 +118,9 @@
         android:id="@+id/btn_clear_arrange"
         android:layout_width="151dp"
         android:layout_height="63dp"
-        android:layout_marginStart="56dp"
-        android:clickable="false"
+        android:layout_marginStart="32dp"
         android:background="@drawable/btn_clear_guess"
+        android:clickable="false"
         android:onClick="clearArrangement"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -298,13 +299,24 @@
 
     <ImageView
         android:id="@+id/combi_icon"
-        android:layout_width="57dp"
+        android:layout_width="63dp"
         android:layout_height="57dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
         android:onClick="clicking"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toStartOf="@+id/speech_bubble" />
 
+    <ImageView
+        android:id="@+id/speech_bubble"
+        android:layout_width="145dp"
+        android:layout_height="144dp"
+        android:layout_marginEnd="324dp"
+        android:layout_marginBottom="4dp"
+        android:visibility="invisible"
+        android:background="@drawable/bubble_speech_next_match"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

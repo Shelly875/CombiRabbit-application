@@ -66,11 +66,15 @@ public class BullsAndCows extends ActivityMethods{
         Intent prevIntent = getIntent();
         this.gameInstance = (GameOperations) prevIntent
                 .getSerializableExtra("gameInstance");
-        String maxAge = prevIntent.getStringExtra("maxAge");
+        //String maxAge = prevIntent.getStringExtra("maxAge");
+        String maxAge = "7";
         // Set the activity to use full screen
         this.fullScreen();
 
         Random r = new Random();
+
+        // Find the instructions button
+        ImageButton btnInstruction = new ImageButton(this);
 
         // Layout will be declared by the user age
         // bulls and cows with colors
@@ -78,9 +82,17 @@ public class BullsAndCows extends ActivityMethods{
             // Main view - bulls and cows in colors
             setContentView(R.layout.bulls_cows_color_game);
 
+            btnInstruction= findViewById(R.id.btn_bull_color_instructions);
+
+            // Declare popup for the instruction button
+            btnInstruction.setOnClickListener(v -> {
+                ShowInstructionPopUp(R.drawable.bulls_colors_instructions_img);
+            });
+
             // the colors the game generate to guess randomly
             nRandomColorsToGuess = new int[]{nGameColors[r.nextInt(nGameColors.length)],
-                    nGameColors[r.nextInt(nGameColors.length)], nGameColors[r.nextInt(nGameColors.length)]};
+                    nGameColors[r.nextInt(nGameColors.length)],
+                    nGameColors[r.nextInt(nGameColors.length)]};
             Log.d("Log: ", "The random colors are: "
                     + Arrays.toString(nRandomColorsToGuess));
         }
@@ -89,6 +101,13 @@ public class BullsAndCows extends ActivityMethods{
             // Main view - bulls and cows with numbers
             setContentView(R.layout.bulls_cows_num_game);
 
+            btnInstruction= findViewById(R.id.btn_bull_num_instructions);
+
+            // Declare popup for the instruction button
+            btnInstruction.setOnClickListener(v -> {
+                ShowInstructionPopUp(R.drawable.bulls_num_instructions_img);
+            });
+
             // the numbers the game generate to guess randomly
             nRandomNumbersToGuess = new int[]{r.nextInt(9),
                     r.nextInt(9), r.nextInt(9), r.nextInt(9)};
@@ -96,6 +115,8 @@ public class BullsAndCows extends ActivityMethods{
             Log.d("Log: ", "The random numbers are: "
                     + Arrays.toString(nRandomNumbersToGuess));
         }
+
+
     }
 
     // Class functions

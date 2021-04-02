@@ -52,6 +52,15 @@ public class MatchAndComplete extends ActivityMethods {
 
         Intent prevIntent = getIntent();
         this.gameInstance = (GameOperations) prevIntent.getSerializableExtra("gameInstance");
+
+        // Find the instructions button
+        ImageButton btnInstruction = findViewById(R.id.btn_match_instructions);
+
+        // Declare popup for the instruction button
+        btnInstruction.setOnClickListener(v -> {
+                ShowInstructionPopUp(R.drawable.match_instructions_img);
+        });
+
     }
 
     protected void onStart() {

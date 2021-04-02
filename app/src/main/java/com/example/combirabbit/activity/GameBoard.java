@@ -7,10 +7,14 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageButton;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import androidx.fragment.app.FragmentTransaction;
 
@@ -40,6 +44,8 @@ public class GameBoard extends ActivityMethods {
     private String maxAge = "";
     private Object objChosenGame;
     TextView playerName;
+    VideoView video;
+    MediaController mc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -195,7 +201,14 @@ public class GameBoard extends ActivityMethods {
         // Show the pop up for - instructions/start game
         trailerPopUp.setContentView(R.layout.trailer_popup);
         trailerPopUp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        trailerPopUp.show();
+
+        // can't exit the popup without pressing the exit X button
+        trailerPopUp.setCancelable(false);
+
+        // pressing on the close popup feature
+        trailerPopUp.findViewById(R.id.close_pop_up).setOnClickListener(v -> {
+            trailerPopUp.dismiss();
+        });
 
         // Take the buttons and direct the intents
         ImageButton btnStartTrailer = trailerPopUp.findViewById(R.id.btn_guide_button);
@@ -210,10 +223,29 @@ public class GameBoard extends ActivityMethods {
                     objChosenGame.getClass()).putExtra("maxAge", maxAge)
                                              .putExtra("gameInstance", this.gameInstance));
         });
-
         // Each press will lead to other intent - start trailer
-        btnStartTrailer.setOnClickListener(v ->
-                startActivity(new Intent(GameBoard.this, objChosenGame.getClass())
-                .putExtra("gameInstance", this.gameInstance)));
+        btnStartTrailer.setOnClickListener(v -> {
+            try
+            {
+             startActivity(new Intent(GameBoard.this, Trailer.class)
+               .putExtra("gameName", objChosenGame.toString())
+               .putExtra("maxAge", maxAge)
+               .putExtra("gameInstance", this.gameInstance));
+
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                System.out.println("Error in btnInfo Click -->"+e.toString());
+            }
+        });
+        //BtnPlay
+
+
+//        btnStartTrailer.setOnClickListener(v ->
+//                startActivity(new Intent(GameBoard.this, Trailer.class)
+//                .putExtra("gameInstance", this.gameInstance)));
+
+        trailerPopUp.show();
     }
 }

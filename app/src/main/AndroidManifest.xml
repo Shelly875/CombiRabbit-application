@@ -17,10 +17,6 @@
             android:name=".activity.SplashScreen"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
         <activity
@@ -28,7 +24,6 @@
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
-
 
         </activity>
         <activity
@@ -60,6 +55,7 @@
             android:theme="@style/AppTheme"
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
+
         </activity>
         <activity
             android:name=".activity.MatchAndComplete"
@@ -73,6 +69,11 @@
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
 
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
         </activity>
         <activity
             android:name=".activity.WhoSitNextToMe"
@@ -80,6 +81,13 @@
             android:screenOrientation="landscape"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
 
+        </activity>
+
+        <activity
+            android:name=".activity.Trailer"
+            android:theme="@style/AppTheme"
+            android:screenOrientation="landscape"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
         </activity>
 
     </application>

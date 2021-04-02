@@ -60,6 +60,12 @@ public class WhoSitNextToMe extends ActivityMethods{
         this.gameInstance = (GameOperations) prevIntent
                 .getSerializableExtra("gameInstance");
 
+        // Declare popup for the instruction button
+        ImageButton btnInstruction= findViewById(R.id.btn_who_next_instructions);
+        btnInstruction.setOnClickListener(v -> {
+            ShowInstructionPopUp(R.drawable.who_next_to_instructions_img);
+        });
+
         // Init the game level on the user view
         this.txtGameLevel = findViewById(R.id.current_game_level);
         this.txtGameLevel.setText(String.valueOf(this.nGameLevel));

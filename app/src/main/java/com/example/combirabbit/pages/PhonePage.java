@@ -41,13 +41,13 @@ public class PhonePage extends ActivityMethods {
 
         // Get previous intent parameters sent
         Intent prevIntent = getIntent();
-        newUser = (User) prevIntent.getSerializableExtra("newUser");
-        isNewGame = (boolean) prevIntent.getSerializableExtra("isNewGame");
+        this.newUser = (User) prevIntent.getSerializableExtra("newUser");
+        this.isNewGame = (boolean) prevIntent.getSerializableExtra("isNewGame");
 
         // In case the user enter to this intent
         // from loading an exist game
-        if(newUser == null) {
-            newUser = new User();
+        if(this.newUser == null) {
+            this.newUser = new User();
         }
 
         // Start playing recording - enter your name

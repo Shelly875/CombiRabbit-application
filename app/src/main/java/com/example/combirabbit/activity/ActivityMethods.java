@@ -1,7 +1,10 @@
 package com.example.combirabbit.activity;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.util.Log;
@@ -17,6 +20,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.combirabbit.R;
+import com.example.combirabbit.models.GameOperations;
 import com.example.combirabbit.pages.PhonePage;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
@@ -112,6 +116,33 @@ public class ActivityMethods extends AppCompatActivity {
         });
     }
 
+    public void ShowInstructionPopUp(int instructions){
+
+        Dialog successPopUp = new Dialog(this);
+        successPopUp.setContentView(R.layout.instructions_popup);
+        successPopUp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        try {
+
+            // Find instructions on the popup
+            ImageView imgInstructionsPlaceHolder = successPopUp.findViewById(R.id.game_instructions);
+            imgInstructionsPlaceHolder.setBackgroundResource(instructions);
+
+            // can't exit the popup without pressing the exit X button
+            successPopUp.setCancelable(false);
+
+            // pressing on the close popup feature
+            successPopUp.findViewById(R.id.close_pop_up).setOnClickListener(v -> {
+               successPopUp.dismiss();
+            });
+
+            // show popup to the user
+            successPopUp.show();
+        }
+        catch (Exception e){
+            Log.d("LOG: ","THE ERROR: " + e);
+        }
+    }
 
 
 }

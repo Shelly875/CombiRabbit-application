@@ -1,6 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:paddingLeft="10dp"
@@ -13,39 +12,26 @@
         app:cardCornerRadius="30dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="400dp"
-            android:layout_height="300dp"
+            android:layout_width="500dp"
+            android:layout_height="400dp"
             android:background="@drawable/popup_background"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/title_instructions"
-                android:layout_width="185dp"
-                android:layout_height="49dp"
-                android:layout_marginTop="28dp"
-                android:text="?איך משחקים"
-                android:textColor="@color/black"
-                android:textSize="30sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.502"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <FrameLayout
+            <ImageView
                 android:id="@+id/game_instructions"
-                android:layout_width="307dp"
-                android:layout_height="202dp"
-                android:layout_marginEnd="48dp"
-                android:layout_marginBottom="16dp"
+                android:layout_width="498dp"
+                android:layout_height="394dp"
+                android:layout_marginEnd="1dp"
+                android:layout_marginBottom="4dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <ImageButton
                 android:id="@+id/close_pop_up"
-                android:layout_width="39dp"
-                android:layout_height="29dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp"
+                android:layout_width="26dp"
+                android:layout_height="19dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="456dp"
                 android:background="@drawable/btn_close_popup"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

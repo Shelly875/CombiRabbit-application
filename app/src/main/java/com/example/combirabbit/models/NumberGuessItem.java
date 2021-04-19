@@ -3,12 +3,14 @@ package com.example.combirabbit.models;
 import android.text.Editable;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import java.util.HashMap;
 
 public class NumberGuessItem {
 
     private String nUserNumbersGuess;
-    private int[] nGuessResult;
+    private int [] nGuessResult;
     private final int BULL = 0;
     private final int COW = 1;
 
@@ -92,5 +94,11 @@ public class NumberGuessItem {
             this.nGuessResult[this.COW] = countCow;
         }
         return this.nGuessResult;
+    }
+
+    @NonNull
+    public String toString(){
+
+        return this.getUserNumbersGuess() + ", ";
     }
 }

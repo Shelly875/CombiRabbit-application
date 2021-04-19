@@ -7,6 +7,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Chronometer;
@@ -44,12 +45,9 @@ public class BullsAndCows extends ActivityMethods{
     private int [] nRandomColorsToGuess;
     private int [] nRandomNumbersToGuess;
     private ArrayList<NumberGuessItem> arrUserNumbersGuess;
-    private NumberGuessItem nUserGuessNum;
     private ColorGuessItem nUserGuess;
     private ArrayList<ColorGuessItem> arrUserColorsGuess;
     private RecyclerView.Adapter mAdapter;
-    private final int COLORS_SUCCESS_RESULT = 3;
-    private final int NUMBERS_SUCCESS_RESULT = 4;
     private GameOperations gameInstance;
     private Chronometer timerView;
     private final int BULL = 0;
@@ -66,8 +64,9 @@ public class BullsAndCows extends ActivityMethods{
         Intent prevIntent = getIntent();
         this.gameInstance = (GameOperations) prevIntent
                 .getSerializableExtra("gameInstance");
-        //String maxAge = prevIntent.getStringExtra("maxAge");
-        String maxAge = "7";
+
+        String maxAge = prevIntent.getStringExtra("maxAge");
+
         // Set the activity to use full screen
         this.fullScreen();
 
@@ -268,13 +267,14 @@ public class BullsAndCows extends ActivityMethods{
             if(nResult !=null) {
 
                 // If the user guessed correctly, popup will appear
-                if (nResult[this.BULL] == this.COLORS_SUCCESS_RESULT) {
+                int COLORS_SUCCESS_RESULT = 3;
+                if (nResult[this.BULL] == COLORS_SUCCESS_RESULT) {
                     // stop the clock
                     timerView.stop();
 
                     // if there is a new record, show on the screen and save
                     // currentRecord > previousRecord, open firebase to check
-                    ShowPopUp((String) timerView.getText());
+                    ShowPopUp(this.gameInstance, (String) timerView.getText());
                 }
             }
             // Write the guess into the table of guessing
@@ -310,87 +310,6 @@ public class BullsAndCows extends ActivityMethods{
         mNumbersGuessTable.setAdapter(mAdapter);
     }
 
-    protected void ShowPopUp(String newRecord)
-    {
-        int animationDuration = 8;
-        ImageButton btnReturnToBoardGame;
-
-
-        // Show the pop up for - instructions/start game
-        // Start playing recording - enter your name
-        this.configRecord(R.raw.guess_success);
-
-        Dialog successPopUp = new Dialog(this);
-        successPopUp.setContentView(R.layout.success_popup);
-        successPopUp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        // Start playing animation & record when pressing the rabbit icon
-        AnimationDrawable rabbitAnimation;
-        rabbitIcon = successPopUp.findViewById(R.id.combi_icon);
-        rabbitIcon.setBackgroundResource(R.drawable.combi_animation);
-        rabbitAnimation = (AnimationDrawable) rabbitIcon.getBackground();
-        rabbitAnimation.start();
-
-        // Update the score of the first game of the user
-        // if the score is smaller than the previous one
-        updateHighestScore(newRecord, successPopUp);
-
-        // Stop animation after first time
-        this.stopAnimation(rabbitAnimation, animationDuration);
-
-        successPopUp.setCancelable(false);
-        successPopUp.show();
-
-        // Return to the game board
-        GameOperations tempGameInstance = new GameOperations(this.gameInstance.getUserInstance());
-        btnReturnToBoardGame = successPopUp.findViewById(R.id.btn_return);
-        btnReturnToBoardGame.setOnClickListener(v ->
-                startActivity(new Intent(successPopUp.getContext(), GameBoard.class)
-                .putExtra("gameInstance", tempGameInstance)));
-
-    }
-
-    protected void updateHighestScore(String newRecord,
-                                      Dialog successPopUp)
-    {
-        GameOperations tempGameInstance = new GameOperations(this.gameInstance.getUserInstance());
-        FirebaseFirestore mDatabase = FirebaseFirestore.getInstance();
-        DocumentReference docRef = mDatabase
-                .collection("SavedGames")
-                .document(tempGameInstance.getUserInstance().getPhone());
-
-        // check if the user already has a game saved in db
-        docRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                assert document != null;
-                if (document.exists()) {
-                    TextView newRecordView;
-                    TextView msgNewRecord;
-
-                    if(this.gameInstance.isBetterScoreOne(newRecord))
-                    {
-                        msgNewRecord = successPopUp.findViewById(R.id.msg_new_record);
-                        msgNewRecord.setVisibility(View.VISIBLE);
-                        newRecordView = successPopUp.findViewById(R.id.new_record);
-                        newRecordView.setVisibility(View.VISIBLE);
-                        newRecordView.setText(newRecord);
-                        this.gameInstance.setHighestScoreGameOne(newRecord);
-                        this.gameInstance.saveGame();
-                    }
-                }
-                else
-                {
-                    Log.d("INFO: ", "No such document");
-                }
-            }
-            else
-            {
-                Log.d("INFO: ", "get failed with ", task.getException());
-            }
-        });
-    }
-
     public void startNumGame(View view) {
 
         // Make user number's input guess enabled
@@ -400,9 +319,6 @@ public class BullsAndCows extends ActivityMethods{
 
         // Init the user and the game numbers guess
         this.arrUserNumbersGuess = new ArrayList<>();
-        this.nUserGuessNum = new NumberGuessItem(this.txtUserGuess.getText());
-        Log.d("Log", "Starting result: " +
-                Arrays.toString(this.nUserGuessNum.getGuessResult()));
 
         // Find elements of the buttons of the game
         ImageButton btnStartGuessing = findViewById(R.id.btn_start_guess);
@@ -433,32 +349,27 @@ public class BullsAndCows extends ActivityMethods{
             this.txtUserGuess = findViewById(R.id.user_number);
 
             // Insert the user's guess to the items array
-            this.nUserGuessNum.setUserNumbersGuess(this.txtUserGuess.getText());
+            NumberGuessItem nUserGuessNum = new NumberGuessItem(this.txtUserGuess.getText());
 
             // Add new guess to table
-            this.arrUserNumbersGuess.add(this.nGuessNumber, this.nUserGuessNum);
+            this.arrUserNumbersGuess.add(nUserGuessNum);
+
+            Log.d("Log: ", "New table: " + Arrays.toString(this.arrUserNumbersGuess.toArray()));
 
             // Get the result of the guess
-
             this.nResultNum = this.arrUserNumbersGuess.get(this.nGuessNumber)
                     .checkGuess(this.nRandomNumbersToGuess);
 
-            Log.d("Log", "the text that sent " + this.nUserGuessNum.getUserNumbersGuess());
-            Log.d("Log", "the current result " +
-                    Arrays.toString(this.nUserGuessNum.getGuessResult()));
-
-            if(this.nResultNum !=null) {
-
-                // If the user guessed correctly, popup will appear
-                if (this.nResultNum[this.BULL] == this.NUMBERS_SUCCESS_RESULT) {
-                    // stop the clock
-                    timerView.stop();
-
-                    // if there is a new record, show on the screen and save
-                    // currentRecord > previousRecord, open firebase to check
-                    ShowPopUp((String) timerView.getText());
-                }
+            // If the user guessed correctly, popup will appear
+            int NUMBERS_SUCCESS_RESULT = 4;
+            if (this.nResultNum[this.BULL] == NUMBERS_SUCCESS_RESULT) {
+                 // stop the clock
+                 timerView.stop();
+                 // if there is a new record, show on the screen and save
+                 // currentRecord > previousRecord, open firebase to check
+                 ShowPopUp(this.gameInstance, (String) timerView.getText());
             }
+
             // Write the guess into the table of guessing
             mAdapter.notifyItemInserted(nGuessNumber);
 
@@ -471,7 +382,6 @@ public class BullsAndCows extends ActivityMethods{
     }
 
     public void clearNumGuess(View view) {
-
         this.txtUserGuess.getText().clear();
     }
 }

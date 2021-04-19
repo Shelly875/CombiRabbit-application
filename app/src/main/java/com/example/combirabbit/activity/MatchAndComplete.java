@@ -6,7 +6,6 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -61,18 +60,6 @@ public class MatchAndComplete extends ActivityMethods {
                 ShowInstructionPopUp(R.drawable.match_instructions_img);
         });
 
-    }
-
-    protected void onStart() {
-        super.onStart();
-
-        // Start playing animation & record when pressing the rabbit icon
-        int animationDuration = 5;
-        AnimationDrawable rabbitAnimation = (AnimationDrawable) this.configAnimation
-                (R.id.combi_icon, animationDuration);
-
-        // Stop animation after first time
-        this.stopAnimation(rabbitAnimation, animationDuration);
     }
 
     public void startGame(View view){
@@ -168,7 +155,7 @@ public class MatchAndComplete extends ActivityMethods {
                     timerView.stop();
                     // if there is a new record, show on the screen and save
                     // currentRecord > previousRecord, open firebase to check
-                    ShowPopUp((String) timerView.getText());
+                    ShowPopUp(gameInstance, (String) timerView.getText());
                 }
 
                 // continue to play
@@ -440,91 +427,6 @@ public class MatchAndComplete extends ActivityMethods {
             }
         }
         return false;
-    }
-
-    protected void ShowPopUp(String newRecord)
-    {
-        int animationDuration = 8;
-        ImageButton btnReturnToBoardGame;
-
-        // Show the pop up for - instructions/start game
-        // Start playing recording - enter your name
-        this.configRecord(R.raw.guess_success);
-
-        Dialog successPopUp = new Dialog(this);
-        successPopUp.setContentView(R.layout.success_popup);
-        successPopUp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        // Start playing animation & record when pressing the rabbit icon
-        AnimationDrawable rabbitAnimation;
-        rabbitIcon = successPopUp.findViewById(R.id.combi_icon);
-        rabbitIcon.setBackgroundResource(R.drawable.combi_animation);
-        rabbitAnimation = (AnimationDrawable) rabbitIcon.getBackground();
-        rabbitAnimation.start();
-
-        // Update the score of the first game of the user
-        // if the score is smaller than the previous one
-        updateHighestScore(newRecord, successPopUp);
-
-        // Stop animation after first time
-        this.stopAnimation(rabbitAnimation, animationDuration);
-
-        try {
-            successPopUp.setCancelable(false);
-            // Return to the game board
-            GameOperations tempGameInstance = new GameOperations(this.gameInstance.getUserInstance());
-            btnReturnToBoardGame = successPopUp.findViewById(R.id.btn_return);
-            btnReturnToBoardGame.setOnClickListener(v ->
-                    startActivity(new Intent(successPopUp.getContext(), GameBoard.class)
-                            .putExtra("gameInstance", tempGameInstance)));
-            successPopUp.show();
-        }
-        catch (Exception e){
-            Log.d("LOG: ","THE ERROR: " + e);
-        }
-
-    }
-
-    protected void updateHighestScore(String newRecord,
-                                      Dialog successPopUp)
-    {
-        GameOperations tempGameInstance = new GameOperations(this.gameInstance.getUserInstance());
-        FirebaseFirestore mDatabase = FirebaseFirestore.getInstance();
-        DocumentReference docRef = mDatabase
-                .collection("SavedGames")
-                .document(tempGameInstance.getUserInstance().getPhone());
-
-        // check if the user already has a game saved in db
-        docRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                assert document != null;
-                if (document.exists()) {
-                    TextView newRecordView;
-                    TextView msgNewRecord;
-
-                    // Check which score is better and save it in DB
-                    if(this.gameInstance.isBetterScoreTwo(newRecord))
-                    {
-                        msgNewRecord = successPopUp.findViewById(R.id.msg_new_record);
-                        msgNewRecord.setVisibility(View.VISIBLE);
-                        newRecordView = successPopUp.findViewById(R.id.new_record);
-                        newRecordView.setVisibility(View.VISIBLE);
-                        newRecordView.setText(newRecord);
-                        this.gameInstance.setHighestScoreGameTwo(newRecord);
-                        this.gameInstance.saveGame();
-                    }
-                }
-                else
-                {
-                    Log.d("INFO: ", "No such document");
-                }
-            }
-            else
-            {
-                Log.d("INFO: ", "get failed with ", task.getException());
-            }
-        });
     }
 }
 

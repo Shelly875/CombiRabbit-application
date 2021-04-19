@@ -4,18 +4,11 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
-import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.VideoView;
-
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.combirabbit.R;
@@ -44,8 +37,6 @@ public class GameBoard extends ActivityMethods {
     private String maxAge = "";
     private Object objChosenGame;
     TextView playerName;
-    VideoView video;
-    MediaController mc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +56,6 @@ public class GameBoard extends ActivityMethods {
         Intent prevIntent = getIntent();
         this.gameInstance = (GameOperations) prevIntent.getSerializableExtra("gameInstance");
         GameOperations tempGameInstance = new GameOperations(this.gameInstance.getUserInstance());
-
-        // Start playing recording - enter your name
-        // Config recording - welcome
-        mediaPlayer = MediaPlayer.create(this, R.raw.game_board_record);
 
         // Load game or start a new game (that was already saved)
         // when loading a game - take name, high score 1, high score 2 for view only
@@ -148,6 +135,7 @@ public class GameBoard extends ActivityMethods {
                     // For game one - show popup window and navigate to trailer or game
                     btnPlayGameOne.setOnClickListener(v -> {
 
+                        this.mediaPlayer.stop();
                         // Bulls and cows - colors or numbers
                         objChosenGame = new BullsAndCows();
 
@@ -157,6 +145,9 @@ public class GameBoard extends ActivityMethods {
 
                     // For game two - show popup window and navigate to trailer or game
                     btnPlayGameTwo.setOnClickListener(v -> {
+
+                        this.mediaPlayer.stop();
+
                         // give the popup the chosen game class
                         if (maxAge.equals("7")) {
                             objChosenGame = new WhoSitNextToMe();
@@ -166,11 +157,6 @@ public class GameBoard extends ActivityMethods {
                         // input for function: game number 2
                         ShowPopUp(objChosenGame, maxAge);
                     });
-
-                    // load from db all the relevant fields
-                    // fragments game images from relevant age
-                    // show name of the user
-                    // show score, if there is no score show : - -
 
                     Log.d("INFO: ", "DocumentSnapshot data: " + document.getData());
                 } else {
@@ -187,12 +173,7 @@ public class GameBoard extends ActivityMethods {
         super.onStart();
 
         // Start playing animation & record when pressing the rabbit icon
-        int animationDuration = 17;
-        AnimationDrawable rabbitAnimation = (AnimationDrawable) this.configAnimation
-                (R.id.combi_icon, animationDuration);
-
-        // Stop animation after first time
-        this.stopAnimation(rabbitAnimation, animationDuration);
+        this.configAnimation(R.drawable.combi_animation, R.raw.game_board_record, false);
     }
 
     // popup that will redirect to the wanted game
@@ -239,13 +220,6 @@ public class GameBoard extends ActivityMethods {
                 System.out.println("Error in btnInfo Click -->"+e.toString());
             }
         });
-        //BtnPlay
-
-
-//        btnStartTrailer.setOnClickListener(v ->
-//                startActivity(new Intent(GameBoard.this, Trailer.class)
-//                .putExtra("gameInstance", this.gameInstance)));
-
         trailerPopUp.show();
     }
 }

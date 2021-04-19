@@ -303,7 +303,7 @@
         android:layout_height="57dp"
         android:layout_marginEnd="4dp"
         android:layout_marginBottom="4dp"
-        android:onClick="clicking"
+        android:background="@drawable/combi_logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/speech_bubble" />
 

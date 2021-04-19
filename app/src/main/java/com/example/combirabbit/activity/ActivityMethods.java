@@ -11,24 +11,17 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.combirabbit.R;
 import com.example.combirabbit.models.GameOperations;
-import com.example.combirabbit.pages.PhonePage;
-import com.google.firebase.FirebaseException;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthOptions;
-import com.google.firebase.auth.PhoneAuthProvider;
-
-import java.util.concurrent.TimeUnit;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class ActivityMethods extends AppCompatActivity {
 
@@ -50,70 +43,96 @@ public class ActivityMethods extends AppCompatActivity {
         decorView.setSystemUiVisibility(uiOptions);
     }
 
-    protected void configRecord(int rabbitRecord) {
+    protected void configRecord(int rabbitRecord, boolean isOnStart) {
 
-        mediaPlayer = MediaPlayer.create(this, rabbitRecord);
-        mediaPlayer.start();
+        this.mediaPlayer = MediaPlayer.create(this, rabbitRecord);
+        if(isOnStart){
+            this.mediaPlayer.start();
+        }
     }
 
-    protected Object configAnimation(int combiIcon, int duration) {
+    protected Object configAnimation(int combImg, int record, boolean isOnStart) {
 
         AnimationDrawable rabbitAnimation;
-        rabbitIcon = findViewById(combiIcon);
-        rabbitIcon.setBackgroundResource(R.drawable.combi_animation);
+        rabbitIcon = findViewById(R.id.combi_icon);
+        rabbitIcon.setBackgroundResource(combImg);
         rabbitAnimation = (AnimationDrawable) rabbitIcon.getBackground();
-        rabbitAnimation.start();
+
+        // check if we are running the record at start immidiatly
+        if(isOnStart) {
+            rabbitAnimation.start();
+        }
+        // config record
+        this.configRecord(record, isOnStart);
 
         // When pressing the rabbit, we can hear the record again
         rabbitIcon.setOnClickListener(v -> {
-            mediaPlayer.start();
-            rabbitAnimation.start();
-            stopAnimation(rabbitAnimation, duration);
+            if(mediaPlayer.isPlaying())
+            {
+                Log.d("msg :", "Im playing");
+                this.mediaPlayer.stop();
+                rabbitAnimation.stop();
+                rabbitAnimation.selectDrawable(0);
+            }
+            else {
+                Log.d("msg :", "Im not playing");
+                this.mediaPlayer = MediaPlayer.create(this, record);
+                rabbitAnimation.start();
+                this.stopAnimation(rabbitAnimation, this.mediaPlayer.getDuration());
+                this.mediaPlayer.start();
+            }
         });
-
+        this.stopAnimation(rabbitAnimation, this.mediaPlayer.getDuration());
         return rabbitAnimation;
     }
 
-    protected Object configAnimationHoldSign(int combiIcon, int duration) {
+    protected Object configAnimation(int combImg, int record,
+                                     Dialog successPopUp,
+                                     boolean isOnStart) {
 
         AnimationDrawable rabbitAnimation;
-        rabbitIcon = findViewById(combiIcon);
-        rabbitIcon.setBackgroundResource(R.drawable.combi_with_sign_animation);
+        rabbitIcon = successPopUp.findViewById(R.id.combi_icon);
+        rabbitIcon.setBackgroundResource(combImg);
         rabbitAnimation = (AnimationDrawable) rabbitIcon.getBackground();
-        rabbitAnimation.start();
+
+        // check if we are running the record at start immidiatly
+        if(isOnStart) {
+            rabbitAnimation.start();
+        }
+        // config record
+        this.configRecord(record, isOnStart);
 
         // When pressing the rabbit, we can hear the record again
         rabbitIcon.setOnClickListener(v -> {
-            mediaPlayer.start();
-            rabbitAnimation.start();
-            stopAnimation(rabbitAnimation, duration);
+            if(mediaPlayer.isPlaying())
+            {
+                Log.d("msg :", "Im playing");
+                this.mediaPlayer.stop();
+                rabbitAnimation.stop();
+                rabbitAnimation.selectDrawable(0);
+            }
+            else {
+                Log.d("msg :", "Im not playing");
+                this.mediaPlayer = MediaPlayer.create(this, record);
+                rabbitAnimation.start();
+                this.stopAnimation(rabbitAnimation, this.mediaPlayer.getDuration());
+                this.mediaPlayer.start();
+            }
         });
-
+        this.stopAnimation(rabbitAnimation, this.mediaPlayer.getDuration());
         return rabbitAnimation;
     }
 
 
     protected void stopAnimation(AnimationDrawable rabbitAnimation, int duration) {
-        new Handler().postDelayed(new Runnable() {
+        Handler myHandler = new Handler();
+        myHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
+                Log.d("msg: ", "DURATION: " + duration);
                 rabbitAnimation.stop();
             }
-        },duration*1000);
-    }
-
-    protected void stopRecordAndAnimation(AnimationDrawable rabbitAnimation,
-                                          int animationDuration) {
-        this.stopAnimation(rabbitAnimation, animationDuration);
-        this.mediaPlayer.stop();
-    }
-
-    protected void transferToPage(ImageButton buttonContinue, Object nextPage) {
-
-        buttonContinue.setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), (Class<?>) nextPage);
-            startActivity(intent);
-        });
+        }, duration);
     }
 
     public void ShowInstructionPopUp(int instructions){
@@ -142,6 +161,79 @@ public class ActivityMethods extends AppCompatActivity {
         catch (Exception e){
             Log.d("LOG: ","THE ERROR: " + e);
         }
+    }
+
+    protected void ShowPopUp(GameOperations gameInstance, String newRecord)
+    {
+        ImageButton btnReturnToBoardGame;
+
+        Dialog successPopUp = new Dialog(this);
+        successPopUp.setContentView(R.layout.success_popup);
+        successPopUp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        // Show the pop up for - success in the game
+        this.configAnimation(R.drawable.combi_animation,R.raw.guess_success,
+                successPopUp, true);
+
+        // Update the score of the first game of the user
+        // if the score is smaller than the previous one
+        updateHighestScore(gameInstance, newRecord, successPopUp);
+
+        successPopUp.setCancelable(false);
+        successPopUp.show();
+
+        // Return to the game board
+        GameOperations tempGameInstance = new GameOperations(gameInstance.getUserInstance());
+        btnReturnToBoardGame = successPopUp.findViewById(R.id.btn_return);
+        btnReturnToBoardGame.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Code here executes on main thread after user presses button
+                mediaPlayer.stop();
+                startActivity(new Intent(successPopUp.getContext(), GameBoard.class)
+                        .putExtra("gameInstance", tempGameInstance));
+            }
+        });
+    }
+
+    protected void updateHighestScore(GameOperations gameInstance, String newRecord,
+                                      Dialog successPopUp)
+    {
+        GameOperations tempGameInstance = new GameOperations(gameInstance.getUserInstance());
+        FirebaseFirestore mDatabase = FirebaseFirestore.getInstance();
+        DocumentReference docRef = mDatabase
+                .collection("SavedGames")
+                .document(tempGameInstance.getUserInstance().getPhone());
+
+        // check if the user already has a game saved in db
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                assert document != null;
+                if (document.exists()) {
+                    TextView newRecordView;
+                    TextView msgNewRecord;
+
+                    if(gameInstance.isBetterScoreTwo(newRecord))
+                    {
+                        msgNewRecord = successPopUp.findViewById(R.id.msg_new_record);
+                        msgNewRecord.setVisibility(View.VISIBLE);
+                        newRecordView = successPopUp.findViewById(R.id.new_record);
+                        newRecordView.setVisibility(View.VISIBLE);
+                        newRecordView.setText(newRecord);
+                        gameInstance.setHighestScoreGameTwo(newRecord);
+                        gameInstance.saveGame();
+                    }
+                }
+                else
+                {
+                    Log.d("INFO: ", "No such document");
+                }
+            }
+            else
+            {
+                Log.d("INFO: ", "get failed with ", task.getException());
+            }
+        });
     }
 
 

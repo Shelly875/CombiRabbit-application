@@ -1,10 +1,6 @@
 package com.example.combirabbit.activity;
 
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.AnimationDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -15,20 +11,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.example.combirabbit.R;
 import com.example.combirabbit.models.BearsArrangement;
 import com.example.combirabbit.models.GameOperations;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.ArrayList;
 
 public class WhoSitNextToMe extends ActivityMethods{
 
-    private AnimationDrawable rabbitAnimation;
-    private int animationDuration = 11;
     TextView txtGameLevel;
     private final int MAX_LEVEL = 5;
     private Chronometer timerView;
@@ -69,19 +58,14 @@ public class WhoSitNextToMe extends ActivityMethods{
         // Init the game level on the user view
         this.txtGameLevel = findViewById(R.id.current_game_level);
         this.txtGameLevel.setText(String.valueOf(this.nGameLevel));
-
-//        this.configRecord(R.raw.enter_phone_record);
     }
 
     protected void onStart() {
         super.onStart();
 
         // Start playing animation & record when pressing the rabbit icon
-        rabbitAnimation = (AnimationDrawable) this.configAnimationHoldSign
-                (R.id.combi_icon, animationDuration);
-
-        // Stop animation after first time
-        this.stopAnimation(rabbitAnimation, animationDuration);
+        this.configAnimation(R.drawable.combi_with_sign_animation,
+                R.raw.start_game_record, false);
     }
 
 
@@ -155,6 +139,14 @@ public class WhoSitNextToMe extends ActivityMethods{
         }
         else {
 
+            // check if we are in level 4 or 5 and enable if else statement
+            if(this.nGameLevel == MAX_LEVEL - 2 ||
+            this.nGameLevel == MAX_LEVEL -1)
+            {
+                findViewById(R.id.if_state).setVisibility(View.VISIBLE);
+                findViewById(R.id.else_state).setVisibility(View.VISIBLE);
+            }
+
             // If finished all 5 games
             if(this.nGameLevel == MAX_LEVEL)
             {
@@ -165,7 +157,7 @@ public class WhoSitNextToMe extends ActivityMethods{
 
                 // if there is a new record, show on the screen and save
                 // currentRecord > previousRecord, open firebase to check
-                ShowPopUp((String) timerView.getText());
+                this.ShowPopUp(this.gameInstance, (String) timerView.getText());
 
             }
             else {
@@ -351,86 +343,5 @@ public class WhoSitNextToMe extends ActivityMethods{
         {
             btnBearSix.setEnabled(false);
         }
-    }
-
-    protected void ShowPopUp(String newRecord)
-    {
-        int animationDuration = 8;
-        ImageButton btnReturnToBoardGame;
-
-
-        // Show the pop up for - instructions/start game
-        // Start playing recording - enter your name
-        this.configRecord(R.raw.guess_success);
-
-        Dialog successPopUp = new Dialog(this);
-        successPopUp.setContentView(R.layout.success_popup);
-        successPopUp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-        // Start playing animation & record when pressing the rabbit icon
-        AnimationDrawable rabbitAnimation;
-        rabbitIcon = successPopUp.findViewById(R.id.combi_icon);
-        rabbitIcon.setBackgroundResource(R.drawable.combi_animation);
-        rabbitAnimation = (AnimationDrawable) rabbitIcon.getBackground();
-        rabbitAnimation.start();
-
-        // Update the score of the first game of the user
-        // if the score is smaller than the previous one
-        updateHighestScore(newRecord, successPopUp);
-
-        // Stop animation after first time
-        this.stopAnimation(rabbitAnimation, animationDuration);
-
-        successPopUp.setCancelable(false);
-        successPopUp.show();
-
-        // Return to the game board
-        GameOperations tempGameInstance = new GameOperations(this.gameInstance.getUserInstance());
-        btnReturnToBoardGame = successPopUp.findViewById(R.id.btn_return);
-        btnReturnToBoardGame.setOnClickListener(v ->
-                startActivity(new Intent(successPopUp.getContext(), GameBoard.class)
-                        .putExtra("gameInstance", tempGameInstance)));
-
-    }
-
-    protected void updateHighestScore(String newRecord,
-                                      Dialog successPopUp)
-    {
-        GameOperations tempGameInstance = new GameOperations(this.gameInstance.getUserInstance());
-        FirebaseFirestore mDatabase = FirebaseFirestore.getInstance();
-        DocumentReference docRef = mDatabase
-                .collection("SavedGames")
-                .document(tempGameInstance.getUserInstance().getPhone());
-
-        // check if the user already has a game saved in db
-        docRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                DocumentSnapshot document = task.getResult();
-                assert document != null;
-                if (document.exists()) {
-                    TextView newRecordView;
-                    TextView msgNewRecord;
-
-                    if(this.gameInstance.isBetterScoreTwo(newRecord))
-                    {
-                        msgNewRecord = successPopUp.findViewById(R.id.msg_new_record);
-                        msgNewRecord.setVisibility(View.VISIBLE);
-                        newRecordView = successPopUp.findViewById(R.id.new_record);
-                        newRecordView.setVisibility(View.VISIBLE);
-                        newRecordView.setText(newRecord);
-                        this.gameInstance.setHighestScoreGameTwo(newRecord);
-                        this.gameInstance.saveGame();
-                    }
-                }
-                else
-                {
-                    Log.d("INFO: ", "No such document");
-                }
-            }
-            else
-            {
-                Log.d("INFO: ", "get failed with ", task.getException());
-            }
-        });
     }
 }

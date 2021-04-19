@@ -25,7 +25,6 @@ import java.util.concurrent.TimeUnit;
 public class CodeVerificationPage extends ActivityMethods {
 
     // Class variables
-    AnimationDrawable rabbitAnimation;
     private String mVerificationId;
     private String strPhoneNumber;
     private String strCode;
@@ -64,20 +63,13 @@ public class CodeVerificationPage extends ActivityMethods {
         if (mVerificationId == null && savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
         }
-
-        // Start playing recording - enter your name
-        this.configRecord(R.raw.enter_code_record);
     }
 
     protected void onStart() {
         super.onStart();
 
         // Start playing animation & record when pressing the rabbit icon
-        rabbitAnimation = (AnimationDrawable) this.configAnimation
-                (R.id.combi_icon, animationDuration);
-
-        // Stop animation after first time
-        this.stopAnimation(rabbitAnimation, animationDuration);
+       this.configAnimation(R.drawable.combi_animation, R.raw.enter_code_record, true);
     }
 
     //the callback to detect the verification status
@@ -184,14 +176,14 @@ public class CodeVerificationPage extends ActivityMethods {
     public void GameBoard(View view) {
 
         // stop animation and record when clicking on the button
-        this.stopRecordAndAnimation(rabbitAnimation, animationDuration);
+        this.mediaPlayer.stop();
 
         // check that the code is valid
         strCode = editTextCode.getText().toString().trim();
         if (strCode.isEmpty() || strCode.length() < 6) {
 
             // start record for enter valid number
-            this.configRecord(R.raw.error_code_record);
+            this.configRecord(R.raw.error_code_record, true);
             editTextCode.setError("הקש מספר חוקי");
             editTextCode.requestFocus();
             return;

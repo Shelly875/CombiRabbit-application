@@ -39,22 +39,26 @@ public class Trailer extends ActivityMethods {
 
         // get Bulls and cows in colors video instructions
         if(gameName.contains("BullsAndCows") && maxAge.equals("7")) {
-            videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.some);
+            videoView.setVideoPath("android.resource://" + getPackageName() + "/"
+                    + R.raw.webm_bulls_cows_colors);
         }
 
         // get Bulls and cows in numbers video instructions
         if(gameName.contains("BullsAndCows") && maxAge.equals("12+")) {
-            videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.some);
+            videoView.setVideoPath("android.resource://" + getPackageName() + "/"
+                    + R.raw.webm_bull_cow_numbers);
         }
 
         // get Who sit next to me in numbers video instructions
         if(gameName.contains("WhoSitNextToMe")) {
-            videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.some);
+            videoView.setVideoPath("android.resource://" + getPackageName() + "/"
+                    + R.raw.webm_bulls_cows_colors);
         }
 
         // get Match and complete to me in numbers video instructions
         if(gameName.contains("MatchAndComplete")) {
-            videoView.setVideoPath("android.resource://" + getPackageName() + "/" + R.raw.some);
+            videoView.setVideoPath("android.resource://" + getPackageName() + "/"
+                    + R.raw.webm_match_complete);
         }
 
         videoView.setMediaController(new MediaController(Trailer.this));

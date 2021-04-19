@@ -14,7 +14,6 @@ import com.example.combirabbit.models.User;
 public class AgePage extends ActivityMethods {
 
     // Class variables
-    private AnimationDrawable rabbitAnimation;
     private Spinner ageSpinner;
     private String spinnerAgeSelected;
     private User newUser;
@@ -30,9 +29,6 @@ public class AgePage extends ActivityMethods {
 
         // Main view - enter name button
         setContentView(R.layout.enter_age_page);
-
-        // Start playing recording - enter your name
-        this.configRecord(R.raw.enter_age_record);
 
         // Get previous intent parameters sent
         Intent prevIntent = getIntent();
@@ -51,11 +47,8 @@ public class AgePage extends ActivityMethods {
         super.onStart();
 
         // Start playing animation & record when pressing the rabbit icon
-        rabbitAnimation = (AnimationDrawable) this.configAnimation
-                (R.id.combi_icon,animationDuration);
+        this.configAnimation(R.drawable.combi_animation, R.raw.enter_age_record, true);
 
-        // Stop animation after first time
-        this.stopAnimation(rabbitAnimation, animationDuration);
     }
 
     public void PhonePage(View view) {
@@ -67,7 +60,7 @@ public class AgePage extends ActivityMethods {
         newUser.setAge(spinnerAgeSelected);
 
         // Stop record and animation when clicking on the button
-        this.stopRecordAndAnimation(rabbitAnimation, animationDuration);
+        this.mediaPlayer.stop();
         startActivity(new Intent(this,PhonePage.class)
                 .putExtra("newUser", newUser).putExtra("isNewGame", isNewGame));
     }

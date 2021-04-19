@@ -17,7 +17,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class PhonePage extends ActivityMethods {
 
     // Class variables
-    private AnimationDrawable rabbitAnimation;
     private boolean isNewGame;
     private EditText phoneNumberField;
     private String strPhoneNumber = "";
@@ -49,20 +48,13 @@ public class PhonePage extends ActivityMethods {
         if(this.newUser == null) {
             this.newUser = new User();
         }
-
-        // Start playing recording - enter your name
-        this.configRecord(R.raw.enter_phone_record);
     }
 
     protected void onStart() {
         super.onStart();
 
         // Start playing animation & record when pressing the rabbit icon
-        rabbitAnimation = (AnimationDrawable) this.configAnimation
-                (R.id.combi_icon, animationDuration);
-
-        // Stop animation after first time
-        this.stopAnimation(rabbitAnimation, animationDuration);
+        this.configAnimation(R.drawable.combi_animation, R.raw.enter_phone_record, true);
     }
 
     public void CodePage(View view) {
@@ -72,11 +64,11 @@ public class PhonePage extends ActivityMethods {
         strPhoneNumber = phoneNumberField.getText().toString();
 
         // stop record and animation
-        this.stopRecordAndAnimation(rabbitAnimation, animationDuration);
+        this.mediaPlayer.stop();
 
         // Check that the phone number is valid
         if (strPhoneNumber.isEmpty() || strPhoneNumber.length() < maxPhoneLength) {
-            this.configRecord(R.raw.error_phone_record);
+            this.configRecord(R.raw.error_phone_record, true);
             phoneNumberField.setError("הקש מספר טלפון חוקי :-)");
             phoneNumberField.requestFocus();
         } else {

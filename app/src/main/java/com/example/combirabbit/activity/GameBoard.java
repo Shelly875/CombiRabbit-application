@@ -140,7 +140,7 @@ public class GameBoard extends ActivityMethods {
                         objChosenGame = new BullsAndCows();
 
                         // input for function: game number 1
-                        ShowPopUp(objChosenGame, maxAge);
+                        ShowNavigatePopUp(objChosenGame, maxAge, 1);
                     });
 
                     // For game two - show popup window and navigate to trailer or game
@@ -155,7 +155,7 @@ public class GameBoard extends ActivityMethods {
                             objChosenGame = new MatchAndComplete();
                         }
                         // input for function: game number 2
-                        ShowPopUp(objChosenGame, maxAge);
+                        ShowNavigatePopUp(objChosenGame, maxAge, 2);
                     });
 
                     Log.d("INFO: ", "DocumentSnapshot data: " + document.getData());
@@ -172,12 +172,20 @@ public class GameBoard extends ActivityMethods {
     protected void onStart() {
         super.onStart();
 
+        // get parents control button id
+        ImageButton btnParentControl = findViewById(R.id.btn_parents_control);
+
         // Start playing animation & record when pressing the rabbit icon
         this.configAnimation(R.drawable.combi_animation, R.raw.game_board_record, false);
+
+        // todo: Open parents control popup with data about the game
+        btnParentControl.setOnClickListener(v -> {
+            ShowParentsControlPopUp(this.gameInstance);
+        });
     }
 
     // popup that will redirect to the wanted game
-    protected void ShowPopUp(Object objChosenGame, String maxAge){
+    protected void ShowNavigatePopUp(Object objChosenGame, String maxAge, int gameNumber){
 
         // Show the pop up for - instructions/start game
         trailerPopUp.setContentView(R.layout.trailer_popup);
@@ -195,6 +203,7 @@ public class GameBoard extends ActivityMethods {
         ImageButton btnStartTrailer = trailerPopUp.findViewById(R.id.btn_guide_button);
         ImageButton btnStartGame = trailerPopUp.findViewById(R.id.btn_start_game_button);
 
+        Log.d("MSG: ", "game number first : " + gameNumber);
         // Each press will lead to other intent - start game
         btnStartGame.setOnClickListener(v -> {
 
@@ -202,7 +211,8 @@ public class GameBoard extends ActivityMethods {
             // we will operate
             startActivity(new Intent(GameBoard.this,
                     objChosenGame.getClass()).putExtra("maxAge", maxAge)
-                                             .putExtra("gameInstance", this.gameInstance));
+                                             .putExtra("gameInstance", this.gameInstance)
+                                             .putExtra("gameNumber", gameNumber));
         });
         // Each press will lead to other intent - start trailer
         btnStartTrailer.setOnClickListener(v -> {

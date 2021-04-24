@@ -33,6 +33,7 @@ public class MatchAndComplete extends ActivityMethods {
     private int shapeClickPlace = 0;
     private FrameLayout layerShapesBoard;
     private ArrayList<ImagePlace> userPlacement;
+    private int gameNumber;
     private int nLevel = 1;
     private final int MAX_LEVEL = 5;
 
@@ -51,7 +52,7 @@ public class MatchAndComplete extends ActivityMethods {
 
         Intent prevIntent = getIntent();
         this.gameInstance = (GameOperations) prevIntent.getSerializableExtra("gameInstance");
-
+        this.gameNumber = prevIntent.getIntExtra("gameNumber", 0);
         // Find the instructions button
         ImageButton btnInstruction = findViewById(R.id.btn_match_instructions);
 
@@ -155,7 +156,7 @@ public class MatchAndComplete extends ActivityMethods {
                     timerView.stop();
                     // if there is a new record, show on the screen and save
                     // currentRecord > previousRecord, open firebase to check
-                    ShowPopUp(gameInstance, (String) timerView.getText());
+                    ShowPopUp(gameInstance, (String) timerView.getText(), gameNumber);
                 }
 
                 // continue to play

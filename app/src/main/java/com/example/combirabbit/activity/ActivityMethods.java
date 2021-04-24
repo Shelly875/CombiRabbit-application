@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -14,14 +15,15 @@ import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.combirabbit.R;
 import com.example.combirabbit.models.GameOperations;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ActivityMethods extends AppCompatActivity {
 
@@ -163,7 +165,8 @@ public class ActivityMethods extends AppCompatActivity {
         }
     }
 
-    protected void ShowPopUp(GameOperations gameInstance, String newRecord)
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    protected void ShowPopUp(GameOperations gameInstance, String newRecord, int gameNumber)
     {
         ImageButton btnReturnToBoardGame;
 
@@ -175,9 +178,9 @@ public class ActivityMethods extends AppCompatActivity {
         this.configAnimation(R.drawable.combi_animation,R.raw.guess_success,
                 successPopUp, true);
 
-        // Update the score of the first game of the user
+        // Update the score of the current game (one or two) of the user
         // if the score is smaller than the previous one
-        updateHighestScore(gameInstance, newRecord, successPopUp);
+        updateHighestScore(gameInstance, newRecord, successPopUp, gameNumber);
 
         successPopUp.setCancelable(false);
         successPopUp.show();
@@ -185,18 +188,17 @@ public class ActivityMethods extends AppCompatActivity {
         // Return to the game board
         GameOperations tempGameInstance = new GameOperations(gameInstance.getUserInstance());
         btnReturnToBoardGame = successPopUp.findViewById(R.id.btn_return);
-        btnReturnToBoardGame.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Code here executes on main thread after user presses button
-                mediaPlayer.stop();
-                startActivity(new Intent(successPopUp.getContext(), GameBoard.class)
-                        .putExtra("gameInstance", tempGameInstance));
-            }
+        btnReturnToBoardGame.setOnClickListener(v -> {
+            // Code here executes on main thread after user presses button
+            mediaPlayer.stop();
+            startActivity(new Intent(successPopUp.getContext(), GameBoard.class)
+                    .putExtra("gameInstance", tempGameInstance));
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     protected void updateHighestScore(GameOperations gameInstance, String newRecord,
-                                      Dialog successPopUp)
+                                      Dialog successPopUp, int gameNumber)
     {
         GameOperations tempGameInstance = new GameOperations(gameInstance.getUserInstance());
         FirebaseFirestore mDatabase = FirebaseFirestore.getInstance();
@@ -212,16 +214,37 @@ public class ActivityMethods extends AppCompatActivity {
                 if (document.exists()) {
                     TextView newRecordView;
                     TextView msgNewRecord;
+                    Log.d("Log: ", "Game number 2: " + gameNumber);
+                    if(gameNumber == 1) {
 
-                    if(gameInstance.isBetterScoreTwo(newRecord))
-                    {
-                        msgNewRecord = successPopUp.findViewById(R.id.msg_new_record);
-                        msgNewRecord.setVisibility(View.VISIBLE);
-                        newRecordView = successPopUp.findViewById(R.id.new_record);
-                        newRecordView.setVisibility(View.VISIBLE);
-                        newRecordView.setText(newRecord);
-                        gameInstance.setHighestScoreGameTwo(newRecord);
-                        gameInstance.saveGame();
+                        if (gameInstance.isBetterScoreOne(newRecord)) {
+                            saveParentControl(gameInstance, true, gameNumber);
+                            msgNewRecord = successPopUp.findViewById(R.id.msg_new_record);
+                            msgNewRecord.setVisibility(View.VISIBLE);
+                            newRecordView = successPopUp.findViewById(R.id.new_record);
+                            newRecordView.setVisibility(View.VISIBLE);
+                            newRecordView.setText(newRecord);
+                            gameInstance.setHighestScoreGameOne(newRecord);
+                            gameInstance.saveGame();
+                        }
+                        else{
+                            saveParentControl(gameInstance, false, gameNumber);
+                        }
+                    }
+                    else{
+                        if(gameInstance.isBetterScoreTwo(newRecord)){
+                            saveParentControl(gameInstance, true, gameNumber);
+                            msgNewRecord = successPopUp.findViewById(R.id.msg_new_record);
+                            msgNewRecord.setVisibility(View.VISIBLE);
+                            newRecordView = successPopUp.findViewById(R.id.new_record);
+                            newRecordView.setVisibility(View.VISIBLE);
+                            newRecordView.setText(newRecord);
+                            gameInstance.setHighestScoreGameTwo(newRecord);
+                            gameInstance.saveGame();
+                        }
+                        else{
+                            saveParentControl(gameInstance, false, gameNumber);
+                        }
                     }
                 }
                 else
@@ -236,5 +259,184 @@ public class ActivityMethods extends AppCompatActivity {
         });
     }
 
+    protected void ShowParentsControlPopUp(GameOperations gameInstance)
+    {
+        Dialog parentsControlPopUp = new Dialog(this);
+        parentsControlPopUp.setContentView(R.layout.parents_control_popup);
+        parentsControlPopUp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        // Update the score of the first game of the user
+        // if the score is smaller than the previous one
+
+        // pressing on the close popup feature
+        parentsControlPopUp.findViewById(R.id.close_pop_up).setOnClickListener(v -> {
+            parentsControlPopUp.dismiss();
+        });
+
+        // Get all fields to fill from the db from the parents popup layout
+        TextView recordBrokeOne = parentsControlPopUp.findViewById(R.id.num_record_broke_one);
+        TextView recordBrokeTwo = parentsControlPopUp.findViewById(R.id.num_record_broke_two);
+        TextView numGamesPlayedOne = parentsControlPopUp.findViewById(R.id.num_games_one);
+        TextView numGamesPlayedTwo = parentsControlPopUp.findViewById(R.id.num_games_two);
+        TextView lastGameDateOne = parentsControlPopUp.findViewById(R.id.date_one);
+        TextView lastGameDateTwo = parentsControlPopUp.findViewById(R.id.date_two);
+        TextView progressOne = parentsControlPopUp.findViewById(R.id.percentage_progress_one);
+        TextView progressTwo = parentsControlPopUp.findViewById(R.id.percentage_progress_two);
+        TextView titleGameOne = parentsControlPopUp.findViewById(R.id.title_game_one);
+        TextView titleGameTwo = parentsControlPopUp.findViewById(R.id.title_game_two);
+
+        GameOperations tempGameInstance = new GameOperations(gameInstance.getUserInstance());
+        FirebaseFirestore mDatabase = FirebaseFirestore.getInstance();
+        DocumentReference docRef = mDatabase
+                .collection("ParentControl")
+                .document(tempGameInstance.getUserInstance().getPhone());
+
+        // check if the parent control instance already exists in db
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                assert document != null;
+                // check if document exists
+                if (document.exists()) {
+
+                    // fill all the data on the player's games
+                    recordBrokeOne.setText(String.valueOf(((Number) document
+                            .get("numRecordBrokeOne")).intValue()));
+                    recordBrokeTwo.setText(String.valueOf(((Number) document
+                            .get("numRecordBrokeTwo")).intValue()));
+                    numGamesPlayedOne.setText(String.valueOf(((Number) document
+                            .get("sumGamesOne")).intValue()));
+                    numGamesPlayedTwo.setText(String.valueOf(((Number) document
+                            .get("sumGamesTwo")).intValue()));
+                    lastGameDateOne.setText(document.getString("lastGameDateOne"));
+                    lastGameDateTwo.setText(document.getString("lastGameDateTwo"));
+                    progressOne.setText(document.getString("progressPercentOne"));
+                    progressTwo.setText(document.getString("progressPercentTwo"));
+
+                    // check the ages of the player to fit the titles of the games
+                    if(gameInstance.getUserInstance().getAge().matches("[6-7]"))
+                    {
+                        titleGameOne.setText("בול פגיעה בצבעים");
+                        titleGameTwo.setText("מי נמצא לצידי");
+                    }
+                    else{
+                        titleGameOne.setText("בול פגיעה במספרים");
+                        titleGameTwo.setText("התאם והשלם");
+                    }
+
+                }
+                else
+                {
+                    Log.d("ERROR : ", "Problem, there is no chance" +
+                            " that there is no parent control");
+                }
+            }
+            else
+            {
+                Log.d("INFO: ", "get failed with ", task.getException());
+            }
+        });
+
+        parentsControlPopUp.setCancelable(false);
+        parentsControlPopUp.show();
+    }
+
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    protected void saveParentControl(GameOperations gameInstance,
+                                     boolean isNewRecord, int gameNumber)
+    {
+        GameOperations tempGameInstance = new GameOperations(gameInstance.getUserInstance());
+        FirebaseFirestore mDatabase = FirebaseFirestore.getInstance();
+        DocumentReference docRef = mDatabase
+                .collection("ParentControl")
+                .document(tempGameInstance.getUserInstance().getPhone());
+
+        // Init record number broke per game
+
+
+        // check if the parent control instance already exists in db
+        docRef.get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                DocumentSnapshot document = task.getResult();
+                assert document != null;
+                // check if document exists
+                if (document.exists()) {
+
+                    int numRecordBroke;
+                    // the date of the current game
+                    LocalDateTime myDateObj = LocalDateTime.now();
+                    DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                    String formattedDate = myDateObj.format(myFormatObj);
+
+                    // game number one to update
+                    if(gameNumber == 1) {
+
+                        // check if the this is a new game so there is no record to increase
+                        numRecordBroke = checkRecordBroke(document,isNewRecord,
+                                "numRecordBrokeOne");
+                        // create a record for parent control db
+                        docRef.update("numRecordBrokeOne", numRecordBroke);
+                        docRef.update("sumGamesOne", (Long)document
+                                .get("sumGamesOne") + 1);
+                        docRef.update("lastGameDateOne",formattedDate);
+                        if((Long)document.get("sumGamesOne") != 0) {
+                            int sumGamesOne = ((Number)((Long) document
+                                    .get("sumGamesOne"))).intValue() + 1;
+                            double progressPercentOne = ((double)numRecordBroke/
+                                    (double)sumGamesOne)*100;
+                            docRef.update("progressPercentOne",
+                                    (Math.round(progressPercentOne)) + "%");
+                        }
+                    }
+                    // game number two to update
+                    else{
+
+                        // check if the this is a new game so there is no record to increase
+                        numRecordBroke = checkRecordBroke(document,isNewRecord,
+                                "numRecordBrokeTwo");
+
+                        // create a record for parent control db
+                        docRef.update("numRecordBrokeTwo", numRecordBroke);
+                        docRef.update("sumGamesTwo",
+                                (Long)document.get("sumGamesTwo") + 1);
+                        docRef.update("lastGameDateTwo", formattedDate);
+                        if((Long)document.get("sumGamesTwo") != 0)
+                        {
+                            int sumGamesTwo = ((Number)((Long) document
+                                    .get("sumGamesTwo"))).intValue() + 1;
+                            double progressPercentTwo = ((double)numRecordBroke/
+                                    (double)sumGamesTwo)*100;
+                            docRef.update("progressPercentTwo",
+                                    (Math.round(progressPercentTwo)) + "%");
+                        }
+
+                    }
+                }
+                else
+                {
+                    Log.d("ERROR : ", "Problem, there is no chance" +
+                            " that there is no parent control");
+                }
+            }
+            else
+            {
+                Log.d("INFO: ", "get failed with ", task.getException());
+            }
+        });
+    }
+
+
+    public int checkRecordBroke(DocumentSnapshot document, boolean isNewRecord,
+                                String numBrokePerGame){
+
+        int numRecordBroke = ((Number)((Long) document.get(numBrokePerGame))).intValue();
+
+        if(isNewRecord) {
+            numRecordBroke ++;
+        }
+
+        return numRecordBroke;
+    }
 
 }

@@ -228,21 +228,6 @@ public class BearsArrangement {
                     }
                 }
 
-//                if(userBearsGuess.get(i).equals(this.getGame_rules()[2]))
-//                {
-//                    if(userBearsGuess.get(i + 1).equals(this.getGame_rules()[3]))
-//                    {
-//                        return false;
-//                    }
-//                }
-//
-//                if(userBearsGuess.get(i).equals(this.getGame_rules()[3]))
-//                {
-//                    if(userBearsGuess.get(i + 1).equals(this.getGame_rules()[2]))
-//                    {
-//                        return false;
-//                    }
-//                }
             }
         }
         return true;

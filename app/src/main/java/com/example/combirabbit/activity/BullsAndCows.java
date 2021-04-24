@@ -53,6 +53,7 @@ public class BullsAndCows extends ActivityMethods{
     private final int BULL = 0;
     private boolean isButtonPressedClear = true;
     private EditText txtUserGuess;
+    private int gameNumber;
     int[] nResultNum = {0,0};
 
     @Override
@@ -66,6 +67,7 @@ public class BullsAndCows extends ActivityMethods{
                 .getSerializableExtra("gameInstance");
 
         String maxAge = prevIntent.getStringExtra("maxAge");
+        this.gameNumber = prevIntent.getIntExtra("gameNumber", 0);
 
         // Set the activity to use full screen
         this.fullScreen();
@@ -274,7 +276,7 @@ public class BullsAndCows extends ActivityMethods{
 
                     // if there is a new record, show on the screen and save
                     // currentRecord > previousRecord, open firebase to check
-                    ShowPopUp(this.gameInstance, (String) timerView.getText());
+                    ShowPopUp(this.gameInstance, (String) timerView.getText(), this.gameNumber);
                 }
             }
             // Write the guess into the table of guessing
@@ -367,7 +369,8 @@ public class BullsAndCows extends ActivityMethods{
                  timerView.stop();
                  // if there is a new record, show on the screen and save
                  // currentRecord > previousRecord, open firebase to check
-                 ShowPopUp(this.gameInstance, (String) timerView.getText());
+                 Log.d("log: ", "game number:" + this.gameNumber);
+                 ShowPopUp(this.gameInstance, (String) timerView.getText(), this.gameNumber);
             }
 
             // Write the guess into the table of guessing

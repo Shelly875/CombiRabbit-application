@@ -29,6 +29,7 @@ public class WhoSitNextToMe extends ActivityMethods{
     private LinearLayout linearRepoUserBear;
     private RelativeLayout relativeRulesTable;
     private GameOperations gameInstance;
+    private int gameNumber;
 
     public WhoSitNextToMe() {
     }
@@ -49,6 +50,7 @@ public class WhoSitNextToMe extends ActivityMethods{
         this.gameInstance = (GameOperations) prevIntent
                 .getSerializableExtra("gameInstance");
 
+        this.gameNumber = prevIntent.getIntExtra("gameNumber", 0);
         // Declare popup for the instruction button
         ImageButton btnInstruction= findViewById(R.id.btn_who_next_instructions);
         btnInstruction.setOnClickListener(v -> {
@@ -157,7 +159,7 @@ public class WhoSitNextToMe extends ActivityMethods{
 
                 // if there is a new record, show on the screen and save
                 // currentRecord > previousRecord, open firebase to check
-                this.ShowPopUp(this.gameInstance, (String) timerView.getText());
+                this.ShowPopUp(this.gameInstance, (String) timerView.getText(), this.gameNumber);
 
             }
             else {

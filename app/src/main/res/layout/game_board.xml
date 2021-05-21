@@ -153,12 +153,12 @@
         app:layout_constraintVertical_bias="0.053" />
 
     <ImageButton
-        android:id="@+id/btn_parents_control"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:id="@+id/btn_progress_data"
+        android:layout_width="96dp"
+        android:layout_height="86dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/btn_parents_control"
+        android:background="@drawable/btn_progress_data"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

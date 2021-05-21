@@ -2,15 +2,9 @@ package com.example.combirabbit.models;
 
 import android.os.Build;
 import android.util.Log;
-
 import androidx.annotation.RequiresApi;
-
 import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,11 +64,11 @@ public class GameOperations implements Serializable {
         parentControl.put("numRecordBrokeOne", 0);
         parentControl.put("sumGamesOne", 0);
         parentControl.put("lastGameDateOne","לא שוחק");
-        parentControl.put("progressPercentOne", "100%");
+        parentControl.put("progressPercentOne", "0%");
         parentControl.put("numRecordBrokeTwo", 0);
         parentControl.put("sumGamesTwo", 0);
         parentControl.put("lastGameDateTwo", "לא שוחק");
-        parentControl.put("progressPercentTwo", "100%");
+        parentControl.put("progressPercentTwo", "0%");
 
         // save in parent control db
         this.getFireBaseInstance().collection("ParentControl")

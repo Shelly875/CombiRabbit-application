@@ -173,15 +173,13 @@ public class GameBoard extends ActivityMethods {
         super.onStart();
 
         // get parents control button id
-        ImageButton btnParentControl = findViewById(R.id.btn_parents_control);
+        ImageButton btnParentControl = findViewById(R.id.btn_progress_data);
 
         // Start playing animation & record when pressing the rabbit icon
         this.configAnimation(R.drawable.combi_animation, R.raw.game_board_record, false);
 
-        // todo: Open parents control popup with data about the game
-        btnParentControl.setOnClickListener(v -> {
-            ShowParentsControlPopUp(this.gameInstance);
-        });
+        // Open parents control popup with data about the game
+        btnParentControl.setOnClickListener(v -> ShowParentsControlPopUp(this.gameInstance));
     }
 
     // popup that will redirect to the wanted game

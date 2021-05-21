@@ -25,11 +25,6 @@ public class GameOperations implements Serializable {
         this.highestScoreGameTwo = highestScoreTwo;
     }
 
-    // Start connection to the database server
-    public void setFireBaseInstance() {
-        this.mDatabase = FirebaseFirestore.getInstance();
-    }
-
     // Get firebase instance
     public FirebaseFirestore getFireBaseInstance() {
 
@@ -57,23 +52,23 @@ public class GameOperations implements Serializable {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void createParentControl()
+    public void createProgressControl()
     {
-        // create a record for parent control db
-        Map<String, Object> parentControl = new HashMap<>();
-        parentControl.put("numRecordBrokeOne", 0);
-        parentControl.put("sumGamesOne", 0);
-        parentControl.put("lastGameDateOne","לא שוחק");
-        parentControl.put("progressPercentOne", "0%");
-        parentControl.put("numRecordBrokeTwo", 0);
-        parentControl.put("sumGamesTwo", 0);
-        parentControl.put("lastGameDateTwo", "לא שוחק");
-        parentControl.put("progressPercentTwo", "0%");
+        // create a record for progress data db
+        Map<String, Object> progressControl = new HashMap<>();
+        progressControl.put("numRecordBrokeOne", 0);
+        progressControl.put("sumGamesOne", 0);
+        progressControl.put("lastGameDateOne","לא שוחק");
+        progressControl.put("progressPercentOne", "0%");
+        progressControl.put("numRecordBrokeTwo", 0);
+        progressControl.put("sumGamesTwo", 0);
+        progressControl.put("lastGameDateTwo", "לא שוחק");
+        progressControl.put("progressPercentTwo", "0%");
 
-        // save in parent control db
-        this.getFireBaseInstance().collection("ParentControl")
+        // save in progress data db
+        this.getFireBaseInstance().collection("ProgressData")
                 .document(this.getUserInstance().getPhone())
-                .set(parentControl);
+                .set(progressControl);
     }
 
     public User getUserInstance() {

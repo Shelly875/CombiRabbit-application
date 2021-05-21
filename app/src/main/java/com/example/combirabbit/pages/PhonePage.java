@@ -2,10 +2,14 @@ package com.example.combirabbit.pages;
 
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+
+import androidx.annotation.RequiresApi;
+
 import com.example.combirabbit.R;
 import com.example.combirabbit.activity.ActivityMethods;
 import com.example.combirabbit.activity.GameBoard;
@@ -56,6 +60,7 @@ public class PhonePage extends ActivityMethods {
         this.configAnimation(R.drawable.combi_animation, R.raw.enter_phone_record, true);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void CodePage(View view) {
 
         // get phone number text
@@ -103,8 +108,8 @@ public class PhonePage extends ActivityMethods {
                             // save new game to db
                             this.gameInstance.saveGame();
 
-                            // create new parent control for the new user
-                            this.gameInstance.createParentControl();
+                            // create new progress control for the new user
+                            this.gameInstance.createProgressControl();
                         }
                         startActivity(new Intent(this, GameBoard.class)
                                 .putExtra("gameInstance", tempGameInstance));

@@ -172,14 +172,14 @@ public class GameBoard extends ActivityMethods {
     protected void onStart() {
         super.onStart();
 
-        // get parents control button id
-        ImageButton btnParentControl = findViewById(R.id.btn_progress_data);
+        // get progress control button id
+        ImageButton btnProgressControl = findViewById(R.id.btn_progress_data);
 
         // Start playing animation & record when pressing the rabbit icon
         this.configAnimation(R.drawable.combi_animation, R.raw.game_board_record, false);
 
-        // Open parents control popup with data about the game
-        btnParentControl.setOnClickListener(v -> ShowParentsControlPopUp(this.gameInstance));
+        // Open progress control popup with data about the game
+        btnProgressControl.setOnClickListener(v -> ShowProgressControlPopUp(this.gameInstance));
     }
 
     // popup that will redirect to the wanted game

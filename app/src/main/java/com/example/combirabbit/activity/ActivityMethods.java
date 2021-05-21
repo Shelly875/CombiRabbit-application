@@ -24,6 +24,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 public class ActivityMethods extends AppCompatActivity {
 
@@ -53,7 +54,7 @@ public class ActivityMethods extends AppCompatActivity {
         }
     }
 
-    protected Object configAnimation(int combImg, int record, boolean isOnStart) {
+    protected void configAnimation(int combImg, int record, boolean isOnStart) {
 
         AnimationDrawable rabbitAnimation;
         rabbitIcon = findViewById(R.id.combi_icon);
@@ -85,7 +86,6 @@ public class ActivityMethods extends AppCompatActivity {
             }
         });
         this.stopAnimation(rabbitAnimation, this.mediaPlayer.getDuration());
-        return rabbitAnimation;
     }
 
     protected Object configAnimation(int combImg, int record,
@@ -218,7 +218,7 @@ public class ActivityMethods extends AppCompatActivity {
                     if(gameNumber == 1) {
 
                         if (gameInstance.isBetterScoreOne(newRecord)) {
-                            saveParentControl(gameInstance, true, gameNumber);
+                            saveProgressControl(gameInstance, true, gameNumber);
                             msgNewRecord = successPopUp.findViewById(R.id.msg_new_record);
                             msgNewRecord.setVisibility(View.VISIBLE);
                             newRecordView = successPopUp.findViewById(R.id.new_record);
@@ -228,12 +228,12 @@ public class ActivityMethods extends AppCompatActivity {
                             gameInstance.saveGame();
                         }
                         else{
-                            saveParentControl(gameInstance, false, gameNumber);
+                            saveProgressControl(gameInstance, false, gameNumber);
                         }
                     }
                     else{
                         if(gameInstance.isBetterScoreTwo(newRecord)){
-                            saveParentControl(gameInstance, true, gameNumber);
+                            saveProgressControl(gameInstance, true, gameNumber);
                             msgNewRecord = successPopUp.findViewById(R.id.msg_new_record);
                             msgNewRecord.setVisibility(View.VISIBLE);
                             newRecordView = successPopUp.findViewById(R.id.new_record);
@@ -243,7 +243,7 @@ public class ActivityMethods extends AppCompatActivity {
                             gameInstance.saveGame();
                         }
                         else{
-                            saveParentControl(gameInstance, false, gameNumber);
+                            saveProgressControl(gameInstance, false, gameNumber);
                         }
                     }
                 }
@@ -259,39 +259,39 @@ public class ActivityMethods extends AppCompatActivity {
         });
     }
 
-    protected void ShowParentsControlPopUp(GameOperations gameInstance)
+    protected void ShowProgressControlPopUp(GameOperations gameInstance)
     {
-        Dialog parentsControlPopUp = new Dialog(this);
-        parentsControlPopUp.setContentView(R.layout.parents_control_popup);
-        parentsControlPopUp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        Dialog progressControlPopUp = new Dialog(this);
+        progressControlPopUp.setContentView(R.layout.progress_data_popup);
+        progressControlPopUp.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         // Update the score of the first game of the user
         // if the score is smaller than the previous one
 
         // pressing on the close popup feature
-        parentsControlPopUp.findViewById(R.id.close_pop_up).setOnClickListener(v -> {
-            parentsControlPopUp.dismiss();
+        progressControlPopUp.findViewById(R.id.close_pop_up).setOnClickListener(v -> {
+            progressControlPopUp.dismiss();
         });
 
-        // Get all fields to fill from the db from the parents popup layout
-        TextView recordBrokeOne = parentsControlPopUp.findViewById(R.id.num_record_broke_one);
-        TextView recordBrokeTwo = parentsControlPopUp.findViewById(R.id.num_record_broke_two);
-        TextView numGamesPlayedOne = parentsControlPopUp.findViewById(R.id.num_games_one);
-        TextView numGamesPlayedTwo = parentsControlPopUp.findViewById(R.id.num_games_two);
-        TextView lastGameDateOne = parentsControlPopUp.findViewById(R.id.date_one);
-        TextView lastGameDateTwo = parentsControlPopUp.findViewById(R.id.date_two);
-        TextView progressOne = parentsControlPopUp.findViewById(R.id.percentage_progress_one);
-        TextView progressTwo = parentsControlPopUp.findViewById(R.id.percentage_progress_two);
-        TextView titleGameOne = parentsControlPopUp.findViewById(R.id.title_game_one);
-        TextView titleGameTwo = parentsControlPopUp.findViewById(R.id.title_game_two);
+        // Get all fields to fill from the db from the progress popup layout
+        TextView recordBrokeOne = progressControlPopUp.findViewById(R.id.num_record_broke_one);
+        TextView recordBrokeTwo = progressControlPopUp.findViewById(R.id.num_record_broke_two);
+        TextView numGamesPlayedOne = progressControlPopUp.findViewById(R.id.num_games_one);
+        TextView numGamesPlayedTwo = progressControlPopUp.findViewById(R.id.num_games_two);
+        TextView lastGameDateOne = progressControlPopUp.findViewById(R.id.date_one);
+        TextView lastGameDateTwo = progressControlPopUp.findViewById(R.id.date_two);
+        TextView progressOne = progressControlPopUp.findViewById(R.id.percentage_progress_one);
+        TextView progressTwo = progressControlPopUp.findViewById(R.id.percentage_progress_two);
+        TextView titleGameOne = progressControlPopUp.findViewById(R.id.title_game_one);
+        TextView titleGameTwo = progressControlPopUp.findViewById(R.id.title_game_two);
 
         GameOperations tempGameInstance = new GameOperations(gameInstance.getUserInstance());
         FirebaseFirestore mDatabase = FirebaseFirestore.getInstance();
         DocumentReference docRef = mDatabase
-                .collection("ParentControl")
+                .collection("ProgressData")
                 .document(tempGameInstance.getUserInstance().getPhone());
 
-        // check if the parent control instance already exists in db
+        // check if the progress control instance already exists in db
         docRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
@@ -300,14 +300,14 @@ public class ActivityMethods extends AppCompatActivity {
                 if (document.exists()) {
 
                     // fill all the data on the player's games
-                    recordBrokeOne.setText(String.valueOf(((Number) document
-                            .get("numRecordBrokeOne")).intValue()));
-                    recordBrokeTwo.setText(String.valueOf(((Number) document
-                            .get("numRecordBrokeTwo")).intValue()));
-                    numGamesPlayedOne.setText(String.valueOf(((Number) document
-                            .get("sumGamesOne")).intValue()));
-                    numGamesPlayedTwo.setText(String.valueOf(((Number) document
-                            .get("sumGamesTwo")).intValue()));
+                    recordBrokeOne.setText(String.valueOf(((Number) Objects.requireNonNull(document
+                            .get("numRecordBrokeOne"))).intValue()));
+                    recordBrokeTwo.setText(String.valueOf(((Number) Objects.requireNonNull(document
+                            .get("numRecordBrokeTwo"))).intValue()));
+                    numGamesPlayedOne.setText(String.valueOf(((Number) Objects.requireNonNull(document
+                            .get("sumGamesOne"))).intValue()));
+                    numGamesPlayedTwo.setText(String.valueOf(((Number) Objects.requireNonNull(document
+                            .get("sumGamesTwo"))).intValue()));
                     lastGameDateOne.setText(document.getString("lastGameDateOne"));
                     lastGameDateTwo.setText(document.getString("lastGameDateTwo"));
                     progressOne.setText(document.getString("progressPercentOne"));
@@ -328,7 +328,7 @@ public class ActivityMethods extends AppCompatActivity {
                 else
                 {
                     Log.d("ERROR : ", "Problem, there is no chance" +
-                            " that there is no parent control");
+                            " that there is no progress control");
                 }
             }
             else
@@ -337,25 +337,25 @@ public class ActivityMethods extends AppCompatActivity {
             }
         });
 
-        parentsControlPopUp.setCancelable(false);
-        parentsControlPopUp.show();
+        progressControlPopUp.setCancelable(false);
+        progressControlPopUp.show();
     }
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    protected void saveParentControl(GameOperations gameInstance,
-                                     boolean isNewRecord, int gameNumber)
+    protected void saveProgressControl(GameOperations gameInstance,
+                                       boolean isNewRecord, int gameNumber)
     {
         GameOperations tempGameInstance = new GameOperations(gameInstance.getUserInstance());
         FirebaseFirestore mDatabase = FirebaseFirestore.getInstance();
         DocumentReference docRef = mDatabase
-                .collection("ParentControl")
+                .collection("ProgressData")
                 .document(tempGameInstance.getUserInstance().getPhone());
 
         // Init record number broke per game
 
 
-        // check if the parent control instance already exists in db
+        // check if the progress control instance already exists in db
         docRef.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot document = task.getResult();
@@ -375,14 +375,14 @@ public class ActivityMethods extends AppCompatActivity {
                         // check if the this is a new game so there is no record to increase
                         numRecordBroke = checkRecordBroke(document,isNewRecord,
                                 "numRecordBrokeOne");
-                        // create a record for parent control db
+                        // create a record for progress control db
                         docRef.update("numRecordBrokeOne", numRecordBroke);
                         docRef.update("sumGamesOne", (Long)document
                                 .get("sumGamesOne") + 1);
                         docRef.update("lastGameDateOne",formattedDate);
                         if((Long)document.get("sumGamesOne") != 0) {
-                            int sumGamesOne = ((Number)((Long) document
-                                    .get("sumGamesOne"))).intValue() + 1;
+                            int sumGamesOne = ((Number)((Long) Objects.requireNonNull(document
+                                    .get("sumGamesOne")))).intValue() + 1;
                             double progressPercentOne = ((double)numRecordBroke/
                                     (double)sumGamesOne)*100;
                             docRef.update("progressPercentOne",
@@ -396,7 +396,7 @@ public class ActivityMethods extends AppCompatActivity {
                         numRecordBroke = checkRecordBroke(document,isNewRecord,
                                 "numRecordBrokeTwo");
 
-                        // create a record for parent control db
+                        // create a record for progress control db
                         docRef.update("numRecordBrokeTwo", numRecordBroke);
                         docRef.update("sumGamesTwo",
                                 (Long)document.get("sumGamesTwo") + 1);
@@ -416,7 +416,7 @@ public class ActivityMethods extends AppCompatActivity {
                 else
                 {
                     Log.d("ERROR : ", "Problem, there is no chance" +
-                            " that there is no parent control");
+                            " that there is no progress control");
                 }
             }
             else
@@ -430,7 +430,7 @@ public class ActivityMethods extends AppCompatActivity {
     public int checkRecordBroke(DocumentSnapshot document, boolean isNewRecord,
                                 String numBrokePerGame){
 
-        int numRecordBroke = ((Number)((Long) document.get(numBrokePerGame))).intValue();
+        int numRecordBroke = ((Number)((Long) Objects.requireNonNull(document.get(numBrokePerGame)))).intValue();
 
         if(isNewRecord) {
             numRecordBroke ++;

@@ -26,6 +26,7 @@
                 android:layout_marginTop="40dp"
                 android:padding="10dp"
                 android:text="לאיזה מסך תרצה להגיע?"
+                android:textDirection="rtl"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"

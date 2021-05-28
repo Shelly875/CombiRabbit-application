@@ -8,6 +8,8 @@ import android.widget.EditText;
 
 import com.example.combirabbit.R;
 import com.example.combirabbit.activity.ActivityMethods;
+import com.example.combirabbit.activity.GameBoard;
+import com.example.combirabbit.activity.MainActivity;
 import com.example.combirabbit.models.User;
 
 public class NamePage extends ActivityMethods {
@@ -53,5 +55,19 @@ public class NamePage extends ActivityMethods {
         this.mediaPlayer.stop();
         startActivity(new Intent(this,AgePage.class)
                 .putExtra("newUser", newUser).putExtra("isNewGame", isNewGame));
+    }
+
+    @Override
+    protected void onStop() {
+        // call the superclass method first
+        super.onStop();
+        onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+        startActivity(new Intent(NamePage.this, MainActivity.class));
     }
 }

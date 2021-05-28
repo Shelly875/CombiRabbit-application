@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import com.example.combirabbit.R;
 import com.example.combirabbit.activity.ActivityMethods;
 import com.example.combirabbit.activity.GameBoard;
+import com.example.combirabbit.activity.MainActivity;
 import com.example.combirabbit.models.GameOperations;
 import com.example.combirabbit.models.User;
 import com.google.firebase.FirebaseException;
@@ -85,11 +86,11 @@ public class CodeVerificationPage extends ActivityMethods {
                     //in this case the code will be null
                     //so user has to manually enter the code
                     verifyVerificationCode(code);
-//                    if (code != null) {
-//                        editTextCode.setText(code);
-//                        //verifying the code
-//                        verifyVerificationCode(code);
-//                    }
+                    if (code != null) {
+                        editTextCode.setText(code);
+                        //verifying the code
+                        verifyVerificationCode(code);
+                    }
                 }
 
                 @Override
@@ -203,6 +204,20 @@ public class CodeVerificationPage extends ActivityMethods {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString(KEY_VERIFICATION_ID, mVerificationId);
+    }
+
+    @Override
+    protected void onStop() {
+        // call the superclass method first
+        super.onStop();
+        onBackPressed();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
+        startActivity(new Intent(CodeVerificationPage.this, MainActivity.class));
     }
 
 }

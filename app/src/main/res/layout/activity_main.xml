@@ -33,12 +33,11 @@
 
     <ImageView
         android:id="@+id/combi_icon"
-        android:layout_width="223dp"
-        android:layout_height="212dp"
-        android:layout_marginTop="52dp"
+        android:layout_width="245dp"
+        android:layout_height="230dp"
+        android:layout_marginTop="204dp"
         android:onClick="clicking"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

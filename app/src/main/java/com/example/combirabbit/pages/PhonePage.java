@@ -122,4 +122,11 @@ public class PhonePage extends ActivityMethods {
             });
         }
     }
+    public void onBackPressed ()
+    {
+        super.onBackPressed();
+        finish();
+        Intent in = new Intent(PhonePage.this,MainActivity.class);
+        startActivity(in);
+    }
 }

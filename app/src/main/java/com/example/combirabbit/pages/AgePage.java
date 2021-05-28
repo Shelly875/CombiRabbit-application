@@ -66,4 +66,12 @@ public class AgePage extends ActivityMethods {
         startActivity(new Intent(this,PhonePage.class)
                 .putExtra("newUser", newUser).putExtra("isNewGame", isNewGame));
     }
+
+    public void onBackPressed ()
+    {
+        super.onBackPressed();
+        finish();
+        Intent in = new Intent(AgePage.this,MainActivity.class);
+        startActivity(in);
+    }
 }

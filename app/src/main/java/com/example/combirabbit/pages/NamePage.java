@@ -56,4 +56,12 @@ public class NamePage extends ActivityMethods {
         startActivity(new Intent(this,AgePage.class)
                 .putExtra("newUser", newUser).putExtra("isNewGame", isNewGame));
     }
+
+    public void onBackPressed ()
+    {
+        super.onBackPressed();
+        finish();
+        Intent in = new Intent(NamePage.this,MainActivity.class);
+        startActivity(in);
+    }
 }

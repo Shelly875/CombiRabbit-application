@@ -205,4 +205,12 @@ public class CodeVerificationPage extends ActivityMethods {
         super.onSaveInstanceState(outState);
         outState.putString(KEY_VERIFICATION_ID, mVerificationId);
     }
+
+    public void onBackPressed ()
+    {
+        super.onBackPressed();
+        finish();
+        Intent in = new Intent(CodeVerificationPage.this,MainActivity.class);
+        startActivity(in);
+    }
 }

@@ -122,18 +122,4 @@ public class PhonePage extends ActivityMethods {
             });
         }
     }
-
-    @Override
-    protected void onStop() {
-        // call the superclass method first
-        super.onStop();
-        onBackPressed();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        this.finish();
-        startActivity(new Intent(PhonePage.this, MainActivity.class));
-    }
 }

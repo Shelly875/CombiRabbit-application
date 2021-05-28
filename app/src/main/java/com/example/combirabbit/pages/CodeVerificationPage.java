@@ -205,19 +205,4 @@ public class CodeVerificationPage extends ActivityMethods {
         super.onSaveInstanceState(outState);
         outState.putString(KEY_VERIFICATION_ID, mVerificationId);
     }
-
-    @Override
-    protected void onStop() {
-        // call the superclass method first
-        super.onStop();
-        onBackPressed();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        this.finish();
-        startActivity(new Intent(CodeVerificationPage.this, MainActivity.class));
-    }
-
 }

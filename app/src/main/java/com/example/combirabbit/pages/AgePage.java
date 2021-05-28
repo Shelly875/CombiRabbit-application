@@ -66,18 +66,4 @@ public class AgePage extends ActivityMethods {
         startActivity(new Intent(this,PhonePage.class)
                 .putExtra("newUser", newUser).putExtra("isNewGame", isNewGame));
     }
-
-    @Override
-    protected void onStop() {
-        // call the superclass method first
-        super.onStop();
-        onBackPressed();
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        this.finish();
-        startActivity(new Intent(AgePage.this, MainActivity.class));
-    }
 }

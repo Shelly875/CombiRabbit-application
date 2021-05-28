@@ -1,7 +1,6 @@
 package com.example.combirabbit.pages;
 
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;

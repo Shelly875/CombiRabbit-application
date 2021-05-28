@@ -34,7 +34,6 @@ public class CodeVerificationPage extends ActivityMethods {
     private FirebaseAuth mAuth;
     private GameOperations gameInstance;
     private FirebaseUser currentUser;
-    private int animationDuration = 4;
     private static final String KEY_VERIFICATION_ID = "key_verification_id";
 
     @Override

@@ -27,7 +27,6 @@ public class PhonePage extends ActivityMethods {
     private String strPhoneNumber = "";
     private int maxPhoneLength = 10;
     private String phonePrefix = "+972";
-    private int animationDuration = 11;
     private User newUser;
     private GameOperations gameInstance;
 

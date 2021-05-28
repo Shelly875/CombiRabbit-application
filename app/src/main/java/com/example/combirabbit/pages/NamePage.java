@@ -18,7 +18,6 @@ public class NamePage extends ActivityMethods {
     private EditText editTextCode;
     private User newUser;
     private String newUserName;
-    private int animationDuration = 9;
     private boolean isNewGame;
 
     @Override

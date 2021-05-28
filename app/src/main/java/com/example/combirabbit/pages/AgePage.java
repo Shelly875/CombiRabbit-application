@@ -19,7 +19,6 @@ public class AgePage extends ActivityMethods {
     private Spinner ageSpinner;
     private String spinnerAgeSelected;
     private User newUser;
-    private int animationDuration = 4;
     private boolean isNewGame;
 
     @Override

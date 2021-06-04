@@ -107,7 +107,7 @@
         android:layout_height="66dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/game_two"
-        app:layout_constraintHorizontal_bias="0.45"
+        app:layout_constraintHorizontal_bias="0.465"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/wooden_sign_score"
         app:layout_constraintVertical_bias="0.325" />
@@ -119,7 +119,7 @@
         android:layout_marginEnd="164dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.61"
+        app:layout_constraintHorizontal_bias="0.634"
         app:layout_constraintStart_toEndOf="@+id/tree_game_one"
         app:layout_constraintTop_toBottomOf="@+id/wooden_sign_score_two"
         app:layout_constraintVertical_bias="0.325" />

@@ -51,7 +51,7 @@
         android:id="@+id/max_game_level"
         android:layout_width="60dp"
         android:layout_height="20dp"
-        android:layout_marginStart="120dp"
+        android:layout_marginStart="224dp"
         android:layout_marginTop="28dp"
         android:text="מתוך    5"
         android:textColor="@color/black"
@@ -66,7 +66,7 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/game_timer"
         app:layout_constraintEnd_toStartOf="@+id/game_title"
-        app:layout_constraintHorizontal_bias="0.136"
+        app:layout_constraintHorizontal_bias="0.095"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -86,9 +86,9 @@
     <ImageView
         android:id="@+id/combi_icon"
         android:layout_width="351dp"
-        android:layout_height="334dp"
+        android:layout_height="335dp"
         android:layout_marginStart="4dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginBottom="0dp"
         android:background="@drawable/combi_with_sign_animation"
         android:onClick="clicking"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -107,6 +107,7 @@
             android:id="@+id/ifelse_statments"
             android:layout_width="40dp"
             android:layout_height="80dp"
+            android:layout_marginTop="11dp"
             android:orientation="vertical"
             android:layout_marginStart="215dp">
 
@@ -134,6 +135,7 @@
             android:id="@+id/rule_one"
             android:layout_width="200dp"
             android:layout_height="40dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -166,7 +168,7 @@
             android:id="@+id/rule_two"
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:layout_marginTop="49dp"
+            android:layout_marginTop="60dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -382,7 +384,7 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/btn_instructions"
         app:layout_constraintEnd_toStartOf="@+id/max_game_level"
-        app:layout_constraintHorizontal_bias="0.34"
+        app:layout_constraintHorizontal_bias="0.844"
         app:layout_constraintStart_toEndOf="@+id/timer_img"
         app:layout_constraintTop_toTopOf="parent" />
 

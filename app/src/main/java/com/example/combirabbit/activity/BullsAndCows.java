@@ -78,7 +78,8 @@ public class BullsAndCows extends ActivityMethods{
         Random r = new Random();
 
         // Find the instructions button
-        ImageButton btnInstruction = new ImageButton(this);
+        new ImageButton(this);
+        ImageButton btnInstruction;
 
         // Layout will be declared by the user age
         // bulls and cows with colors

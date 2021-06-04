@@ -383,10 +383,13 @@ public class MatchAndComplete extends ActivityMethods {
     // clear the user's shapes board
     public void clearArrangement(View view) {
 
-        this.shapeClickPlace = 0;
-        enable_shapes_buttons();
-        this.layerShapesBoard.removeAllViews();
-        this.userPlacement = new ArrayList<>();
+        if(this.layerShapesBoard.getChildCount() != 0)
+        {
+            this.shapeClickPlace = 0;
+            enable_shapes_buttons();
+            this.layerShapesBoard.removeAllViews();
+            this.userPlacement = new ArrayList<>();
+        }
     }
 
     public void rotateShape(View v) {
@@ -394,15 +397,17 @@ public class MatchAndComplete extends ActivityMethods {
        ImageView imgCurrentShapeOnBoard;
        imgCurrentShapeOnBoard = (ImageView) this.layerShapesBoard
                .getChildAt(this.layerShapesBoard.getChildCount() -1);
-       // In case we complete a full cycle - init to the start
-       if(imgCurrentShapeOnBoard.getRotation() == 360){
-           imgCurrentShapeOnBoard.setRotation(0);
-       }
-       imgCurrentShapeOnBoard.setRotation(imgCurrentShapeOnBoard.getRotation() + 90);
+       if(imgCurrentShapeOnBoard != null) {
+           // In case we complete a full cycle - init to the start
+           if (imgCurrentShapeOnBoard.getRotation() == 360) {
+               imgCurrentShapeOnBoard.setRotation(0);
+           }
+           imgCurrentShapeOnBoard.setRotation(imgCurrentShapeOnBoard.getRotation() + 90);
 
-       // each time the user rotate the shape, the shape's degree updated
-        this.userPlacement.get(this.shapeClickPlace - 1)
-                .setDegree((int) imgCurrentShapeOnBoard.getRotation());
+           // each time the user rotate the shape, the shape's degree updated
+           this.userPlacement.get(this.shapeClickPlace - 1)
+                   .setDegree((int) imgCurrentShapeOnBoard.getRotation());
+       }
     }
 
     public boolean playGame(MatchPattern randMatchPattern, View view){

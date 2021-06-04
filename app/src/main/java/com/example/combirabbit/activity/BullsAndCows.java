@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.Editable;
@@ -16,6 +17,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.combirabbit.R;
@@ -243,6 +246,7 @@ public class BullsAndCows extends ActivityMethods{
 
     // Send the guess of the user and write it down
     // in the guessing table
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void sendColorGuess(View view) {
 
         if(nGuessPlace < MAX_GUESS_PLACE)
@@ -276,7 +280,7 @@ public class BullsAndCows extends ActivityMethods{
 
                     // if there is a new record, show on the screen and save
                     // currentRecord > previousRecord, open firebase to check
-                    ShowPopUp(this.gameInstance, (String) timerView.getText(), this.gameNumber);
+                    this.ShowPopUp(this.gameInstance, (String) timerView.getText(), this.gameNumber);
                 }
             }
             // Write the guess into the table of guessing
@@ -338,6 +342,7 @@ public class BullsAndCows extends ActivityMethods{
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void sendNumGuess(View view) {
 
         // Check that the guess entered is in the proper length
@@ -370,7 +375,7 @@ public class BullsAndCows extends ActivityMethods{
                  // if there is a new record, show on the screen and save
                  // currentRecord > previousRecord, open firebase to check
                  Log.d("log: ", "game number:" + this.gameNumber);
-                 ShowPopUp(this.gameInstance, (String) timerView.getText(), this.gameNumber);
+                 this.ShowPopUp(this.gameInstance, (String) timerView.getText(), this.gameNumber);
             }
 
             // Write the guess into the table of guessing

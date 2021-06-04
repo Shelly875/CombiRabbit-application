@@ -1,6 +1,7 @@
 package com.example.combirabbit.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.Log;
@@ -11,6 +12,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
+
 import com.example.combirabbit.R;
 import com.example.combirabbit.models.BearsArrangement;
 import com.example.combirabbit.models.GameOperations;
@@ -124,6 +128,7 @@ public class WhoSitNextToMe extends ActivityMethods{
         btnBearSix.setOnClickListener(this::onClick);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void sendArrangement(View view) throws InterruptedException {
 
         ImageView bubbleSpeech = findViewById(R.id.bubble_speech);
@@ -133,7 +138,6 @@ public class WhoSitNextToMe extends ActivityMethods{
         // push an alert with a failed attempt
         if(!this.bUserArrangement.check_arrangement(this.userBearGuess))
         {
-            Log.d("Log: ", "Im here");
             // error message
             bubbleSpeech.setVisibility(View.VISIBLE);
             speechText.setText("נסה שנית");

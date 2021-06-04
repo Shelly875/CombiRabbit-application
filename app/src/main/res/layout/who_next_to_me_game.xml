@@ -13,7 +13,7 @@
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginEnd="16dp"
         android:text="מי נמצא לידי"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -21,25 +21,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
         android:id="@+id/game_title_level"
         android:layout_width="45dp"
         android:layout_height="20dp"
         android:layout_marginTop="28dp"
-        android:layout_marginEnd="12dp"
+        android:layout_marginEnd="4dp"
         android:text="משחק"
         android:textColor="@color/black"
         android:textSize="15sp"
         app:layout_constraintEnd_toStartOf="@+id/game_title"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <TextView
         android:id="@+id/current_game_level"
         android:layout_width="10dp"
         android:layout_height="20dp"
         android:layout_marginTop="28dp"
-        android:layout_marginEnd="52dp"
+        android:layout_marginEnd="60dp"
         android:text="1"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -51,7 +51,7 @@
         android:id="@+id/max_game_level"
         android:layout_width="60dp"
         android:layout_height="20dp"
-        android:layout_marginStart="224dp"
+        android:layout_marginStart="216dp"
         android:layout_marginTop="28dp"
         android:text="מתוך    5"
         android:textColor="@color/black"

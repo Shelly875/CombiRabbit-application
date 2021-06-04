@@ -66,11 +66,11 @@ public class AgePage extends ActivityMethods {
                 .putExtra("newUser", newUser).putExtra("isNewGame", isNewGame));
     }
 
-    public void onBackPressed ()
-    {
-        super.onBackPressed();
-        finish();
-        Intent in = new Intent(AgePage.this,MainActivity.class);
-        startActivity(in);
-    }
+//    public void onBackPressed ()
+//    {
+//        super.onBackPressed();
+//        finish();
+//        Intent in = new Intent(AgePage.this,MainActivity.class);
+//        startActivity(in);
+//    }
 }

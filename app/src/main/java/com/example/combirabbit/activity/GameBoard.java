@@ -231,11 +231,11 @@ public class GameBoard extends ActivityMethods {
         trailerPopUp.show();
     }
 
-    public void onBackPressed ()
-    {
-        super.onBackPressed();
-        finish();
-        Intent in = new Intent(GameBoard.this,MainActivity.class);
-        startActivity(in);
-    }
+//    public void onBackPressed ()
+//    {
+//        super.onBackPressed();
+//        finish();
+//        Intent in = new Intent(GameBoard.this,MainActivity.class);
+//        startActivity(in);
+//    }
 }

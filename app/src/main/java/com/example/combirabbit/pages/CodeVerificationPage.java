@@ -57,6 +57,7 @@ public class CodeVerificationPage extends ActivityMethods {
         // Send verification code
         sendVerificationCode(strPhoneNumber);
 
+
         // Restore instance state
         // put this code after starting phone number verification
         if (mVerificationId == null && savedInstanceState != null) {
@@ -127,16 +128,6 @@ public class CodeVerificationPage extends ActivityMethods {
     private void verifyVerificationCode(String code) {
         //creating the credential
         try {
-            if(mVerificationId == null)
-            {
-                Log.d("Log: ", "this is null for sure!");
-            }
-
-            if(this.mVerificationId == null)
-            {
-                Log.d("Log: ", "this is null for sure!");
-            }
-
             Log.d("Log: ", "code: " +  code);
             PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, code);
             signInWithPhoneAuthCredential(credential);
@@ -192,15 +183,15 @@ public class CodeVerificationPage extends ActivityMethods {
         verifyVerificationCode(strCode);
     }
 
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-        mVerificationId = savedInstanceState.getString(KEY_VERIFICATION_ID);
-    }
-
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(KEY_VERIFICATION_ID, mVerificationId);
-    }
+//    @Override
+//    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+//        super.onRestoreInstanceState(savedInstanceState);
+//        mVerificationId = savedInstanceState.getString(KEY_VERIFICATION_ID);
+//    }
+//
+//    @Override
+//    protected void onSaveInstanceState(@NonNull Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        outState.putString(KEY_VERIFICATION_ID, mVerificationId);
+//    }
 }

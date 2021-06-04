@@ -87,7 +87,7 @@
         android:id="@+id/btn_start_guess"
         android:layout_width="133dp"
         android:layout_height="55dp"
-        android:layout_marginStart="444dp"
+        android:layout_marginStart="408dp"
         android:layout_marginBottom="28dp"
         android:background="@drawable/btn_start_guess"
         android:onClick="startNumGame"
@@ -98,7 +98,7 @@
         android:id="@+id/btn_send_guess"
         android:layout_width="133dp"
         android:layout_height="55dp"
-        android:layout_marginStart="444dp"
+        android:layout_marginStart="408dp"
         android:layout_marginBottom="28dp"
         android:background="@drawable/btn_send_guess"
         android:onClick="sendNumGuess"
@@ -116,7 +116,7 @@
         android:onClick="clearNumGuess"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1."
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/btn_start_guess" />
 
     <ImageView
@@ -177,7 +177,7 @@
         android:layout_width="259dp"
         android:layout_height="180dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="104dp"
+        android:layout_marginBottom="80dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -188,7 +188,7 @@
         android:id="@+id/btn_bull_num_instructions"
         android:layout_width="79dp"
         android:layout_height="78dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/btn_instructions"
         app:layout_constraintEnd_toEndOf="parent"

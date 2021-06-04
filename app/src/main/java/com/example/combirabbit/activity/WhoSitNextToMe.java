@@ -129,14 +129,15 @@ public class WhoSitNextToMe extends ActivityMethods{
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void sendArrangement(View view) throws InterruptedException {
+    public void sendArrangement(View view) {
 
         ImageView bubbleSpeech = findViewById(R.id.bubble_speech);
         TextView speechText = findViewById(R.id.speech_text);
 
         // If the user did not arrange as the rules
         // push an alert with a failed attempt
-        if(!this.bUserArrangement.check_arrangement(this.userBearGuess))
+        if(!this.bUserArrangement.check_arrangement(this.userBearGuess) ||
+                this.userBearGuess == null)
         {
             // error message
             bubbleSpeech.setVisibility(View.VISIBLE);

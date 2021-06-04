@@ -40,6 +40,8 @@ public class MatchAndComplete extends ActivityMethods {
     private int gameNumber;
     private int nLevel = 1;
     private final int MAX_LEVEL = 5;
+    private ImageButton btnRotateShape;
+    private ImageButton btnClearboard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,14 +67,20 @@ public class MatchAndComplete extends ActivityMethods {
                 ShowInstructionPopUp(R.drawable.match_instructions_img);
         });
 
+        // declare global buttons - rotate image button
+        this.btnRotateShape = findViewById(R.id.btn_rotate_shape);
+        this.btnRotateShape.setEnabled(false);
+
+        //declare global buttons - clear board
+        this.btnClearboard = findViewById(R.id.btn_clear_arrange);
+        this.btnClearboard.setEnabled(false);
+
     }
 
     public void startGame(View view){
 
         // Buttons on the screen to initialize
         ImageButton btnStartGame = findViewById(R.id.btn_start_game);
-        ImageButton btnClearBoard = findViewById(R.id.btn_clear_arrange);
-        ImageButton btnRotateShape = findViewById(R.id.btn_rotate_shape);
         ImageButton btnBlockTriangle = findViewById(R.id.btn_block_triangle);
         ImageButton btnHalfBlueCircle = findViewById(R.id.btn_half_circle);
         ImageButton btnGreenRec = findViewById(R.id.btn_green_rectangle);
@@ -91,13 +99,13 @@ public class MatchAndComplete extends ActivityMethods {
         ImageButton btnGreenShape = findViewById(R.id.btn_green_shape);
         ImageButton btnPurpleCircleRecOut = findViewById(R.id.btn_purple_out_circle_rec);
         ImageButton btnGreenTriangle = findViewById(R.id.btn_green_triangle);
-        ImageView speechBubble = findViewById(R.id.speech_bubble);
+        findViewById(R.id.speech_bubble);
 
         // enable buttons - clear board and rotate
         // make start game button disappear
-        btnClearBoard.setEnabled(true);
+        this.btnClearboard.setEnabled(true);
         btnStartGame.setVisibility(View.INVISIBLE);
-        btnRotateShape.setEnabled(true);
+        this.btnRotateShape.setEnabled(true);
 
         // Declare shapes buttons on click
         btnBlockTriangle.setOnClickListener(this::onClick);

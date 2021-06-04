@@ -110,7 +110,7 @@ public class PhonePage extends ActivityMethods {
                             // create new progress control for the new user
                             this.gameInstance.createProgressControl();
                         }
-                        startActivity(new Intent(this, GameBoard.class)
+                        startActivity(new Intent(this, CodeVerificationPage.class)
                                 .putExtra("gameInstance", tempGameInstance));
                     }
                 } else {

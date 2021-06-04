@@ -58,6 +58,7 @@ public class BullsAndCows extends ActivityMethods{
     private EditText txtUserGuess;
     private int gameNumber;
     int[] nResultNum = {0,0};
+    private ImageButton btnClearArrange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +81,10 @@ public class BullsAndCows extends ActivityMethods{
         // Find the instructions button
         new ImageButton(this);
         ImageButton btnInstruction;
+
+        // declare global buttons - clear guess
+        this.btnClearArrange = findViewById(R.id.btn_clear_guess);
+        this.btnClearArrange.setEnabled(false);
 
         // Layout will be declared by the user age
         // bulls and cows with colors
@@ -137,6 +142,9 @@ public class BullsAndCows extends ActivityMethods{
         // Replace buttons - start/send
         btnStartGuessing.setVisibility(View.INVISIBLE);
         btnSendGuess.setVisibility(View.VISIBLE);
+
+        // enable clear guess
+        this.btnClearArrange.setEnabled(true);
 
         // Start timer
         startTimer();
@@ -326,6 +334,9 @@ public class BullsAndCows extends ActivityMethods{
 
         // Init the user and the game numbers guess
         this.arrUserNumbersGuess = new ArrayList<>();
+
+        // enable clear guess
+        this.btnClearArrange.setEnabled(true);
 
         // Find elements of the buttons of the game
         ImageButton btnStartGuessing = findViewById(R.id.btn_start_guess);

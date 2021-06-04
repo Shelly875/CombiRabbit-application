@@ -34,6 +34,7 @@ public class WhoSitNextToMe extends ActivityMethods{
     private RelativeLayout relativeRulesTable;
     private GameOperations gameInstance;
     private int gameNumber;
+    private ImageButton btnClearArrange;
 
     public WhoSitNextToMe() {
     }
@@ -64,6 +65,10 @@ public class WhoSitNextToMe extends ActivityMethods{
         // Init the game level on the user view
         this.txtGameLevel = findViewById(R.id.current_game_level);
         this.txtGameLevel.setText(String.valueOf(this.nGameLevel));
+
+        // declare global buttons - clear arrange
+        this.btnClearArrange = findViewById(R.id.btn_clear_arrange);
+        this.btnClearArrange.setEnabled(false);
     }
 
     protected void onStart() {
@@ -104,6 +109,7 @@ public class WhoSitNextToMe extends ActivityMethods{
         // when pressing on the start button,
         // it disappear and the sendArrangement button enabled
         btnSendArrange.setEnabled(true);
+        this.btnClearArrange.setEnabled(true);
         btnStartGame.setVisibility(View.INVISIBLE);
 
         // Init the game to be at level 1

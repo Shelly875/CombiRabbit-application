@@ -82,10 +82,6 @@ public class BullsAndCows extends ActivityMethods{
         new ImageButton(this);
         ImageButton btnInstruction;
 
-        // declare global buttons - clear guess
-        this.btnClearArrange = findViewById(R.id.btn_clear_guess);
-        this.btnClearArrange.setEnabled(false);
-
         // Layout will be declared by the user age
         // bulls and cows with colors
         if(maxAge.equals("7")) {
@@ -126,7 +122,9 @@ public class BullsAndCows extends ActivityMethods{
                     + Arrays.toString(nRandomNumbersToGuess));
         }
 
-
+        // declare global buttons - clear guess
+        this.btnClearArrange = findViewById(R.id.btn_clear_guess);
+        this.btnClearArrange.setEnabled(false);
     }
 
     // Class functions

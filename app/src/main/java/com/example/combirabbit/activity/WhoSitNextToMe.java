@@ -35,6 +35,7 @@ public class WhoSitNextToMe extends ActivityMethods{
     private GameOperations gameInstance;
     private int gameNumber;
     private ImageButton btnClearArrange;
+    private ImageButton btnSendArrange;
 
     public WhoSitNextToMe() {
     }
@@ -69,6 +70,9 @@ public class WhoSitNextToMe extends ActivityMethods{
         // declare global buttons - clear arrange
         this.btnClearArrange = findViewById(R.id.btn_clear_arrange);
         this.btnClearArrange.setEnabled(false);
+
+        this.btnSendArrange = findViewById(R.id.btn_send_arrange);
+        this.btnSendArrange.setEnabled(false);
     }
 
     protected void onStart() {
@@ -84,7 +88,6 @@ public class WhoSitNextToMe extends ActivityMethods{
 
         // Buttons on the screen to initialize
         ImageButton btnStartGame = findViewById(R.id.btn_start_game);
-        ImageButton btnSendArrange = findViewById(R.id.btn_send_arrange);
         ImageButton btnBearOne = findViewById(R.id.bear_one);
         ImageButton btnBearTwo = findViewById(R.id.bear_two);
         ImageButton btnBearThree = findViewById(R.id.bear_three);
@@ -108,7 +111,7 @@ public class WhoSitNextToMe extends ActivityMethods{
 
         // when pressing on the start button,
         // it disappear and the sendArrangement button enabled
-        btnSendArrange.setEnabled(true);
+        this.btnSendArrange.setEnabled(true);
         this.btnClearArrange.setEnabled(true);
         btnStartGame.setVisibility(View.INVISIBLE);
 

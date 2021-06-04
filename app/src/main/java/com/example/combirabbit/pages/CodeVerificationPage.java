@@ -183,15 +183,15 @@ public class CodeVerificationPage extends ActivityMethods {
         verifyVerificationCode(strCode);
     }
 
-//    @Override
-//    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-//        super.onRestoreInstanceState(savedInstanceState);
-//        mVerificationId = savedInstanceState.getString(KEY_VERIFICATION_ID);
-//    }
-//
-//    @Override
-//    protected void onSaveInstanceState(@NonNull Bundle outState) {
-//        super.onSaveInstanceState(outState);
-//        outState.putString(KEY_VERIFICATION_ID, mVerificationId);
-//    }
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mVerificationId = savedInstanceState.getString(KEY_VERIFICATION_ID);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(KEY_VERIFICATION_ID, mVerificationId);
+    }
 }

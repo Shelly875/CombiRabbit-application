@@ -59,6 +59,7 @@ public class NamePage extends ActivityMethods {
     public void onBackPressed ()
     {
         super.onBackPressed();
+        this.mediaPlayer.stop();
         finish();
         Intent in = new Intent(NamePage.this,MainActivity.class);
         startActivity(in);

@@ -124,6 +124,7 @@ public class PhonePage extends ActivityMethods {
     public void onBackPressed ()
     {
         super.onBackPressed();
+        this.mediaPlayer.stop();
         finish();
         Intent in = new Intent(PhonePage.this,MainActivity.class);
         startActivity(in);

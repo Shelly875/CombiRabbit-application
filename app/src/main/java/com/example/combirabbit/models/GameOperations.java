@@ -75,10 +75,6 @@ public class GameOperations implements Serializable {
         return this.userInstance;
     }
 
-    public void setNewUser(User newUser) {
-        this.userInstance = newUser;
-    }
-
     public String getHighestScoreGameOne() {
         return this.highestScoreGameOne;
     }

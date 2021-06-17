@@ -69,6 +69,7 @@ public class AgePage extends ActivityMethods {
     public void onBackPressed ()
     {
         super.onBackPressed();
+        this.mediaPlayer.stop();
         finish();
         Intent in = new Intent(AgePage.this,MainActivity.class);
         startActivity(in);

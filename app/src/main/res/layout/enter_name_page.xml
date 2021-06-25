@@ -22,7 +22,6 @@
         android:layout_width="@dimen/new_game_user_input_width"
         android:layout_height="@dimen/new_game_user_input_height"
         android:textSize="@dimen/new_game_user_input_text_size"
-        android:inputType="text|textNoSuggestions"
         android:textAlignment="center"
         android:maxLength="10"
         android:textColor="@color/black"

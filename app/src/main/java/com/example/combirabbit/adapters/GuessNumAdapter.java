@@ -33,6 +33,12 @@ public class GuessNumAdapter extends RecyclerView.Adapter<GuessNumAdapter.Exampl
         this.nNumberGuessList = nNumberGuessList;
     }
 
+    @Override
+    public int getItemViewType(int position)
+    {
+        return position;
+    }
+
     @NonNull
     @Override
     public ExampleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

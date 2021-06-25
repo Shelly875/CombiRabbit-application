@@ -137,19 +137,19 @@ public class Pattern {
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_blue_trapeze_img,
                     180));
         }
-
-        if(this.imgLevel == R.drawable.img_comb_fiftheen){
-            this.arrImgPattern.add(new ImagePlace(R.drawable.match_light_green_rec_squre_img,
-                    0));
-            this.arrImgPattern.add(new ImagePlace(R.drawable.match_yellow_lines_img,
-                    90));
-            this.arrImgPattern.add(new ImagePlace(R.drawable.match_yellow_square_img,
-                    270));
-            this.arrImgPattern.add(new ImagePlace(R.drawable.match_light_green_triangle_img,
-                    0));
-            this.arrImgPattern.add(new ImagePlace(R.drawable.match_circle_in_circle_block,
-                    180));
-        }
+//
+//        if(this.imgLevel == R.drawable.img_comb_fiftheen){
+//            this.arrImgPattern.add(new ImagePlace(R.drawable.match_light_green_rec_squre_img,
+//                    0));
+//            this.arrImgPattern.add(new ImagePlace(R.drawable.match_yellow_lines_img,
+//                    90));
+//            this.arrImgPattern.add(new ImagePlace(R.drawable.match_yellow_square_img,
+//                    270));
+//            this.arrImgPattern.add(new ImagePlace(R.drawable.match_light_green_triangle_img,
+//                    0));
+//            this.arrImgPattern.add(new ImagePlace(R.drawable.match_circle_in_circle_block,
+//                    180));
+//        }
 
         if(this.imgLevel == R.drawable.img_comb_sixteen){
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_green_rectangle_img,

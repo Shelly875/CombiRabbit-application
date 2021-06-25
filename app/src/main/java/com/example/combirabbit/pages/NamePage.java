@@ -51,8 +51,8 @@ public class NamePage extends ActivityMethods {
         newUserName = editTextCode.getText().toString().trim();
         newUser.setName(newUserName);
 
-        if (newUserName.isEmpty() || !(newUserName.matches("[a-zA-Z ]+"))) {
-            editTextCode.setError("אנא הזן את שמך");
+        if (newUserName.isEmpty() || !(newUserName.matches("[a-zA-Zא-ת][a-zA-Zא-ת]+"))) {
+            editTextCode.setError("אנא הזן שם חוקי");
             editTextCode.requestFocus();
         }else{
             this.mediaPlayer.stop();

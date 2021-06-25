@@ -51,9 +51,14 @@ public class NamePage extends ActivityMethods {
         newUserName = editTextCode.getText().toString().trim();
         newUser.setName(newUserName);
 
-        this.mediaPlayer.stop();
-        startActivity(new Intent(this,AgePage.class)
-                .putExtra("newUser", newUser).putExtra("isNewGame", isNewGame));
+        if (newUserName.isEmpty()) {
+            editTextCode.setError("אנא הזן את שמך");
+            editTextCode.requestFocus();
+        }else{
+            this.mediaPlayer.stop();
+            startActivity(new Intent(this, AgePage.class)
+                    .putExtra("newUser", newUser).putExtra("isNewGame", isNewGame));
+        }
     }
 
     public void onBackPressed ()

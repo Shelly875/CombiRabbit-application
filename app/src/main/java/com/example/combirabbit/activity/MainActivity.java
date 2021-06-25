@@ -26,7 +26,7 @@ public class MainActivity extends ActivityMethods {
 
         // Start playing animation & record when pressing the rabbit icon
         // Class variables
-        this.configAnimation(R.drawable.combi_animation, R.raw.start_game_record, true);
+        this.configAnimation(R.drawable.combi_animation, R.raw.start_game_record, false);
     }
 
     public void NamePage(View view) {

@@ -174,10 +174,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/guess_list"
-        android:layout_width="248dp"
-        android:layout_height="249dp"
+        android:layout_width="239dp"
+        android:layout_height="226dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="40dp"
         android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">

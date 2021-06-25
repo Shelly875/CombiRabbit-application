@@ -67,16 +67,13 @@ public class Pattern {
                     90));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_red_rhombus_img,
                     0));
-
-            //TODO: maybe it is worth to add a flag to each ImagePlace(img, degree, flag=0/1)
-            // the will indicate if it can be another possible match
         }
 
         if(this.imgLevel == R.drawable.img_comb_eight){
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_half_star_img,
                     0));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_circle_in_circle_block,
-                    180));
+                    0));
         }
 
         if(this.imgLevel == R.drawable.img_comb_nine){

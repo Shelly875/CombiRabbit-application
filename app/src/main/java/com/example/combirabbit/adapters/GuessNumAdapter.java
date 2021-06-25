@@ -34,8 +34,12 @@ public class GuessNumAdapter extends RecyclerView.Adapter<GuessNumAdapter.Exampl
     }
 
     @Override
-    public int getItemViewType(int position)
-    {
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
         return position;
     }
 

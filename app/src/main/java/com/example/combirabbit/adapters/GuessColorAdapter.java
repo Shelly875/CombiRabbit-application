@@ -74,8 +74,12 @@ public class GuessColorAdapter extends RecyclerView.Adapter<GuessColorAdapter.Ex
     }
 
     @Override
-    public int getItemViewType(int position)
-    {
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
         return position;
     }
 

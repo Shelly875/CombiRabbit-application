@@ -1,5 +1,6 @@
 package com.example.combirabbit.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -40,6 +41,7 @@ public class MatchAndComplete extends ActivityMethods {
     private int gameNumber;
     private int nLevel = 1;
     private final int MAX_LEVEL = 5;
+    private Handler handler;
     private ImageButton btnRotateShape;
     private ImageButton btnClearboard;
 
@@ -148,8 +150,8 @@ public class MatchAndComplete extends ActivityMethods {
                 .getSinglePatternToGuess().getImgLevel());
 
         // Init
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        this.handler = new Handler();
+        this.handler.postDelayed(new Runnable() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void run() {
@@ -161,7 +163,8 @@ public class MatchAndComplete extends ActivityMethods {
                 if(isFinished){
 
                     // stop the runnable
-                    handler.removeCallbacks(this);
+                    handler.removeCallbacksAndMessages(null);
+
                     // finished and pop up with harry!!
                     Log.d("INFO: ", "game finished and you succeeded all!");
 
@@ -204,6 +207,7 @@ public class MatchAndComplete extends ActivityMethods {
                 this.shapeClickPlace++;
                 this.userPlacement.add(new ImagePlace(R.drawable.match_blue_half_circle_img,
                         (int) imgChosenShape.getRotation()));
+
                 break;
             case R.id.btn_green_rectangle:
                 imgChosenShape.setBackgroundResource(R.drawable.match_green_rectangle_img);
@@ -211,7 +215,7 @@ public class MatchAndComplete extends ActivityMethods {
                 v.setEnabled(false);
                 this.shapeClickPlace++;
                 this.userPlacement.add(new ImagePlace(R.drawable.match_green_rectangle_img,
-                        (int) imgChosenShape.getRotation()));
+                         (int) imgChosenShape.getRotation()));
                 break;
             case R.id.btn_blue_half_star:
                 imgChosenShape.setBackgroundResource(R.drawable.match_half_star_img);
@@ -219,7 +223,7 @@ public class MatchAndComplete extends ActivityMethods {
                 v.setEnabled(false);
                 this.shapeClickPlace++;
                 this.userPlacement.add(new ImagePlace(R.drawable.match_half_star_img,
-                        (int) imgChosenShape.getRotation()));
+                         (int) imgChosenShape.getRotation()));
                 break;
             case R.id.btn_purple_in_circle_rec:
                 imgChosenShape.setBackgroundResource(R.drawable.match_purple_half_circle_rec_img);
@@ -227,7 +231,7 @@ public class MatchAndComplete extends ActivityMethods {
                 v.setEnabled(false);
                 this.shapeClickPlace++;
                 this.userPlacement.add(new ImagePlace(R.drawable.match_purple_half_circle_rec_img,
-                        (int) imgChosenShape.getRotation()));
+                         (int) imgChosenShape.getRotation()));
                 break;
             case R.id.btn_parallelogram_blue:
                 imgChosenShape.setBackgroundResource(R.drawable.match_blue_trapeze_img);
@@ -235,7 +239,7 @@ public class MatchAndComplete extends ActivityMethods {
                 v.setEnabled(false);
                 this.shapeClickPlace++;
                 this.userPlacement.add(new ImagePlace(R.drawable.match_blue_trapeze_img,
-                        (int) imgChosenShape.getRotation()));
+                         (int) imgChosenShape.getRotation()));
                 break;
             case R.id.btn_rhombus_red:
                 imgChosenShape.setBackgroundResource(R.drawable.match_red_rhombus_img);
@@ -243,7 +247,7 @@ public class MatchAndComplete extends ActivityMethods {
                 v.setEnabled(false);
                 this.shapeClickPlace++;
                 this.userPlacement.add(new ImagePlace(R.drawable.match_red_rhombus_img,
-                        (int) imgChosenShape.getRotation()));
+                         (int) imgChosenShape.getRotation()));
                 break;
             case R.id.btn_q_circle_red:
                 imgChosenShape.setBackgroundResource(R.drawable.match_red_quarter_circle_img);
@@ -251,7 +255,7 @@ public class MatchAndComplete extends ActivityMethods {
                 v.setEnabled(false);
                 this.shapeClickPlace++;
                 this.userPlacement.add(new ImagePlace(R.drawable.match_red_quarter_circle_img,
-                        (int) imgChosenShape.getRotation()));
+                         (int) imgChosenShape.getRotation()));
                 break;
             case R.id.btn_yellow_square:
                 imgChosenShape.setBackgroundResource(R.drawable.match_yellow_square_img);
@@ -259,7 +263,7 @@ public class MatchAndComplete extends ActivityMethods {
                 v.setEnabled(false);
                 this.shapeClickPlace++;
                 this.userPlacement.add(new ImagePlace(R.drawable.match_yellow_square_img,
-                        (int) imgChosenShape.getRotation()));
+                         (int) imgChosenShape.getRotation()));
                 break;
             case R.id.btn_block_circle:
                 imgChosenShape.setBackgroundResource(R.drawable.match_circle_in_circle_block);
@@ -267,7 +271,7 @@ public class MatchAndComplete extends ActivityMethods {
                 v.setEnabled(false);
                 this.shapeClickPlace++;
                 this.userPlacement.add(new ImagePlace(R.drawable.match_circle_in_circle_block,
-                        (int) imgChosenShape.getRotation()));
+                         (int) imgChosenShape.getRotation()));
                 break;
             case R.id.btn_lines_yellow:
                 imgChosenShape.setBackgroundResource(R.drawable.match_yellow_lines_img);
@@ -275,7 +279,7 @@ public class MatchAndComplete extends ActivityMethods {
                 v.setEnabled(false);
                 this.shapeClickPlace++;
                 this.userPlacement.add(new ImagePlace(R.drawable.match_yellow_lines_img,
-                        (int) imgChosenShape.getRotation()));
+                         (int) imgChosenShape.getRotation()));
                 break;
             case R.id.btn_blue_star_empty:
                 imgChosenShape.setBackgroundResource(R.drawable.match_star_backgroud_colored);
@@ -283,7 +287,7 @@ public class MatchAndComplete extends ActivityMethods {
                 v.setEnabled(false);
                 this.shapeClickPlace++;
                 this.userPlacement.add(new ImagePlace(R.drawable.match_star_backgroud_colored,
-                        (int) imgChosenShape.getRotation()));
+                         (int) imgChosenShape.getRotation()));
                 break;
             case R.id.btn_orange_square:
                 imgChosenShape.setBackgroundResource(R.drawable.match_orange_square_img);
@@ -291,7 +295,7 @@ public class MatchAndComplete extends ActivityMethods {
                 v.setEnabled(false);
                 this.shapeClickPlace++;
                 this.userPlacement.add(new ImagePlace(R.drawable.match_orange_square_img,
-                        (int) imgChosenShape.getRotation()));
+                         (int) imgChosenShape.getRotation()));
                 break;
             case R.id.btn_parallelogram_green:
                 imgChosenShape.setBackgroundResource(R.drawable.match_green_parallelogram_img);
@@ -299,7 +303,7 @@ public class MatchAndComplete extends ActivityMethods {
                 v.setEnabled(false);
                 this.shapeClickPlace++;
                 this.userPlacement.add(new ImagePlace(R.drawable.match_green_parallelogram_img,
-                        (int) imgChosenShape.getRotation()));
+                         (int) imgChosenShape.getRotation()));
                 break;
             case R.id.btn_orange_triangle:
                 imgChosenShape.setBackgroundResource(R.drawable.match_orange_triangle_img);
@@ -307,7 +311,7 @@ public class MatchAndComplete extends ActivityMethods {
                 v.setEnabled(false);
                 this.shapeClickPlace++;
                 this.userPlacement.add(new ImagePlace(R.drawable.match_orange_triangle_img,
-                        (int) imgChosenShape.getRotation()));
+                         (int) imgChosenShape.getRotation()));
                 break;
             case R.id.btn_green_shape:
                 imgChosenShape.setBackgroundResource(R.drawable.match_light_green_rec_squre_img);
@@ -315,7 +319,7 @@ public class MatchAndComplete extends ActivityMethods {
                 v.setEnabled(false);
                 this.shapeClickPlace++;
                 this.userPlacement.add(new ImagePlace(R.drawable.match_light_green_rec_squre_img,
-                        (int) imgChosenShape.getRotation()));
+                         (int) imgChosenShape.getRotation()));
                 break;
             case R.id.btn_purple_out_circle_rec:
                 imgChosenShape.setBackgroundResource(R.drawable.match_purple_rec_circle_out_img);
@@ -323,7 +327,7 @@ public class MatchAndComplete extends ActivityMethods {
                 v.setEnabled(false);
                 this.shapeClickPlace++;
                 this.userPlacement.add(new ImagePlace(R.drawable.match_purple_rec_circle_out_img,
-                        (int) imgChosenShape.getRotation()));
+                         (int) imgChosenShape.getRotation()));
                 break;
             case R.id.btn_green_triangle:
                 imgChosenShape.setBackgroundResource(R.drawable.match_light_green_triangle_img);
@@ -331,7 +335,7 @@ public class MatchAndComplete extends ActivityMethods {
                 v.setEnabled(false);
                 this.shapeClickPlace++;
                 this.userPlacement.add(new ImagePlace(R.drawable.match_light_green_triangle_img,
-                        (int) imgChosenShape.getRotation()));
+                         (int) imgChosenShape.getRotation()));
                 break;
         }
 
@@ -400,9 +404,14 @@ public class MatchAndComplete extends ActivityMethods {
         }
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     public void rotateShape(View v) {
-
        ImageView imgCurrentShapeOnBoard;
+
+       // end cases for red rhombus and orange square
+       ImageView imgRedRhombus = findViewById(R.id.btn_rhombus_red);
+       ImageView imgOrangeSquare = findViewById(R.id.btn_orange_square);
+
        imgCurrentShapeOnBoard = (ImageView) this.layerShapesBoard
                .getChildAt(this.layerShapesBoard.getChildCount() -1);
        if(imgCurrentShapeOnBoard != null) {
@@ -410,7 +419,19 @@ public class MatchAndComplete extends ActivityMethods {
            if (imgCurrentShapeOnBoard.getRotation() == 360) {
                imgCurrentShapeOnBoard.setRotation(0);
            }
+
            imgCurrentShapeOnBoard.setRotation(imgCurrentShapeOnBoard.getRotation() + 90);
+
+           Log.d("current:", String.valueOf(imgCurrentShapeOnBoard.getBackground().getConstantState()));
+           Log.d("red:", String.valueOf(imgRedRhombus.getBackground().getConstantState()));
+           // end case for degree
+           if(imgCurrentShapeOnBoard.getBackground().getConstantState().equals(
+                   imgRedRhombus.getBackground().getConstantState()) ||
+                   imgCurrentShapeOnBoard.getBackground().getConstantState().equals(
+                           imgOrangeSquare.getBackground().getConstantState()))
+           {
+               imgCurrentShapeOnBoard.setRotation(0);
+           }
 
            // each time the user rotate the shape, the shape's degree updated
            this.userPlacement.get(this.shapeClickPlace - 1)
@@ -446,6 +467,23 @@ public class MatchAndComplete extends ActivityMethods {
             }
         }
         return false;
+    }
+
+    protected void onStop() {
+        super.onStop();
+        this.handler.removeCallbacksAndMessages(null);
+    }
+
+    protected void onPause() {
+        super.onPause();
+        this.handler.removeCallbacksAndMessages(null);
+    }
+
+    public void onBackPressed ()
+    {
+        super.onBackPressed();
+        this.handler.removeCallbacksAndMessages(null);
+//        MatchAndComplete.this.finish();
     }
 }
 

@@ -191,6 +191,7 @@ public class ActivityMethods extends AppCompatActivity {
         btnReturnToBoardGame.setOnClickListener(v -> {
             // Code here executes on main thread after user presses button
             mediaPlayer.stop();
+            successPopUp.dismiss();
             startActivity(new Intent(successPopUp.getContext(), GameBoard.class)
                     .putExtra("gameInstance", tempGameInstance));
         });

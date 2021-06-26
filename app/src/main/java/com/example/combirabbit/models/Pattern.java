@@ -61,28 +61,32 @@ public class Pattern {
         }
 
         if(this.imgLevel == R.drawable.img_comb_seven){
+            this.arrImgPattern.add(new ImagePlace(R.drawable.match_blue_trapeze_img,
+                    270));
+            this.arrImgPattern.add(new ImagePlace(R.drawable.match_orange_square_img,
+                    0));
+            this.arrImgPattern.add(new ImagePlace(R.drawable.match_blue_half_circle_img,
+                   90));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_yellow_square_img,
-                    180));
+                    270));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_green_rectangle_img,
                     90));
-            this.arrImgPattern.add(new ImagePlace(R.drawable.match_red_rhombus_img,
-                    0));
         }
 
         if(this.imgLevel == R.drawable.img_comb_eight){
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_half_star_img,
-                    0));
+                   0));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_circle_in_circle_block,
-                    0));
+                   0));
         }
 
         if(this.imgLevel == R.drawable.img_comb_nine){
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_red_rhombus_img,
-                    0));
+                   0));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_orange_square_img,
                     0));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_light_green_rec_squre_img,
-                    0));
+                   0));
         }
 
         if(this.imgLevel == R.drawable.img_comb_ten){
@@ -111,23 +115,23 @@ public class Pattern {
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_blue_trapeze_img,
                     270));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_star_backgroud_colored,
-                    0));
+                   0));
         }
 
         if(this.imgLevel == R.drawable.img_comb_thirteen){
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_blue_half_circle_img,
                     180));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_purple_rec_circle_out_img,
-                    0));
+                   0));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_blue_trapeze_img,
-                    0));
+                   0));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_purple_half_circle_rec_img,
-                    0));
+                   0));
         }
 
         if(this.imgLevel == R.drawable.img_comb_fourteen){
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_red_rhombus_img,
-                    0));
+                   0));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_yellow_square_img,
                     270));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_orange_square_img,
@@ -137,19 +141,19 @@ public class Pattern {
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_blue_trapeze_img,
                     180));
         }
-//
-//        if(this.imgLevel == R.drawable.img_comb_fiftheen){
-//            this.arrImgPattern.add(new ImagePlace(R.drawable.match_light_green_rec_squre_img,
-//                    0));
-//            this.arrImgPattern.add(new ImagePlace(R.drawable.match_yellow_lines_img,
-//                    90));
-//            this.arrImgPattern.add(new ImagePlace(R.drawable.match_yellow_square_img,
-//                    270));
-//            this.arrImgPattern.add(new ImagePlace(R.drawable.match_light_green_triangle_img,
-//                    0));
-//            this.arrImgPattern.add(new ImagePlace(R.drawable.match_circle_in_circle_block,
-//                    180));
-//        }
+
+        if(this.imgLevel == R.drawable.img_comb_fiftheen){
+            this.arrImgPattern.add(new ImagePlace(R.drawable.match_red_rhombus_img,
+                   0));
+            this.arrImgPattern.add(new ImagePlace(R.drawable.match_block_triangular_img,
+                    180));
+            this.arrImgPattern.add(new ImagePlace(R.drawable.match_blue_trapeze_img,
+                    270));
+            this.arrImgPattern.add(new ImagePlace(R.drawable.match_red_quarter_circle_img,
+                    90));
+            this.arrImgPattern.add(new ImagePlace(R.drawable.match_purple_half_circle_rec_img,
+                    90));
+        }
 
         if(this.imgLevel == R.drawable.img_comb_sixteen){
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_green_rectangle_img,
@@ -168,7 +172,7 @@ public class Pattern {
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_half_star_img,
                     270));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_orange_square_img,
-                    0));
+                   0));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_light_green_rec_squre_img,
                     270));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_block_triangular_img,
@@ -176,16 +180,16 @@ public class Pattern {
         }
 
         if(this.imgLevel == R.drawable.img_comb_eighteen){
-            this.arrImgPattern.add(new ImagePlace(R.drawable.match_green_rectangle_img,
-                    180));
-            this.arrImgPattern.add(new ImagePlace(R.drawable.match_light_green_rec_squre_img,
-                    90));
-            this.arrImgPattern.add(new ImagePlace(R.drawable.match_blue_trapeze_img,
-                    0));
-            this.arrImgPattern.add(new ImagePlace(R.drawable.match_green_parallelogram_img,
-                    0));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_red_rhombus_img,
                     0));
+            this.arrImgPattern.add(new ImagePlace(R.drawable.match_block_triangular_img,
+                    0));
+            this.arrImgPattern.add(new ImagePlace(R.drawable.match_yellow_square_img,
+                   90));
+            this.arrImgPattern.add(new ImagePlace(R.drawable.match_green_parallelogram_img,
+                   0));
+            this.arrImgPattern.add(new ImagePlace(R.drawable.match_red_quarter_circle_img,
+                   90));
         }
 
         if(this.imgLevel == R.drawable.img_comb_nineteen){
@@ -194,7 +198,7 @@ public class Pattern {
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_blue_half_circle_img,
                     90));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_block_triangular_img,
-                    0));
+                   0));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_orange_triangle_img,
                     90));
         }
@@ -209,7 +213,7 @@ public class Pattern {
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_purple_half_circle_rec_img,
                     90));
             this.arrImgPattern.add(new ImagePlace(R.drawable.match_circle_in_circle_block,
-                    0));
+                   0));
         }
     }
 

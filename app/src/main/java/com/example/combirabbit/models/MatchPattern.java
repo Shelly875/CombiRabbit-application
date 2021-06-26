@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MatchPattern {
-    private final int nLevel;
     private Pattern singlePatternToGuess;
 
     public MatchPattern(int newLevel){
@@ -17,7 +16,6 @@ public class MatchPattern {
         Random r = new Random();
 
         // get current level
-        this.nLevel = newLevel;
 
         // Array that will hold all the possible patterns
         ArrayList <Pattern> patternToGuess = new ArrayList<Pattern>();
@@ -45,31 +43,31 @@ public class MatchPattern {
         patternToGuess.add(new Pattern(R.drawable.img_comb_twenty));
 
         // set image to random according to the level
-        if(this.nLevel == 1)
+        if(newLevel == 1)
         {
             this.singlePatternToGuess = patternToGuess
                     .get(r.nextInt(patternToGuess.size() - 17));
         }
 
-        if(this.nLevel == 2)
+        if(newLevel == 2)
         {
             this.singlePatternToGuess = patternToGuess
                     .get(r.nextInt(4) + 4);
         }
 
-        if(this.nLevel == 3)
+        if(newLevel == 3)
         {
             this.singlePatternToGuess = patternToGuess
                     .get(r.nextInt(4) + 8);
         }
 
-        if(this.nLevel == 4)
+        if(newLevel == 4)
         {
             this.singlePatternToGuess = patternToGuess
                     .get(r.nextInt(4) + 12);
         }
 
-        if(this.nLevel == 5)
+        if(newLevel == 5)
         {
             this.singlePatternToGuess = patternToGuess
                     .get(r.nextInt(4) + 16);

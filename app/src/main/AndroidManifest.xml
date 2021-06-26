@@ -67,12 +67,14 @@
             android:name=".activity.MatchAndComplete"
             android:theme="@style/AppTheme"
             android:screenOrientation="landscape"
+            android:noHistory="true"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
         </activity>
         <activity
             android:name=".activity.BullsAndCows"
             android:theme="@style/AppTheme"
             android:screenOrientation="landscape"
+            android:noHistory="true"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
 
 
@@ -81,6 +83,7 @@
             android:name=".activity.WhoSitNextToMe"
             android:theme="@style/AppTheme"
             android:screenOrientation="landscape"
+            android:noHistory="true"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
         </activity>
 
